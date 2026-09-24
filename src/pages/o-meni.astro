@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import { breadcrumbSchema, type Crumb } from '../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'O meni', href: '/o-meni' },
+];
+
+const principles = [
+  ['Detalji nisu sitnica', 'Razmak, riječ, trenutak u kojem se nešto pomakne. Posjetitelj to ne mora primijetiti, ali osjeti.'],
+  ['Jasan jezik', 'Bez stručnog žargona. Uvijek znate što radim, zašto i koliko to košta.'],
+  ['Stranica ostaje Vaša', 'Domena i hosting glase na Vas. Nitko Vas ne drži taocem vlastite stranice.'],
+];
+---
+
+<Base
+  title="O meni — Mirnes Okanović, web dizajner iz Šibenika | Levanat"
+  description="Mirnes Okanović, web dizajner iz Šibenika. Izrađujem web stranice za male poduzetnike i obrte, s posvećenošću detaljima koji čine razliku."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="O meni">
+    <h1>Mirnes Okanović, <em>web dizajner</em> iz Šibenika</h1>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap grid about">
+      <figure class="portrait">
+        <!-- [FOTO_MIRNES] zamijenite s: <img src="/mirnes.webp" alt="Mirnes Okanović, web dizajner iz Šibenika" width="1200" height="1500" /> -->
+        <div class="portrait__placeholder mono" aria-hidden="true">[FOTO_MIRNES]</div>
+      </figure>
+      <div class="about__body">
+        <p class="mono label">Kako je počelo</p>
+        <p class="lead" data-reveal="fade">
+          Sve je počelo kada me djevojka zamolila da joj izradim web stranicu. Tijekom tog projekta shvatio sam da imam
+          oko za dizajn i da me taj posao istinski ispunjava.
+        </p>
+        <p data-reveal="fade">
+          Ne žalim sate provedene u promišljanju svakog elementa, jer znam da upravo sitni detalji čine razliku. Onaj
+          razmak koji diše, riječ koja je točno na mjestu, gumb koji se ponaša baš kako treba.
+        </p>
+        <p data-reveal="fade">Najdraža poruka koju mogu dobiti je ona koja stigne tjedan dana nakon predaje:</p>
+        <blockquote class="quote" data-reveal="fade">
+          <p>„Tek sam sad vidio ovo, pa ti si i o tome razmišljao.”</p>
+        </blockquote>
+        <p data-reveal="fade">Zbog takvih poruka radim ovaj posao.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap grid block" style="border-top: 1px solid var(--linija);">
+      <div class="block__head">
+        <p class="mono label">Kako radim</p>
+        <h2 data-reveal="line">Tri stvari do kojih mi je stalo</h2>
+      </div>
+      <div class="block__body">
+        <ol class="list">
+          {
+            principles.map(([t, d], i) => (
+              <li data-reveal="fade">
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{t}</strong>
+                  <span>{d}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <p data-reveal="fade">
+          Radim iz Šibenika, s klijentima iz cijele Hrvatske. S onima iz Šibenika i Šibensko-kninske županije rado se
+          nađem i uživo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Cta title="Ispričajte mi o svom poslu." />
+</Base>

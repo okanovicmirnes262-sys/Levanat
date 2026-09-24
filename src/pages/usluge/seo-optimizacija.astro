@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import { seoFaq } from '../../data/faq';
+import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Usluge', href: '/usluge' },
+  { name: 'SEO optimizacija', href: '/usluge/seo-optimizacija' },
+];
+
+const work = [
+  ['Tehnička osnova', 'Brzina, prikaz na mobitelu, sitemap i sve što Googleu treba kako bi stranicu pročitao bez zapreka.'],
+  [
+    'Sadržaj i ključne riječi',
+    'Stranice za usluge i mjesta u kojima radite, napisane prirodnim jezikom, onako kako Vas ljudi zaista traže.',
+  ],
+  [
+    'Google Business profil',
+    'Izrada ili uređivanje profila: kategorije, radno vrijeme, fotografije i opis, kako biste bili vidljivi i na Google kartama.',
+  ],
+  ['Strukturirani podaci', 'Oznake koje Googleu jasno kažu tko ste, gdje ste i čime se bavite.'],
+  ['Dosljedni podaci', 'Isti naziv, adresa i telefon na stranici, na Google profilu i u imenicima u kojima se pojavljujete.'],
+  ['Praćenje', 'Postavljanje Google Search Consolea, kako bi se vidjelo za koje se pojmove pojavljujete i koliko Vas ljudi pronalazi.'],
+];
+---
+
+<Base
+  title="SEO optimizacija Šibenik — lokalni SEO | Levanat"
+  description="SEO optimizacija u Šibeniku za obrte i male firme: lokalni SEO, Google Business profil i tehnička osnova, kako bi Vas pronašli na Googleu i Google kartama."
+  schema={[breadcrumbSchema(crumbs), faqSchema(seoFaq)]}
+>
+  <PageHero crumbs={crumbs} label="Usluga 02">
+    <h1>SEO optimizacija u Šibeniku: <em>neka Vas pronađu</em> oni koji Vas već traže</h1>
+    <p class="lead">
+      Lokalni SEO za obrte i male firme. Cilj je jednostavan: kad netko u Šibeniku ili okolici upiše ono čime se
+      bavite, treba naići na Vas, a ne samo na konkurenciju.
+    </p>
+  </PageHero>
+
+  <div class="wrap">
+    <section class="grid block" aria-labelledby="sto-je">
+      <div class="block__head">
+        <p class="mono label">Lokalni SEO</p>
+        <h2 id="sto-je" data-reveal="line">Što je lokalni SEO i zašto je važan malim poslovima?</h2>
+      </div>
+      <div class="block__body">
+        <p class="lead" data-reveal="fade">
+          Kad netko traži „frizer Šibenik” ili „servis klima Vodice”, Google prikazuje rezultate s karte i stranice koje
+          najbolje odgovaraju upitu i mjestu.
+        </p>
+        <p data-reveal="fade">
+          Lokalni SEO je skup postupaka kojima Googleu jasno pokazujemo da ste upravo Vi dobar odgovor: da postojite, da
+          radite u tom mjestu i da se bavite baš time. Za mali posao to je često važnije od bilo kakvog oglašavanja,
+          jer dolazi do ljudi u trenutku kad im zaista trebate.
+        </p>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="sto-radim">
+      <div class="block__head">
+        <p class="mono label">Što radim</p>
+        <h2 id="sto-radim" data-reveal="line">SEO optimizacija, korak po korak</h2>
+      </div>
+      <div class="block__body">
+        <ul class="list">
+          {
+            work.map(([t, d], i) => (
+              <li data-reveal="fade">
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{t}</strong>
+                  <span>{d}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="iskreno">
+      <div class="block__head">
+        <p class="mono label">Iskreno</p>
+        <h2 id="iskreno" data-reveal="line">SEO nije gumb koji se jednom pritisne.</h2>
+      </div>
+      <div class="block__body">
+        <p data-reveal="fade">
+          Rezultati dolaze postupno, a prvo mjesto na Googleu ne može Vam pošteno obećati nitko. Mogu Vam obećati da će
+          stranica i Google Business profil biti složeni onako kako Google preporučuje, i da ćete razumjeti što je
+          napravljeno i zašto.
+        </p>
+        <p data-reveal="fade">
+          SEO optimizacija uključena je u osnovnom obliku u svaku <a class="link" href="/usluge/izrada-web-stranica"
+            >izradu web stranice</a
+          >. Za postojeće stranice ili opsežniji lokalni SEO javite se, pa ćemo vidjeti što ima smisla.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <Faq items={seoFaq} label="Pitanja" title="Pitanja o SEO optimizaciji" />
+  <Cta title="Neka Vas pronađu oni koji Vas traže." />
+</Base>

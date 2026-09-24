@@ -1,0 +1,83 @@
+---
+import { brand, nav, services } from '../config';
+import { isPlaceholder, windLetters } from '../lib';
+
+const year = new Date().getFullYear();
+const email = brand.email;
+const emailIsReal = !isPlaceholder(email);
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="grid footer__top">
+      <div class="footer__intro">
+        <p class="mono">Levanat · web dizajn · Šibenik</p>
+        <p>
+          Web stranice, lokalni SEO i AI chatbotovi za male poduzetnike, obrtnike i firme. Iz Šibenika, za cijelu
+          Hrvatsku.
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h2>Stranice</h2>
+        <ul>
+          <li><a class="link" href="/">Početna</a></li>
+          {
+            nav.map((item) => (
+              <li>
+                <a class="link" href={item.href}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h2>Usluge</h2>
+        <ul>
+          {
+            services.map((s) => (
+              <li>
+                <a class="link" href={s.href}>
+                  {s.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h2>Kontakt</h2>
+        <ul>
+          <li>
+            {emailIsReal ? <a class="link" href={`mailto:${email}`}>{email}</a> : <span>{email}</span>}
+          </li>
+          <li>Šibenik, Hrvatska</li>
+          <li><a class="link" href="/kontakt">{brand.primaryCta}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer__word" aria-hidden="true" set:html={windLetters('Levanat')} />
+
+    <div class="footer__bottom">
+      <p>© {year} Levanat · {brand.businessDetails}</p>
+      <p><a class="link" href="/pravila-privatnosti">Pravila privatnosti</a></p>
+      <p class="footer__sun" data-sun-line>Levanat puše s istoka, odakle izlazi sunce.</p>
+    </div>
+
+    <details class="colophon">
+      <summary class="mono"><span>Kolofon</span></summary>
+      <p>
+        Naslovi su složeni u fontu Fraunces, tekst u Schibsted Grotesku, a sitne oznake u Fragment Monu. Svi fontovi
+        učitavaju se s ove stranice, bez vanjskih servisa. Boja pozadine inspirirana je svijetlim kamenom šibenske
+        katedrale sv. Jakova, tamnomodra dubokim morem, a jedina topla boja prvim jutarnjim svjetlom. Ako ste pažljivo
+        gledali, primijetili ste da se sve linije na stranici miču zdesna nalijevo. Tako puše levanat. Stranica ne
+        koristi kolačiće.
+      </p>
+    </details>
+  </div>
+</footer>

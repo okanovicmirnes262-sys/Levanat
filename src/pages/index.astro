@@ -1,0 +1,267 @@
+---
+import Base from '../layouts/Base.astro';
+import Wind from '../components/Wind.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import WorkItem from '../components/WorkItem.astro';
+import { brand, services } from '../config';
+import { homeFaq } from '../data/faq';
+import { radovi } from '../data/radovi';
+import { faqSchema, splitWords } from '../lib';
+
+const t1 = splitWords('Kad Vas netko potraži na Googleu, neka ga dočeka');
+const t2 = splitWords('Vaša stranica.', t1.next);
+const t3 = splitWords('Ne samo', t2.next);
+const t4 = splitWords('Facebook profil.', t3.next);
+
+const steps = [
+  {
+    title: 'Besplatan razgovor i ponuda',
+    text: 'Ukratko mi opišete čime se bavite i što Vam treba. Popričamo, a ja Vam pošaljem jasnu ponudu u kojoj piše što dobivate. Bez obveze.',
+  },
+  {
+    title: 'Dizajn i izrada',
+    text: 'Dizajn slažem za Vas, ne iz gotovog predloška. Usput Vam šaljem međuverzije, pa na vrijeme vidite kako stranica nastaje i možete reći što želite drukčije.',
+  },
+  {
+    title: 'Domena, hosting i Google Business profil',
+    text: 'Pomognem Vam kupiti domenu i postaviti hosting, povežem sve što treba i izradim Vaš Google Business profil, kako biste bili vidljivi i na Google kartama.',
+  },
+  {
+    title: 'Predaja ili održavanje',
+    text: 'Po Vašem izboru: cijeli projekt predajem u Vaše ruke ili se i dalje brinem o stranici uz mjesečno održavanje, s uključenim izmjenama.',
+  },
+];
+---
+
+<Base
+  title="Izrada web stranica Šibenik | Levanat — web dizajn"
+  description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
+  schema={[faqSchema(homeFaq)]}
+>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="naslov">
+    <Wind />
+    <div class="wrap grid hero__grid">
+      <p class="hero__eyebrow mono">
+        <span data-greeting>Dobro došli.</span>
+        <span>Web dizajn · Šibenik</span>
+      </p>
+
+      <h1 id="naslov" class="hero__title">
+        <Fragment set:html={t1.html} />{' '}<em set:html={t2.html} />{' '}
+        <span class="hero__title-aside"
+          ><Fragment set:html={t3.html} /> <span class="hero__strike"><Fragment set:html={t4.html} /></span></span
+        >
+      </h1>
+
+      <div class="hero__foot">
+        <p class="lead">
+          Izrađujem web stranice za male poduzetnike, obrtnike i firme iz Šibenika i cijele Hrvatske. Pregledne, brze i
+          složene tako da Vas ljudi pronađu na Googleu.
+        </p>
+        <div class="hero__actions">
+          <a class="btn" href="/kontakt">
+            {brand.primaryCta}
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="link" href="/radovi">Pogledajte radove</a>
+        </div>
+      </div>
+
+      <dl class="hero__meta">
+        <div>
+          <dt class="mono">Šibenik, sada</dt>
+          <dd><time data-clock>—</time></dd>
+        </div>
+        <div>
+          <dt class="mono">Izlazak sunca</dt>
+          <dd data-sunrise>—</dd>
+        </div>
+        <div>
+          <dt class="mono">Levanat</dt>
+          <dd>puše s istoka <span aria-hidden="true">←</span></dd>
+        </div>
+        <div>
+          <dt class="mono">Koordinate</dt>
+          <dd>43°44′ N, 15°53′ E</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="hero__horizon" aria-hidden="true"></div>
+  </section>
+
+  <!-- Problem -->
+  <section class="section" aria-labelledby="problem-naslov">
+    <div class="wrap grid problem">
+      <div class="problem__text">
+        <p class="mono label">01 · Problem</p>
+        <h2 id="problem-naslov" data-reveal="line">Samo Facebook stranica? Onda ste za Google gotovo nevidljivi.</h2>
+        <p data-reveal="fade">
+          Kad netko upiše ono čime se bavite i ime grada, Google traži stranice koje jasno odgovaraju na to pitanje.
+          Facebook profil rijetko je među njima. A ako se i pojavi, dočeka Vas prozor za prijavu, objave od prije
+          nekoliko mjeseci i broj telefona zatrpan negdje u postovima.
+        </p>
+        <p data-reveal="fade">
+          Vlastita stranica, na Vašoj domeni, na jednom mjestu kaže ono što kupac želi znati: čime se bavite, gdje ste,
+          kada radite i kako Vas dobiti. I pojavljuje se onda kad Vas netko traži.
+        </p>
+      </div>
+
+      <figure class="serp" data-serp aria-labelledby="serp-opis">
+        <div class="serp__frame">
+          <div class="serp__bar" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none"
+              ><circle cx="7" cy="7" r="5.25" stroke="currentColor" stroke-width="1.2"></circle><path
+                d="M11 11l3.5 3.5"
+                stroke="currentColor"
+                stroke-width="1.2"></path></svg
+            >
+            <span>vodoinstalater šibenik</span>
+            <span class="serp__caret"></span>
+          </div>
+          <p class="serp__meta mono" aria-hidden="true">Rezultati pretraživanja</p>
+          <ol class="serp__results">
+            <li class="serp__swap">
+              <div class="serp__layer serp__layer--before">
+                <p class="serp__url"><span class="sr-only">Prije: </span>facebook.com › vodoinstalater.marko</p>
+                <p class="serp__title">Vodoinstalater Marko | Facebook</p>
+                <p class="serp__desc">Prijavite se ili se registrirajte da biste vidjeli više sadržaja…</p>
+              </div>
+              <div class="serp__layer serp__layer--after">
+                <p class="serp__url"><span class="sr-only">Poslije: </span>vodoinstalater-marko.hr</p>
+                <p class="serp__title">Vodoinstalater u Šibeniku · Popravci i ugradnja | Marko</p>
+                <p class="serp__desc">
+                  Popravci, ugradnja i hitne intervencije u Šibeniku i okolici. Usluge, radno vrijeme i kontakt na jednom
+                  mjestu.
+                </p>
+                <span class="serp__tag mono" aria-hidden="true">Vaša domena · Vaša pravila</span>
+              </div>
+            </li>
+            <li class="serp__ghost" aria-hidden="true"><span></span><span></span><span></span></li>
+            <li class="serp__ghost" aria-hidden="true"><span></span><span></span><span></span></li>
+          </ol>
+          <span class="serp__edge" aria-hidden="true"></span>
+        </div>
+        <figcaption id="serp-opis" class="mono">
+          Ilustracija: isti obrt u rezultatima pretraživanja, prije i poslije vlastite stranice.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Usluge -->
+  <section class="section" aria-labelledby="usluge-naslov" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="grid section-head">
+        <p class="mono label">02 · Usluge</p>
+        <h2 id="usluge-naslov" data-reveal="line">
+          Sve što Vam treba kako bi Vas pronašli, <em>i zadržali se</em> na Vašoj stranici.
+        </h2>
+      </div>
+
+      <ol class="services">
+        {
+          services.map((s) => (
+            <li class="service">
+              <a href={s.href}>
+                <span class="service__n mono">{s.n}</span>
+                <h3 class="service__title">{s.title}</h3>
+                <p class="service__short">{s.short}</p>
+                <span class="service__meta mono">{s.meta}</span>
+                <span class="service__arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="grid included">
+        <p class="mono label">Uključeno u svaku izradu</p>
+        <p data-reveal="fade">
+          Pomoć oko kupnje domene i postavljanja hostinga te izrada Google Business profila. Ne morate se sami snalaziti
+          s tehničkim stvarima.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proces -->
+  <section class="section" aria-labelledby="proces-naslov" style="background: var(--kamen-svijetli);">
+    <div class="wrap">
+      <div class="grid section-head">
+        <p class="mono label">03 · Proces</p>
+        <h2 id="proces-naslov" data-reveal="line">Od prvog razgovora do stranice koja radi za Vas.</h2>
+      </div>
+
+      <ol class="process" data-process>
+        {
+          steps.map((s, i) => (
+            <li class="process__step">
+              <span class="process__num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <h3>
+                <span class="sr-only">Korak {i + 1}: </span>
+                {s.title}
+              </h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Radovi -->
+  <section class="section" aria-labelledby="radovi-naslov">
+    <div class="wrap">
+      <div class="grid section-head">
+        <p class="mono label">04 · Radovi</p>
+        <h2 id="radovi-naslov" data-reveal="line">Odabrani radovi</h2>
+        <p class="section-head__text muted" data-reveal="fade">
+          Projekti na kojima trenutno radim. Dok ne pređu na svoje domene, označeni su kao „U izradi”.
+        </p>
+      </div>
+      <div class="works">
+        {radovi.slice(0, 2).map((rad, i) => <WorkItem rad={rad} index={i} />)}
+      </div>
+      <p style="margin-top: clamp(3rem, 6vw, 5rem);">
+        <a class="link" href="/radovi">Svi radovi →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- O meni -->
+  <section class="section" aria-labelledby="o-meni-naslov" style="padding-top: 0;">
+    <div class="wrap grid about">
+      <figure class="portrait">
+        <!-- [FOTO_MIRNES] zamijenite s: <img src="/mirnes.webp" alt="Mirnes Okanović, web dizajner iz Šibenika" width="1200" height="1500" loading="lazy" /> -->
+        <div class="portrait__placeholder mono" aria-hidden="true">[FOTO_MIRNES]</div>
+      </figure>
+      <div class="about__body">
+        <p class="mono label">05 · O meni</p>
+        <h2 id="o-meni-naslov" data-reveal="line">Sitni detalji čine razliku.</h2>
+        <p data-reveal="fade">
+          Ja sam Mirnes, web dizajner iz Šibenika. Ne žalim sate provedene u promišljanju svakog elementa, jer upravo
+          ono što većina ne primijeti na prvi pogled čini stranicu dobrom. Najdraža mi je poruka koja stigne tjedan dana
+          nakon predaje:
+        </p>
+        <blockquote class="quote" data-reveal="fade">
+          <p>„Tek sam sad vidio ovo, pa ti si i o tome razmišljao.”</p>
+        </blockquote>
+        <p data-reveal="fade"><a class="link" href="/o-meni">Više o meni →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <Faq
+    items={homeFaq}
+    label="06 · Pitanja"
+    intro='Ne vidite svoje pitanje? <a class="link" href="/kontakt">Pošaljite mi ga</a>, odgovaram osobno.'
+  />
+
+  <Cta />
+</Base>

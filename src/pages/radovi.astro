@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import WorkItem from '../components/WorkItem.astro';
+import Cta from '../components/Cta.astro';
+import { radovi } from '../data/radovi';
+import { breadcrumbSchema, type Crumb } from '../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Radovi', href: '/radovi' },
+];
+---
+
+<Base
+  title="Radovi — web dizajn i izrada web stranica | Levanat Šibenik"
+  description="Odabrani radovi: web stranice koje sam dizajnirao i izradio. Pogledajte projekte i zatražite besplatnu ponudu za svoju stranicu."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="Radovi">
+    <h1>Radovi, <em>detalj po detalj</em></h1>
+    <p class="lead">
+      Projekti na kojima radim. Neki su još na privremenim adresama, pa su označeni kao „U izradi” dok ne pređu na
+      svoje domene.
+    </p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap works">
+      {radovi.map((rad, i) => <WorkItem rad={rad} index={i} headingLevel="h2" />)}
+    </div>
+  </section>
+
+  <Cta title="Sljedeći projekt može biti Vaš." />
+</Base>

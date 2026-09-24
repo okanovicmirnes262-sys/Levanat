@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import { chatbotFaq } from '../../data/faq';
+import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Usluge', href: '/usluge' },
+  { name: 'AI chatbot', href: '/usluge/ai-chatbot' },
+];
+
+const how = [
+  [
+    'Pošaljete materijale',
+    'Cjenik, opis usluga, radno vrijeme, česta pitanja, ili samo adresu postojeće stranice.',
+  ],
+  ['Složim bazu znanja', 'Iz tih materijala složim bazu znanja i provjerim odgovore na pitanja koja Vam ljudi najčešće postavljaju.'],
+  ['Ugradim chatbot', 'Chatbot dobiva izgled Vaše stranice i Vaš način obraćanja, kako bi se uklopio kao da je oduvijek bio ondje.'],
+  ['Osvježavamo po potrebi', 'Kad se nešto promijeni, cijena ili radno vrijeme, osvježimo bazu znanja.'],
+];
+---
+
+<Base
+  title="AI chatbot za web stranicu — odgovara Vašim kupcima | Levanat"
+  description="AI chatbot za web stranicu koji posjetiteljima odgovara na osnovna pitanja o Vašem poslovanju. Baza znanja iz Vaših materijala ili postojeće stranice."
+  schema={[breadcrumbSchema(crumbs), faqSchema(chatbotFaq)]}
+>
+  <PageHero crumbs={crumbs} label="Usluga 03">
+    <h1>AI chatbot za web stranicu: <em>odgovara Vašim kupcima</em> i kad Vi ne stignete</h1>
+    <p class="lead">
+      Asistent na Vašoj stranici koji posjetiteljima odgovara na osnovna pitanja o Vašem poslovanju: radno vrijeme,
+      usluge, cijene, lokacija. Zna ono što ste ga naučili, i ništa više.
+    </p>
+  </PageHero>
+
+  <div class="wrap">
+    <section class="grid block" aria-labelledby="kako-radi">
+      <div class="block__head">
+        <p class="mono label">Kako radi</p>
+        <h2 id="kako-radi" data-reveal="line">Od Vaših materijala do chatbota na stranici</h2>
+      </div>
+      <div class="block__body">
+        <ol class="list">
+          {
+            how.map(([t, d], i) => (
+              <li data-reveal="fade">
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{t}</strong>
+                  <span>{d}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="granice">
+      <div class="block__head">
+        <p class="mono label">Granice</p>
+        <h2 id="granice" data-reveal="line">Što chatbot zna, a što ne</h2>
+      </div>
+      <div class="block__body">
+        <p class="lead" data-reveal="fade">
+          Chatbot je postavljen tako da odgovara na temelju Vaše baze znanja. Kad odgovor ne zna, ne nagađa, nego
+          posjetitelja uputi da Vas kontaktira izravno.
+        </p>
+        <p data-reveal="fade">
+          Tako ostaje ono što treba biti: brz prvi odgovor na pitanja koja se ponavljaju. Vi i dalje razgovarate s
+          ljudima, samo više ne morate po deseti put u danu pisati koje Vam je radno vrijeme.
+        </p>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="za-koga">
+      <div class="block__head">
+        <p class="mono label">Za koga</p>
+        <h2 id="za-koga" data-reveal="line">Kome AI chatbot ima smisla?</h2>
+      </div>
+      <div class="block__body">
+        <p data-reveal="fade">
+          Ako Vam telefon i poruke stalno stižu s istim pitanjima, ako Vas ljudi traže izvan radnog vremena ili Vam se
+          javljaju gosti na više jezika, chatbot Vam može uštedjeti vrijeme. Posebno je koristan iznajmljivačima,
+          salonima, ugostiteljima i servisima.
+        </p>
+        <div class="price-note" data-reveal="fade">
+          <span class="mono muted">Cijena</span>
+          <strong>na upit</strong>
+          <span class="muted">
+            Ovisi o opsegu baze znanja i načinu ugradnje. U ponudi ćete vidjeti i mjesečne troškove rada chatbota, ako
+            ih ima.
+          </span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <Faq items={chatbotFaq} label="Pitanja" title="Pitanja o AI chatbotu" />
+  <Cta title="Neka Vaša stranica odgovara umjesto Vas." />
+</Base>

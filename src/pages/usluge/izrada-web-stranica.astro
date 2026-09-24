@@ -1,0 +1,139 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import { brand } from '../../config';
+import { webFaq } from '../../data/faq';
+import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Usluge', href: '/usluge' },
+  { name: 'Izrada web stranica', href: '/usluge/izrada-web-stranica' },
+];
+
+const included = [
+  ['Dizajn po mjeri', 'Stranica složena za Vaš posao i Vaše kupce, a ne gotov predložak s promijenjenim logotipom.'],
+  ['Prvo za mobitel', 'Većina ljudi Vas traži na mobitelu, pa stranicu slažem najprije za mali ekran, a zatim za veće.'],
+  ['Brzina', 'Stranica se brzo učitava i na slabijem signalu. To primijete posjetitelji, a primijeti i Google.'],
+  ['Osnovni SEO', 'Naslovi, opisi, struktura i podaci koji Googleu trebaju kako bi Vas pravilno prikazao.'],
+  ['Kontakt na dohvat ruke', 'Telefon, e-mail, karta i radno vrijeme ondje gdje ih ljudi očekuju, na jedan dodir.'],
+  [
+    'Domena, hosting i Google Business profil',
+    'Pomoć oko kupnje domene i postavljanja hostinga te izrada Google Business profila uključene su u cijenu.',
+  ],
+];
+---
+
+<Base
+  title="Izrada web stranica Šibenik — cijena od 200 € | Levanat"
+  description="Izrada web stranica u Šibeniku za obrte i male firme: dizajn po mjeri, prilagodba mobitelu i osnovni SEO. Cijena okvirno od 200 €. Besplatna ponuda."
+  schema={[breadcrumbSchema(crumbs), faqSchema(webFaq)]}
+>
+  <PageHero crumbs={crumbs} label="Usluga 01">
+    <h1>Izrada web stranica u Šibeniku, <em>za obrte i male firme</em></h1>
+    <p class="lead">
+      Vlastita stranica na Vašoj domeni: pregledna, brza, složena za mobitel i spremna za Google. Bez predložaka i bez
+      tehničkih briga s Vaše strane.
+    </p>
+  </PageHero>
+
+  <div class="wrap">
+    <section class="grid block" aria-labelledby="dobivate">
+      <div class="block__head">
+        <p class="mono label">Što dobivate</p>
+        <h2 id="dobivate" data-reveal="line">Stranica koja radi posao i kad Vi ne stignete.</h2>
+      </div>
+      <div class="block__body">
+        <ul class="list">
+          {
+            included.map(([t, d], i) => (
+              <li data-reveal="fade">
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{t}</strong>
+                  <span>{d}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="za-koga">
+      <div class="block__head">
+        <p class="mono label">Za koga</p>
+        <h2 id="za-koga" data-reveal="line">Izrada web stranica za obrte, male poduzetnike i firme.</h2>
+      </div>
+      <div class="block__body">
+        <p class="lead" data-reveal="fade">
+          Najčešće radim s ljudima kojima je Facebook dosad bio jedina adresa na internetu: majstorima, salonima,
+          ugostiteljima, iznajmljivačima, OPG-ovima i uslužnim djelatnostima.
+        </p>
+        <p data-reveal="fade">
+          Ako Vas ljudi traže na Googleu, a pronađu samo Facebook profil ili, još gore, konkurenciju, vlastita stranica
+          jedan je od najisplativijih koraka koje možete napraviti za svoj posao. Posebno kad radite lokalno, u Šibeniku
+          i okolici, gdje se preporuke danas provjeravaju upravo pretraživanjem.
+        </p>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="cijena">
+      <div class="block__head">
+        <p class="mono label">Cijena</p>
+        <h2 id="cijena" data-reveal="line">Koliko košta izrada web stranice?</h2>
+      </div>
+      <div class="block__body">
+        <div class="price-note" data-reveal="fade">
+          <span class="mono muted">Okvirno</span>
+          <strong>od 200 €</strong>
+        </div>
+        <p data-reveal="fade">
+          Konačna cijena ovisi o broju podstranica, količini sadržaja i dodatnim mogućnostima, poput obrasca za upite ili
+          AI chatbota. Nakon kratkog razgovora dobivate besplatnu ponudu u kojoj je svaka stavka jasno navedena.
+        </p>
+        <p data-reveal="fade">
+          Nakon izrade birate: <a class="link" href="/usluge#odrzavanje">mjesečno održavanje</a> s uključenim izmjenama ili
+          jednokratnu predaju cijelog projekta u Vaše ruke.
+        </p>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="suradnja">
+      <div class="block__head">
+        <p class="mono label">Suradnja</p>
+        <h2 id="suradnja" data-reveal="line">Kako izgleda suradnja</h2>
+      </div>
+      <div class="block__body">
+        <ol class="list">
+          <li data-reveal="fade">
+            <span class="mono">01</span>
+            <div><strong>Besplatan razgovor i ponuda</strong><span>Popričamo o Vašem poslu i o tome što Vam treba.</span></div>
+          </li>
+          <li data-reveal="fade">
+            <span class="mono">02</span>
+            <div><strong>Dizajn i izrada</strong><span>Uz međuverzije, kako biste na vrijeme vidjeli kamo stranica ide.</span></div>
+          </li>
+          <li data-reveal="fade">
+            <span class="mono">03</span>
+            <div>
+              <strong>Domena, hosting i Google Business profil</strong><span>Sve povežem i postavim, uz Vaše odobrenje.</span>
+            </div>
+          </li>
+          <li data-reveal="fade">
+            <span class="mono">04</span>
+            <div><strong>Predaja ili održavanje</strong><span>Po Vašem izboru.</span></div>
+          </li>
+        </ol>
+        <p data-reveal="fade">
+          <a class="btn" href="/kontakt">{brand.primaryCta} <span class="btn__arrow" aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <Faq items={webFaq} label="Pitanja" title="Pitanja o izradi web stranica" />
+  <Cta title="Vaša stranica može biti sljedeća." />
+</Base>

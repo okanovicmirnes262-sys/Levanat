@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+---
+
+<Base title="Hvala na poruci | Levanat" description="Vaša poruka je poslana." noindex>
+  <PageHero crumbs={[{ name: 'Početna', href: '/' }, { name: 'Kontakt', href: '/kontakt' }, { name: 'Hvala', href: '/kontakt/hvala' }]}>
+    <h1>Hvala, <em>poruka je stigla.</em></h1>
+    <p class="lead">Javit ću Vam se čim je pročitam. U međuvremenu, levanat i dalje puše s istoka.</p>
+    <p><a class="link" href="/">← Natrag na početnu</a></p>
+  </PageHero>
+</Base>

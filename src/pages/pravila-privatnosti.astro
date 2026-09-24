@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { brand } from '../config';
+import { breadcrumbSchema, type Crumb } from '../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Pravila privatnosti', href: '/pravila-privatnosti' },
+];
+// [DATUM_PRAVILA] — ažurirajte kad promijenite sadržaj pravila.
+const updated = '[DATUM_PRAVILA]';
+---
+
+<Base
+  title="Pravila privatnosti | Levanat"
+  description="Kako Levanat prikuplja, koristi i štiti osobne podatke posjetitelja i klijenata, u skladu s Općom uredbom o zaštiti podataka (GDPR)."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="Privatnost">
+    <h1>Pravila <em>privatnosti</em></h1>
+    <p class="lead">Kratko i jasno: prikupljam samo ono što je potrebno da Vam odgovorim, i ništa ne prodajem.</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <article class="prose">
+        <p class="mono muted">Posljednja izmjena: {updated}</p>
+
+        <h2>1. Voditelj obrade</h2>
+        <p>
+          Voditelj obrade osobnih podataka je {brand.owner}, {brand.businessDetails}. Za sva pitanja o privatnosti možete
+          se javiti na {brand.email}.
+        </p>
+
+        <h2>2. Koje podatke prikupljam</h2>
+        <h3>Kontakt forma i e-mail</h3>
+        <p>
+          Kad pošaljete upit, prikupljam podatke koje sami upišete: ime i prezime, e-mail adresu, broj telefona (ako ga
+          navedete), vrstu usluge i sadržaj poruke.
+        </p>
+        <h3>Posjet stranici</h3>
+        <p>
+          Stranica koristi Vercel Web Analytics, alat za mjerenje posjećenosti koji ne koristi kolačiće i ne prati Vas
+          između različitih stranica. Bilježi se anonimizirani, zbirni podatak o posjetima (npr. koja je stranica
+          posjećena, preglednik, država). Iz tih se podataka ne može utvrditi tko ste.
+        </p>
+        <p>
+          Poslužitelj pri svakom zahtjevu tehnički obrađuje IP adresu, što je nužno za prikaz stranice i zaštitu od
+          zlouporabe.
+        </p>
+        <h3>Lokalna pohrana u pregledniku</h3>
+        <p>
+          Stranica u Vašem pregledniku (localStorage i sessionStorage) pamti samo broj Vaših posjeta, kako bi Vas pri
+          povratku drukčije pozdravila. Taj se podatak nikamo ne šalje i ne sadrži osobne podatke. Možete ga obrisati u
+          postavkama preglednika.
+        </p>
+
+        <h2>3. Svrha i pravna osnova</h2>
+        <ul>
+          <li>
+            Odgovor na upit i priprema ponude: poduzimanje radnji na Vaš zahtjev prije sklapanja ugovora (čl. 6. st. 1.
+            t. (b) GDPR-a).
+          </li>
+          <li>
+            Sigurnost stranice, zaštita od spama i anonimna statistika posjeta: legitimni interes (čl. 6. st. 1. t. (f)
+            GDPR-a).
+          </li>
+          <li>Ispunjavanje zakonskih obveza, npr. računovodstvenih, ako postanete klijent (čl. 6. st. 1. t. (c) GDPR-a).</li>
+        </ul>
+
+        <h2>4. Kome se podaci prosljeđuju</h2>
+        <p>Podatke ne prodajem niti ih ustupam trećima za marketing. Koriste se samo pouzdani izvršitelji obrade:</p>
+        <ul>
+          <li>Vercel Inc. — hosting stranice i anonimna analitika posjeta;</li>
+          <li>Resend (Plus Five Five, Inc.) — isporuka poruka poslanih putem kontakt forme;</li>
+          <li>pružatelj e-mail usluge putem kojeg primam i odgovaram na poruke.</li>
+        </ul>
+        <p>
+          Neki od tih pružatelja sjedište imaju u SAD-u. Prijenos podataka temelji se na odluci o primjerenosti (EU–US
+          Data Privacy Framework) ili na standardnim ugovornim klauzulama Europske komisije.
+        </p>
+
+        <h2>5. Koliko dugo čuvam podatke</h2>
+        <p>
+          Upite koji ne završe suradnjom čuvam najdulje 12 mjeseci od posljednje komunikacije, a zatim ih brišem. Ako
+          postanete klijent, podatke čuvam za trajanja suradnje i onoliko koliko to nalažu propisi.
+        </p>
+
+        <h2>6. Vaša prava</h2>
+        <p>U svakom trenutku imate pravo:</p>
+        <ul>
+          <li>zatražiti pristup svojim podacima i njihovu kopiju;</li>
+          <li>zatražiti ispravak netočnih podataka;</li>
+          <li>zatražiti brisanje podataka („pravo na zaborav”);</li>
+          <li>zatražiti ograničenje obrade ili uložiti prigovor na obradu;</li>
+          <li>zatražiti prijenos podataka drugom voditelju obrade.</li>
+        </ul>
+        <p>
+          Zahtjev pošaljite na {brand.email}. Ako smatrate da se Vašim podacima ne postupa zakonito, možete podnijeti
+          pritužbu Agenciji za zaštitu osobnih podataka (AZOP), <a href="https://azop.hr" rel="noopener">azop.hr</a>.
+        </p>
+
+        <h2>7. Kolačići</h2>
+        <p>
+          Stranica ne koristi kolačiće, ni vlastite ni kolačiće trećih strana. Fontovi se učitavaju s ove stranice, a ne
+          s vanjskih servisa, pa se Vaša IP adresa ne šalje trećim stranama pri prikazu slova.
+        </p>
+
+        <h2>8. Izmjene</h2>
+        <p>
+          Ova pravila mogu se povremeno mijenjati, primjerice kad se promijeni neki od korištenih servisa. Važeća verzija
+          uvijek je objavljena na ovoj stranici.
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>

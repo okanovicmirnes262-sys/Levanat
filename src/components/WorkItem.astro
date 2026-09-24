@@ -1,0 +1,50 @@
+---
+import type { Rad } from '../data/radovi';
+import { isPlaceholder } from '../lib';
+
+interface Props {
+  rad: Rad;
+  index: number;
+  headingLevel?: 'h2' | 'h3';
+}
+const { rad, index, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const hasLink = /^https?:\/\//.test(rad.link);
+const n = String(index + 1).padStart(2, '0');
+---
+
+<article class="grid work">
+  <figure class="work__media">
+    {
+      rad.slika ? (
+        <img
+          src={rad.slika}
+          alt={`Snimka zaslona: ${rad.naziv}`}
+          width="1600"
+          height="1000"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="work__placeholder mono" aria-hidden="true">
+          Snimka zaslona
+        </div>
+      )
+    }
+    {rad.uIzradi && <span class="work__badge mono">U izradi</span>}
+  </figure>
+  <div class="work__body">
+    <p class="mono">{n} · {rad.vrsta}</p>
+    <H data-reveal="line">{rad.naziv}</H>
+    <p data-reveal="fade">{rad.opis}</p>
+    {
+      hasLink ? (
+        <a class="link work__link" href={rad.link} target="_blank" rel="noopener">
+          Pogledajte stranicu<span class="sr-only"> {rad.naziv} (otvara se u novoj kartici)</span> ↗
+        </a>
+      ) : (
+        <span class="mono muted work__link">{isPlaceholder(rad.link) ? rad.link : 'Link uskoro'}</span>
+      )
+    }
+  </div>
+</article>

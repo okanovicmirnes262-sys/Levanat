@@ -1,0 +1,70 @@
+---
+import { brand, nav } from '../config';
+import { windLetters } from '../lib';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href || path.startsWith(href + '/');
+---
+
+<header class="site-header" data-header>
+  <div class="wrap site-header__inner">
+    <a class="logo" href="/" aria-label="Levanat, početna stranica">
+      <span class="logo__word" aria-hidden="true" set:html={windLetters('Levanat')} />
+      <span class="logo__mark" aria-hidden="true"></span>
+    </a>
+
+    <nav class="nav" aria-label="Glavna navigacija">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a class="link-plain" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                <span class="link link--quiet">{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="btn header-cta" href="/kontakt">
+      {brand.primaryCta}
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="izbornik" data-menu-toggle>
+      <span data-menu-label>Izbornik</span>
+      <span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="izbornik" data-menu>
+  <nav aria-label="Izbornik">
+    <ul>
+      <li><a href="/">Početna <span class="mono">00</span></a></li>
+      {
+        nav.map((item, i) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label} <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="mobile-menu__foot">
+    <a class="btn btn--light" href="/kontakt">
+      {brand.primaryCta}
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </a>
+    <p class="mono">Šibenik · 43°44′ N 15°53′ E</p>
+  </div>
+</div>
+
+<style>
+  .link-plain {
+    text-decoration: none;
+  }
+</style>

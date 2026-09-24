@@ -1,0 +1,8 @@
+---
+interface Props {
+  tone?: 'ink' | 'light';
+}
+const { tone = 'ink' } = Astro.props;
+---
+
+<canvas class="wind" data-wind={tone} aria-hidden="true"></canvas>

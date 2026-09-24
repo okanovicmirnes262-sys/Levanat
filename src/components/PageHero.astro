@@ -1,0 +1,32 @@
+---
+import type { Crumb } from '../lib';
+
+interface Props {
+  crumbs: Crumb[];
+  label?: string;
+}
+const { crumbs, label } = Astro.props;
+---
+
+<header class="page-hero">
+  <div class="wrap grid page-hero__grid">
+    <nav class="crumbs mono" aria-label="Putanja">
+      <ol>
+        {
+          crumbs.map((c, i) => (
+            <li>
+              {i < crumbs.length - 1 ? (
+                <a href={c.href}>{c.name}</a>
+              ) : (
+                <span aria-current="page">{c.name}</span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    {label && <p class="mono label">{label}</p>}
+    <slot />
+  </div>
+  <div class="page-hero__line" aria-hidden="true"></div>
+</header>

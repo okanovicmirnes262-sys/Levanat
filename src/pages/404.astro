@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Wind from '../components/Wind.astro';
+---
+
+<Base title="Stranica nije pronađena | Levanat" description="Tražena stranica ne postoji." noindex>
+  <section class="hero" style="min-height: 88svh;">
+    <Wind />
+    <div class="wrap grid hero__grid">
+      <p class="hero__eyebrow mono"><span>Pogreška 404</span></p>
+      <h1 class="hero__title">Ovu stranicu <em>odnio je vjetar.</em></h1>
+      <div class="hero__foot">
+        <p class="lead">Adresa ne postoji ili je premještena. Krenite ispočetka ili mi se javite izravno.</p>
+        <div class="hero__actions">
+          <a class="btn" href="/">Na početnu <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="link" href="/kontakt">Kontakt</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
