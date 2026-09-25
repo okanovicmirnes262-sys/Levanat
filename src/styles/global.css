@@ -803,21 +803,36 @@ body.menu-open .site-header {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-top: calc(var(--header-h) + 2rem);
+  padding-top: calc(var(--header-h) + 35vw + 3rem);
   padding-bottom: calc(var(--tide-h) + clamp(1.5rem, 4vw, 3.5rem));
   overflow: clip;
 }
 
+/* Lučni portreti glava (kao lukovi apside): na mobitelu u nizu iznad teksta */
+.hero .reljef__slika {
+  width: 24vw;
+  top: calc(var(--header-h) + 1.6rem);
+}
 .hero .reljef__slika--1 {
-  width: min(118vw, 640px);
-  right: -38vw;
-  top: 2svh;
+  width: 28vw;
+  left: 36vw;
+  top: calc(var(--header-h) + 0.4rem);
 }
 .hero .reljef__slika--2 {
-  display: none;
+  left: 8.5vw;
 }
 .hero .reljef__slika--3 {
-  display: none;
+  right: 8.5vw;
+}
+/* Tanki brončani luk oko svakog portreta */
+.reljef__slika::after,
+.friz__glava picture::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  pointer-events: none;
 }
 
 /* Tamni veo iza teksta na mobitelu, radi kontrasta */
@@ -827,7 +842,7 @@ body.menu-open .site-header {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to top, var(--more) 52%, rgba(11, 42, 60, 0.82) 70%, rgba(11, 42, 60, 0) 92%);
+  background: none;
 }
 
 .hero__content {
@@ -924,37 +939,49 @@ body.menu-open .site-header {
   .hero__meta {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+  .hero .reljef__slika {
+    width: 19vw;
+  }
   .hero .reljef__slika--1 {
-    width: min(58vw, 620px);
-    right: -8vw;
-    top: 2svh;
+    width: 23vw;
+    left: 38.5vw;
+  }
+  .hero .reljef__slika--2 {
+    left: 14vw;
+  }
+  .hero .reljef__slika--3 {
+    right: 14vw;
+  }
+  .hero {
+    padding-top: calc(var(--header-h) + 29vw + 3.5rem);
   }
 }
 
 @media (min-width: 1100px) {
   .hero {
     justify-content: center;
+    padding-top: calc(var(--header-h) + 2rem);
   }
-  .hero::before {
-    background: linear-gradient(to right, var(--more) 22%, rgba(11, 42, 60, 0.55) 45%, rgba(11, 42, 60, 0) 62%);
+  /* Na desktopu: skupina od tri luka desno od teksta, u različitim visinama kao friz */
+  .hero .reljef__slika {
+    top: 50%;
+    left: auto;
+    right: auto;
   }
   .hero .reljef__slika--1 {
-    width: min(46vw, 800px);
-    right: -1vw;
-    top: 52%;
-    transform: translateY(-46%);
+    width: min(16vw, 320px);
+    right: 16vw;
+    transform: translateY(-64%);
   }
   .hero .reljef__slika--2 {
-    display: block;
-    width: min(13vw, 230px);
-    right: 3vw;
-    top: 7%;
+    width: min(12.5vw, 250px);
+    right: 2vw;
+    transform: translateY(-30%);
   }
   .hero .reljef__slika--3 {
-    display: block;
-    width: min(11vw, 200px);
-    right: 38vw;
-    bottom: 3%;
+    width: min(12.5vw, 250px);
+    right: 33.5vw;
+    transform: translateY(-16%);
   }
   .hero__eyebrow,
   .hero__title,
@@ -1116,27 +1143,24 @@ body.menu-open .site-header {
     opacity: 0;
   }
 }
-.serp__meta {
-  margin: 1.1rem 0 1.5rem;
+.serp__stanje {
+  margin-top: 1.6rem;
+  padding: 1.2rem 1.3rem 1.3rem;
+  border: 1px solid var(--linija);
+  display: grid;
+  gap: 0.9rem;
+}
+.serp__oznaka {
   color: var(--tekst-2);
 }
-.serp__results {
-  display: grid;
-  gap: 1.75rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.serp__swap {
-  display: grid;
-}
-.serp__layer {
-  grid-area: 1 / 1;
+.serp__rezultat {
   display: grid;
   gap: 0.25rem;
 }
-.serp__layer p,
-.serp__layer p + p {
+.serp__rezultat p,
+.serp__rezultat p + p,
+.serp__ishod,
+.serp__oznaka {
   margin: 0;
 }
 .serp__url {
@@ -1144,7 +1168,7 @@ body.menu-open .site-header {
   color: var(--tekst-2);
 }
 .serp__title {
-  font-size: clamp(1.18rem, 1rem + 0.6vw, 1.5rem);
+  font-size: clamp(1.15rem, 1rem + 0.55vw, 1.45rem);
   font-weight: 420;
   line-height: 1.25;
   color: #1c4a70;
@@ -1154,62 +1178,36 @@ body.menu-open .site-header {
   color: var(--tekst-2);
   line-height: 1.5;
 }
-.serp__layer--before .serp__desc {
+.serp__ishod {
+  font-size: 0.98rem;
+  font-style: italic;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--linija);
+}
+.serp__stanje--prije {
+  background: rgba(217, 207, 191, 0.25);
+}
+.serp__stanje--prije .serp__title {
+  color: var(--tekst-2);
+}
+.serp__stanje--prije .serp__desc {
   font-style: italic;
 }
-.serp__layer--after .serp__url {
-  color: var(--tekst);
+.serp__stanje--poslije {
+  border-color: var(--tirkiz);
+  border-left-width: 3px;
+  background: var(--kamen-svijetli);
+  box-shadow: 0 24px 40px -30px rgba(11, 42, 60, 0.45);
 }
-.serp__tag {
-  display: inline-block;
-  margin-top: 0.5rem;
+.serp__stanje--poslije .serp__oznaka {
   color: var(--tirkiz-tekst);
 }
-.serp__ghost {
-  display: grid;
-  gap: 0.5rem;
-  opacity: 0.7;
-}
-.serp__ghost span {
-  display: block;
-  height: 0.6rem;
-  background: var(--kamen-2);
-}
-.serp__ghost span:nth-child(1) {
-  width: 32%;
-}
-.serp__ghost span:nth-child(2) {
-  width: 64%;
-  height: 0.9rem;
-}
-.serp__ghost span:nth-child(3) {
-  width: 88%;
-}
-.serp__edge {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1px;
-  background: var(--tirkiz);
-  box-shadow: 0 0 12px 1px rgba(31, 122, 128, 0.45);
-  opacity: 0;
-  pointer-events: none;
+.serp__stanje--poslije .serp__url {
+  color: var(--tekst);
 }
 .serp figcaption {
   margin-top: 0.9rem;
   color: var(--tekst-2);
-}
-html:not(.motion) .serp__swap {
-  gap: 1.5rem;
-}
-html:not(.motion) .serp__layer {
-  grid-area: auto;
-}
-html:not(.motion) .serp__layer--before {
-  opacity: 0.6;
-}
-html.motion .serp__layer--after {
-  clip-path: inset(0 0 0 100%);
 }
 
 /* ---------- Friz glava ---------- */
@@ -1265,11 +1263,14 @@ html.motion .friz--pinned .friz__traka {
 .friz__glava {
   flex: none;
   margin: 0;
-  width: clamp(240px, 64vw, 480px);
+  width: clamp(210px, 56vw, 330px);
   scroll-snap-align: center;
   display: grid;
   gap: 1.1rem;
   --lit: 1;
+}
+.friz__glava picture {
+  position: relative;
 }
 .friz__glava img {
   width: 100%;
@@ -2122,10 +2123,15 @@ html.motion .friz--pinned .friz__traka {
   justify-content: flex-end;
 }
 .page-hero .reljef__slika--1 {
-  width: min(70vw, 480px);
-  right: -16vw;
-  top: calc(var(--header-h) - 1rem);
-  opacity: 0.9;
+  width: 30vw;
+  right: var(--gutter);
+  top: calc(var(--header-h) + 1rem);
+}
+@media (max-width: 999px) {
+  .page-hero {
+    padding-top: calc(var(--header-h) + 37.5vw + 2.5rem);
+    min-height: 0;
+  }
 }
 .page-hero::before {
   content: '';
@@ -2151,10 +2157,10 @@ html.motion .friz--pinned .friz__traka {
     background: linear-gradient(to right, var(--more) 30%, rgba(11, 42, 60, 0.3) 60%, rgba(11, 42, 60, 0) 75%);
   }
   .page-hero .reljef__slika--1 {
-    width: min(34vw, 560px);
-    right: 5vw;
+    width: min(19vw, 320px);
+    right: 9vw;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-52%);
   }
   .page-hero h1 {
     grid-column: 1 / span 8;

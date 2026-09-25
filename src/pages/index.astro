@@ -136,28 +136,29 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
             <span>vodoinstalater šibenik</span>
             <span class="serp__caret"></span>
           </div>
-          <p class="serp__meta mono" aria-hidden="true">Rezultati pretraživanja</p>
-          <ol class="serp__results">
-            <li class="serp__swap">
-              <div class="serp__layer serp__layer--before">
-                <p class="serp__url"><span class="sr-only">Prije: </span>facebook.com › vodoinstalater.marko</p>
-                <p class="serp__title">Vodoinstalater Marko | Facebook</p>
-                <p class="serp__desc">Prijavite se ili se registrirajte da biste vidjeli više sadržaja…</p>
-              </div>
-              <div class="serp__layer serp__layer--after">
-                <p class="serp__url"><span class="sr-only">Poslije: </span>vodoinstalater-marko.hr</p>
-                <p class="serp__title">Vodoinstalater u Šibeniku · Popravci i ugradnja | Marko</p>
-                <p class="serp__desc">
-                  Popravci, ugradnja i hitne intervencije u Šibeniku i okolici. Usluge, radno vrijeme i kontakt na jednom
-                  mjestu.
-                </p>
-                <span class="serp__tag mono" aria-hidden="true">Vaša domena · Vaša pravila</span>
-              </div>
-            </li>
-            <li class="serp__ghost" aria-hidden="true"><span></span><span></span><span></span></li>
-            <li class="serp__ghost" aria-hidden="true"><span></span><span></span><span></span></li>
-          </ol>
-          <span class="serp__edge" aria-hidden="true"></span>
+
+          <div class="serp__stanje serp__stanje--prije">
+            <p class="serp__oznaka mono">Danas: samo Facebook</p>
+            <div class="serp__rezultat">
+              <p class="serp__url">facebook.com › vodoinstalater.marko</p>
+              <p class="serp__title">Vodoinstalater Marko | Facebook</p>
+              <p class="serp__desc">Prijavite se ili se registrirajte da biste vidjeli više sadržaja…</p>
+            </div>
+            <p class="serp__ishod">Kupac vidi prozor za prijavu i odlazi dalje.</p>
+          </div>
+
+          <div class="serp__stanje serp__stanje--poslije">
+            <p class="serp__oznaka mono">S Vašom stranicom</p>
+            <div class="serp__rezultat">
+              <p class="serp__url">vodoinstalater-marko.hr</p>
+              <p class="serp__title">Vodoinstalater u Šibeniku · Popravci i ugradnja | Marko</p>
+              <p class="serp__desc">
+                Popravci, ugradnja i hitne intervencije u Šibeniku i okolici. Usluge, radno vrijeme i kontakt na jednom
+                mjestu.
+              </p>
+            </div>
+            <p class="serp__ishod">Kupac odmah vidi čime se bavite i kako Vas dobiti.</p>
+          </div>
         </div>
         <figcaption id="serp-opis" class="mono">
           Ilustracija: isti obrt u rezultatima pretraživanja, prije i poslije vlastite stranice.
@@ -182,7 +183,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
               <figure class="friz__glava">
                 <Picture src={g.src} alt={g.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[320, 520, 760]} sizes="(min-width: 900px) 400px, 62vw" loading="lazy" decoding="async" />
                 <figcaption class="mono">
-                  <span>{String(i + 1).padStart(2, '0')} · {g.opis}</span>
+                  <span>{String(i + 1).padStart(2, '0')}</span>
                   <span>Jedna od 71</span>
                 </figcaption>
               </figure>

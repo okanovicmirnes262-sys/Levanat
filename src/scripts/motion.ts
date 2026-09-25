@@ -65,34 +65,16 @@ export function initMotion() {
       });
   }
 
-  // Rezultat pretraživanja: Facebook → vlastita stranica (tirkizna crta vode prelazi)
+  // Rezultat pretraživanja: najprije „samo Facebook”, zatim zdesna uklizne Vaša stranica
   const serp = document.querySelector<HTMLElement>('[data-serp]');
   if (serp) {
-    const before = serp.querySelector('.serp__layer--before');
-    const after = serp.querySelector('.serp__layer--after');
-    const edge = serp.querySelector<HTMLElement>('.serp__edge');
-    const swap = serp.querySelector<HTMLElement>('.serp__swap');
-    const frame = serp.querySelector<HTMLElement>('.serp__frame');
-    const tl = gsap.timeline({ scrollTrigger: { trigger: serp, start: 'top 62%', end: 'bottom 38%', scrub: 0.8 } });
-    tl.fromTo(after, { clipPath: 'inset(-4% 0% -4% 100%)' }, { clipPath: 'inset(-4% 0% -4% 0%)', ease: 'none' }, 0).fromTo(
-      before,
-      { clipPath: 'inset(-4% 0% -4% 0%)' },
-      { clipPath: 'inset(-4% 100% -4% 0%)', ease: 'none' },
-      0,
-    );
-    if (edge && swap && frame) {
-      const place = () => {
-        const fr = frame.getBoundingClientRect();
-        const sr = swap.getBoundingClientRect();
-        gsap.set(edge, { top: sr.top - fr.top - 6, height: sr.height + 12 });
-        return { from: sr.right - fr.left, to: sr.left - fr.left };
-      };
-      let pos = place();
-      ScrollTrigger.addEventListener('refreshInit', () => (pos = place()));
-      tl.fromTo(edge, { x: () => pos.from }, { x: () => pos.to, ease: 'none' }, 0)
-        .to(edge, { opacity: 1, duration: 0.08, ease: 'none' }, 0)
-        .to(edge, { opacity: 0, duration: 0.08, ease: 'none' }, 0.92);
-    }
+    const prije = serp.querySelector('.serp__stanje--prije');
+    const poslije = serp.querySelector('.serp__stanje--poslije');
+    gsap.set(poslije, { opacity: 0, x: 60 });
+    gsap
+      .timeline({ scrollTrigger: { trigger: serp, start: 'top 70%', once: true } })
+      .to(poslije, { opacity: 1, x: 0, duration: 1.1, ease: 'expo.out', delay: 0.5 })
+      .to(prije, { opacity: 0.55, duration: 0.8, ease: 'power2.out' }, '<0.2');
   }
 
   // Friz glava: na većim ekranima sekcija se prikuje i traka klizi vodoravno

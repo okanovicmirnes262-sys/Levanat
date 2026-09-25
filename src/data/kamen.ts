@@ -14,14 +14,15 @@ import g5n from '../assets/kamen/glava-5-n.webp';
 import mihovil from '../assets/kamen/mihovil.webp';
 import katedrala from '../assets/kamen/katedrala.webp';
 
-export type Glava = { src: ImageMetadata; normal: ImageMetadata; alt: string; opis: string };
+export type Glava = { src: ImageMetadata; normal: ImageMetadata; alt: string };
 
+// Redoslijed: prve tri stoje u heroju početne stranice.
 export const glave: Glava[] = [
-  { src: g1, normal: g1n, alt: 'Kamena glava muškarca namrštena lica, s kapom, s apside šibenske katedrale', opis: 'Namršteni' },
-  { src: g3, normal: g3n, alt: 'Kamena glava bradatog starca s kovrčavom kosom, s friza katedrale sv. Jakova', opis: 'Starac' },
-  { src: g4, normal: g4n, alt: 'Kamena glava mlade žene u profilu, s valovitom kosom, s friza katedrale', opis: 'Djevojka' },
-  { src: g2, normal: g2n, alt: 'Kamena glava muškarca s turbanom i brkovima, u profilu, s apside katedrale', opis: 'Putnik' },
-  { src: g5, normal: g5n, alt: 'Kamena glava muškarca s brkovima i šiškama, s friza šibenske katedrale', opis: 'Brko' },
+  { src: g1, normal: g1n, alt: 'Kamena glava bradatog starca s kovrčavom kosom, s friza apside katedrale sv. Jakova u Šibeniku' },
+  { src: g2, normal: g2n, alt: 'Kamena glava mlade žene u profilu, s valovitom kosom, s friza šibenske katedrale' },
+  { src: g3, normal: g3n, alt: 'Kamena glava muškarca s brkovima i šiškama, s friza šibenske katedrale' },
+  { src: g4, normal: g4n, alt: 'Kamena glava muškarca s kapom, s apside katedrale sv. Jakova' },
+  { src: g5, normal: g5n, alt: 'Kamena glava muškarca s turbanom, u profilu, s apside katedrale sv. Jakova' },
 ];
 
 export const kipovi = {

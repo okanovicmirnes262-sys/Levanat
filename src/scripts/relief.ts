@@ -47,7 +47,10 @@ void main() {
   float sd = max(dot(n, sunDir), 0.0);
   vec3 lit = c.rgb * (uAmb + warm * diff * att * uPower + vec3(1.0, 0.95, 0.86) * sd * uSun)
            + warm * spec * att * uPower * c.a;
-  gl_FragColor = vec4(lit, c.a);
+  // meko ograničenje svjetline: svijetli dijelovi kamena ne gube detalj
+  vec3 m = lit / max(c.a, 0.001);
+  m = 1.0 - exp(-m * 1.35);
+  gl_FragColor = vec4(m * c.a, c.a);
 }`;
 
 type Item = { img: HTMLImageElement; color: WebGLTexture; normal: WebGLTexture };
@@ -218,8 +221,8 @@ export async function initRelief(stage: HTMLElement, opts: { intro: boolean; sti
     gl.uniform2f(U.light, light.x, light.y);
     gl.uniform1f(U.height, 260 * dpr);
     gl.uniform1f(U.radius, Math.max(W, H) * 0.5);
-    gl.uniform1f(U.power, 1.25 + introK * 0.5);
-    gl.uniform1f(U.amb, 0.55 + scrollP * 0.3);
+    gl.uniform1f(U.power, (coarse ? 0.95 : 1.15) + introK * 0.45);
+    gl.uniform1f(U.amb, 0.62 + scrollP * 0.25);
     gl.uniform1f(U.sun, scrollP * 0.75);
 
     const cr = canvas.getBoundingClientRect();
