@@ -17,7 +17,7 @@ export function initAsistent() {
   };
   // Pripremi modul čim korisnik pokaže namjeru
   btn.addEventListener('pointerenter', () => import('./asistent'), { once: true });
-  btn.addEventListener('click', () => set(panel.hidden));
+  btn.addEventListener('click', () => set(panel.hidden !== false));
   panel.querySelector('[data-asistent-zatvori]')?.addEventListener('click', () => {
     set(false);
     btn.focus();
