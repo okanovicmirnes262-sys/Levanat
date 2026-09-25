@@ -9,7 +9,7 @@ import { brand, services } from '../config';
 import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
 import { kipovi } from '../data/kamen';
-import nikola from '../assets/scena/nikola.webp';
+import Kostur from '../components/Kostur.astro';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
@@ -63,23 +63,12 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
   description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
   schema={[faqSchema(homeFaq), pageSchema]}
 >
-  <!-- Hero: tvrđava sv. Nikole izbliza; kamera se udaljava sa scrollom -->
+  <!-- Hero: kostur web stranice koji se crta dok skrolate, a na kraju se popuni -->
   <section class="scena" aria-labelledby="naslov" data-scena>
     <div class="scena__kadar">
-      <Picture
-        src={nikola}
-        alt="Tvrđava sv. Nikole na ulazu u šibenski kanal, iz zraka"
-        class="scena__sloj scena__tvrdava"
-        formats={['avif', 'webp']}
-        fallbackFormat="webp"
-        widths={[800, 1280, 1920]}
-        sizes="100vw"
-        loading="eager"
-        fetchpriority="high"
-        data-scena-tvrdava
-      />
+      <div class="odsjaj" aria-hidden="true"></div>
+      <div class="scena__kostur"><Kostur /></div>
       <div class="scena__veo" data-scena-veo></div>
-      <p class="scena__potpis mono" data-scena-potpis>Tvrđava sv. Nikole · Šibenik</p>
       <div class="scena__tekst" data-scena-tekst>
     <div class="wrap grid hero__content">
       <p class="hero__eyebrow mono">

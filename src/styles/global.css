@@ -3466,3 +3466,116 @@ body.menu-open .asistent {
     display: none;
   }
 }
+
+/* ---------- Hero: kostur web stranice ---------- */
+
+.scena {
+  background: var(--more);
+}
+.scena__kostur {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: calc(var(--header-h) + 2vh);
+  opacity: 0.22;
+}
+.kostur {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.kostur [data-zica] {
+  fill: none;
+  stroke: var(--bronca-svijetla);
+  stroke-width: 1.4;
+  stroke-opacity: var(--zica, 1);
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0; /* bez JS-a: gotov crtež */
+}
+html.motion .kostur [data-zica] {
+  stroke-dashoffset: 1;
+}
+html.motion .kostur [data-puni] {
+  opacity: 0;
+}
+.kostur__podloga {
+  fill: rgba(237, 230, 218, 0.05);
+}
+.kostur__url {
+  font-size: 11px;
+  fill: var(--na-moru-2);
+}
+.kostur__logo {
+  font-size: 17px;
+  font-weight: 450;
+  fill: var(--kamen);
+}
+.kostur__gumb {
+  fill: var(--bronca);
+}
+.kostur__gumb-tekst {
+  font-size: 13px;
+  font-weight: 520;
+  fill: var(--more-noc);
+}
+.kostur__naslov {
+  font-size: 31px;
+  font-weight: 360;
+  letter-spacing: -0.02em;
+  fill: var(--kamen);
+}
+.kostur__naslov--kurziv {
+  font-style: italic;
+  font-weight: 320;
+}
+.kostur__slika {
+  fill: url(#kostur-slika);
+}
+.kostur__mala {
+  font-size: 9px;
+  font-weight: 520;
+  letter-spacing: 0.2em;
+  fill: var(--bronca-svijetla);
+}
+.kostur__info {
+  font-size: 14px;
+  fill: var(--kamen);
+}
+@media (min-width: 1100px) {
+  .scena__kostur {
+    left: auto;
+    right: 3.5vw;
+    width: min(46vw, 820px);
+    top: 50%;
+    transform: translateY(-46%);
+    opacity: 1;
+  }
+  /* tekst lijevo: bez vela preko kostura */
+  .scena__veo {
+    background: linear-gradient(to right, rgba(11, 42, 60, 0.85) 0%, rgba(11, 42, 60, 0.5) 38%, transparent 55%);
+  }
+}
+@media (max-width: 1099px) {
+  .scena__veo {
+    background: linear-gradient(to top, rgba(11, 42, 60, 0.85) 30%, rgba(11, 42, 60, 0.2) 100%);
+  }
+}
+.scena {
+  height: 230vh;
+  height: 230svh;
+}
+@media (max-width: 899px) {
+  .scena {
+    height: 190vh;
+    height: 190svh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scena {
+    height: 100vh;
+    height: 100svh;
+  }
+}
