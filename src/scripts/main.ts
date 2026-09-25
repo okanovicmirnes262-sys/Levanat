@@ -3,7 +3,7 @@ import { initDetails } from './details';
 import { initWind } from './wind';
 import { initCursor } from './cursor';
 import { initPlima } from './plima';
-import { initAsistent } from './asistent';
+import { initAsistent } from './asistent-gumb';
 
 declare global {
   interface Window {

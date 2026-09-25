@@ -96,29 +96,7 @@ export function mountChat(root: HTMLElement, opts: { status?: string } = {}) {
   return { focus: () => input.focus() };
 }
 
-// Plutajući asistent (sve stranice)
-export function initAsistent() {
-  const btn = document.querySelector<HTMLButtonElement>('[data-asistent-gumb]');
-  const panel = document.querySelector<HTMLElement>('[data-asistent]');
-  if (!btn || !panel) return;
-  let chat: ReturnType<typeof mountChat>;
-
-  const set = (open: boolean) => {
-    if (open && !chat) chat = mountChat(panel.querySelector<HTMLElement>('.chat')!);
-    panel.hidden = !open;
-    btn.setAttribute('aria-expanded', String(open));
-    document.documentElement.classList.toggle('asistent-open', open);
-    if (open) setTimeout(() => chat?.focus(), 60);
-  };
-  btn.addEventListener('click', () => set(panel.hidden));
-  panel.querySelector('[data-asistent-zatvori]')?.addEventListener('click', () => {
-    set(false);
-    btn.focus();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !panel.hidden) {
-      set(false);
-      btn.focus();
-    }
-  });
+// Plutajući asistent: poziva ga asistent-gumb.ts kad se prozor prvi put otvori
+export function mountFloating(panel: HTMLElement) {
+  return mountChat(panel.querySelector<HTMLElement>('.chat')!);
 }
