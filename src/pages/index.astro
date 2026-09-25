@@ -9,6 +9,8 @@ import { brand, services } from '../config';
 import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
 import { kipovi } from '../data/kamen';
+import hodnik from '../assets/scena/hodnik.webp';
+import nikola from '../assets/scena/nikola.webp';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
@@ -62,22 +64,37 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
   description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
   schema={[faqSchema(homeFaq), pageSchema]}
 >
-  <!-- Hero: tvrđava sv. Nikole u pozadini -->
-  <section class="hero more" aria-labelledby="naslov" data-svjetlo>
-    <!-- Tvrđava sv. Nikole: prigušena pozadina iza teksta -->
-    <figure class="hero__tvrdava" aria-hidden="true">
+  <!-- Hero: šetnja kroz hodnik tvrđave sv. Nikole (scroll scena) -->
+  <section class="scena" aria-labelledby="naslov" data-scena>
+    <div class="scena__kadar">
       <Picture
-        src={kipovi.tvrdava.src}
+        src={hodnik}
         alt=""
+        class="scena__sloj scena__hodnik"
         formats={['avif', 'webp']}
         fallbackFormat="webp"
-        widths={[800, 1200, 1620]}
-        sizes="(min-width: 1100px) 78vw, 140vw"
+        widths={[800, 1280, 1920]}
+        sizes="100vw"
         loading="eager"
         fetchpriority="high"
+        data-scena-hodnik
       />
-    </figure>
-    <div class="odsjaj" aria-hidden="true"></div>
+      <div class="scena__vinjeta" data-scena-vinjeta></div>
+      <Picture
+        src={nikola}
+        alt="Tvrđava sv. Nikole na ulazu u šibenski kanal, iz zraka"
+        class="scena__sloj scena__tvrdava"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[800, 1280, 1920]}
+        sizes="100vw"
+        loading="eager"
+        data-scena-tvrdava
+      />
+      <div class="scena__bljesak" data-scena-bljesak></div>
+      <div class="scena__veo" data-scena-veo></div>
+      <p class="scena__potpis mono" data-scena-potpis>Tvrđava sv. Nikole · Šibenik</p>
+      <div class="scena__tekst" data-scena-tekst>
     <div class="wrap grid hero__content">
       <p class="hero__eyebrow mono">
         <span data-greeting>Dobro došli.</span>
@@ -111,6 +128,8 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
           <dd>43°44′ N, 15°53′ E</dd>
         </div>
       </dl>
+    </div>
+      </div>
     </div>
     <Plima polozaj="dolje" boja="var(--kamen)" />
   </section>

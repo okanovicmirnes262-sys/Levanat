@@ -4,6 +4,7 @@ import { initWind } from './wind';
 import { initCursor } from './cursor';
 import { initPlima } from './plima';
 import { initAsistent } from './asistent-gumb';
+import { initScena } from './scena';
 
 declare global {
   interface Window {
@@ -25,6 +26,7 @@ initWind();
 initCursor();
 initPlima(still);
 initAsistent();
+document.querySelectorAll<HTMLElement>('[data-scena]').forEach(initScena);
 
 const whenIdle = (fn: () => void) => {
   const go = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200));
