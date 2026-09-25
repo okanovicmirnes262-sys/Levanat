@@ -1,29 +1,10 @@
-// Skriveni detalji: pozdrav pri ponovnom posjetu i poruka u konzoli.
+// Skriveni detalji: poruka u konzoli.
 
 function store(kind: 'local' | 'session') {
   try {
     return kind === 'local' ? window.localStorage : window.sessionStorage;
   } catch {
     return null;
-  }
-}
-
-function greeting() {
-  const el = document.querySelector<HTMLElement>('[data-greeting]');
-  const ls = store('local');
-  const ss = store('session');
-  if (!ls || !ss) return;
-  try {
-    let state = ss.getItem('levanat.sesija');
-    if (!state) {
-      const visits = Number(ls.getItem('levanat.posjeti') || '0');
-      state = visits > 0 ? 'povratak' : 'prvi';
-      ls.setItem('levanat.posjeti', String(visits + 1));
-      ss.setItem('levanat.sesija', state);
-    }
-    if (el && state === 'povratak') el.textContent = 'Opet ste tu. Levanat Vas je vratio.';
-  } catch {
-    /* privatni način rada: ostaje zadani pozdrav */
   }
 }
 
@@ -38,7 +19,6 @@ function consoleNote() {
 }
 
 export function initDetails() {
-  greeting();
   if (!store('session')?.getItem('levanat.konzola')) {
     consoleNote();
     try {
