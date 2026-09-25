@@ -44,22 +44,55 @@ Predložak je u `.env.example`. Za lokalni razvoj kopirajte ga u `.env`.
 7. U Resendu pod **Domains** potvrdite domenu (DNS zapisi SPF/DKIM) kako bi e-mailovi iz forme stizali s Vaše adrese.
 8. U [Google Search Console](https://search.google.com/search-console) dodajte domenu i predajte `https://VAŠA-DOMENA/sitemap-index.xml`.
 
+## Koncept „Kamen i more”
+
+Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levanat je prisutan kao detalj: valovi i linije vjetra uvijek putuju zdesna nalijevo.
+
+| Efekt | Gdje | Datoteka |
+|---|---|---|
+| Svjetlo po reljefu (WebGL, normal mape): kursor osvjetljava kamene glave, uvodni snop svjetla, „izlazak sunca” na scroll | hero početne i zaglavlja podstranica | `src/scripts/relief.ts` |
+| More s odrazom katedrale, valovi koje gura levanat, odsjaji sunca | završni poziv | `src/scripts/sea.ts` |
+| Friz glava: prikovana vodoravna šetnja (desktop), swipe (mobitel), mreža (smanjeno kretanje) | početna | `src/scripts/motion.ts` |
+| Plima: valovite granice između kamena i mora | sve stranice | `src/components/Plima.astro`, `src/scripts/plima.ts` |
+| Odsjaji vode (caustics) na kamenu i moru | pozadine | `public/odsjaj.webp` + CSS |
+| Klesanje naslova, izranjanje teksta, linija plime u procesu, paralaksa | sve stranice | `src/scripts/motion.ts` |
+| Brončani kursor, magnetni gumbi, kamen koji se odiže na hover | desktop | `src/scripts/cursor.ts`, CSS |
+| Prijelazi između stranica | sve | CSS View Transitions |
+
+**Performanse i pristupačnost:**
+- WebGL se učitava tek kad je preglednik slobodan i kad je sekcija blizu ekrana.
+- Na uređajima bez grafičke kartice (softversko renderiranje), sa Save-Data ili slabim hardverom crta se jedna sličica ili CSS verzija.
+- Ako sličice trajno kasne, efekt se sam prebaci u mirni način.
+- `prefers-reduced-motion` daje mirnu verziju: statično bočno svjetlo, friz kao mreža, bez uvoda.
+
+## Fotografije
+
+Izvorne fotografije su u `alati/izvori/`. Obrađene su skriptama u `alati/`:
+
+1. `esrgan.py`: Real-ESRGAN 4× povećanje (model `RealESRGAN_x4plus.pth` s GitHuba projekta xinntao/Real-ESRGAN, PyTorch).
+2. Uklanjanje pozadine pomoću `rembg` (model isnet-general-use), zatim `obrada-slika.py`: izrez glava, meke maske koje tonu u sjenu, jedinstveno toniranje u boji kamena, zrno i karte reljefa (normal map) za WebGL.
+
+Rezultat je u `src/assets/kamen/`. Astro iz toga pri izgradnji generira AVIF i WebP u više veličina.
+
 ## Struktura
 
 ```
-public/            fontovi (lokalno, podskupljeni), favicon, OG slika, tekstura kamena
+alati/             obrada fotografija (nije dio stranice)
+public/            font, favicon, OG slika, teksture (kamen, odsjaji vode)
 site.config.mjs    [DOMENA]
+src/assets/kamen/  obrađene glave, Sv. Mihovil, katedrala + karte reljefa
 src/config.ts      podaci o brendu, navigacija, usluge
-src/data/          FAQ, radovi, opcije forme
-src/layouts/       Base.astro — <head>, SEO, Open Graph, JSON-LD (ProfessionalService, Person, WebSite)
-src/components/    Header, Footer, Wind (canvas), Faq, Cta, PageHero, WorkItem
+src/data/          FAQ, radovi, slike (kamen.ts), opcije forme
+src/layouts/       Base.astro — <head>, SEO, Open Graph, JSON-LD
+src/components/    Header, Footer, Reljef, Plima, Cta (katedrala nad morem), Faq, PageHero, WorkItem, Wind
 src/pages/         stranice + api/kontakt.ts (serverless, Resend) + robots.txt.ts
-src/scripts/       wind.ts, motion.ts (GSAP + Lenis), header.ts, details.ts, sun.ts, form.ts
-src/styles/        global.css — tokeni (boje, tipografija), raspored, komponente
+src/scripts/       relief.ts, sea.ts, gpu.ts, motion.ts, plima.ts, cursor.ts, wind.ts, header.ts, details.ts, sun.ts, form.ts
+src/styles/        global.css — tokeni, tipografija, raspored, komponente
 ```
 
-## Fontovi
+## Font
 
-- **Fraunces** (naslovi), **Schibsted Grotesk** (tekst), **Fragment Mono** (oznake). Sva tri su pod licencom SIL Open Font License.
-- Podskup: latinica + latinica proširena A, s provjerenim znakovima č ć đ š ž Č Ć Đ Š Ž te „ “ – … € ′.
-- Ako kasnije želite **Zodiak** (Fontshare) umjesto Fraunces: preuzmite ga s fontshare.com, stavite `woff2` datoteke u `public/fonts/`, promijenite `src` u prva dva `@font-face` bloka u `src/styles/global.css` i ime obitelji u `--f-display`. Na kraju uklonite blok „Optička veličina” na dnu datoteke.
+Cijela stranica koristi jednu obitelj: **Fraunces** (SIL Open Font License), s varijabilnim osima za težinu i optičku veličinu (9–72).
+- **Tekst:** optička veličina 9–18.
+- **Naslovi:** optička veličina do 72. Iznad toga slovo „e” postaje krhko, pa je 72 gornja granica.
+- **Podskup:** latin + latin-ext, s provjerenim znakovima č ć đ š ž Č Ć Đ Š Ž te „ “ – … € ′.

@@ -13,7 +13,7 @@ const { items, title = 'Česta pitanja', intro, label = 'Pitanja' } = Astro.prop
 <section class="section" aria-labelledby="faq-naslov">
   <div class="wrap grid faq">
     <div class="faq__head">
-      <p class="mono label">{label}</p>
+      <p class="label">{label}</p>
       <h2 id="faq-naslov" data-reveal="line">{title}</h2>
       {intro && <p class="muted" data-reveal="fade" set:html={intro} />}
     </div>

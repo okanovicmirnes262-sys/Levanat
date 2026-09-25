@@ -1,14 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import Wind from '../components/Wind.astro';
+import Reljef from '../components/Reljef.astro';
+import { glave } from '../data/kamen';
 ---
 
 <Base title="Stranica nije pronađena | Levanat" description="Tražena stranica ne postoji." noindex>
-  <section class="hero" style="min-height: 88svh;">
-    <Wind />
-    <div class="wrap grid hero__grid">
+  <section class="hero more" style="padding-bottom: clamp(3rem, 8vw, 6rem);" data-svjetlo>
+    <Reljef glave={[glave[1]]} prioritet />
+    <div class="odsjaj" aria-hidden="true"></div>
+    <div class="wrap grid hero__content">
       <p class="hero__eyebrow mono"><span>Pogreška 404</span></p>
-      <h1 class="hero__title">Ovu stranicu <em>odnio je vjetar.</em></h1>
+      <h1 class="hero__title">Ovu stranicu <em>odnijelo je more.</em></h1>
       <div class="hero__foot">
         <p class="lead">Adresa ne postoji ili je premještena. Krenite ispočetka ili mi se javite izravno.</p>
         <div class="hero__actions">

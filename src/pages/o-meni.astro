@@ -21,7 +21,7 @@ const principles = [
   description="Mirnes Okanović, web dizajner iz Šibenika. Izrađujem web stranice za male poduzetnike i obrte, s posvećenošću detaljima koji čine razliku."
   schema={[breadcrumbSchema(crumbs)]}
 >
-  <PageHero crumbs={crumbs} label="O meni">
+  <PageHero glava={0} crumbs={crumbs} label="O meni">
     <h1>Mirnes Okanović, <em>web dizajner</em> iz Šibenika</h1>
   </PageHero>
 
@@ -32,7 +32,7 @@ const principles = [
         <div class="portrait__placeholder mono" aria-hidden="true">[FOTO_MIRNES]</div>
       </figure>
       <div class="about__body">
-        <p class="mono label">Kako je počelo</p>
+        <p class="label">Kako je počelo</p>
         <p class="lead" data-reveal="fade">
           Sve je počelo kada me djevojka zamolila da joj izradim web stranicu. Tijekom tog projekta shvatio sam da imam
           oko za dizajn i da me taj posao istinski ispunjava.
@@ -53,7 +53,7 @@ const principles = [
   <section class="section" style="padding-top: 0;">
     <div class="wrap grid block" style="border-top: 1px solid var(--linija);">
       <div class="block__head">
-        <p class="mono label">Kako radim</p>
+        <p class="label">Kako radim</p>
         <h2 data-reveal="line">Tri stvari do kojih mi je stalo</h2>
       </div>
       <div class="block__body">
@@ -61,7 +61,7 @@ const principles = [
           {
             principles.map(([t, d], i) => (
               <li data-reveal="fade">
-                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="broj">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{t}</strong>
                   <span>{d}</span>

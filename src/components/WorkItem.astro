@@ -15,22 +15,18 @@ const n = String(index + 1).padStart(2, '0');
 
 <article class="grid work">
   <figure class="work__media">
-    {
-      rad.slika ? (
-        <img
-          src={rad.slika}
-          alt={`Snimka zaslona: ${rad.naziv}`}
-          width="1600"
-          height="1000"
-          loading="lazy"
-          decoding="async"
-        />
-      ) : (
-        <div class="work__placeholder mono" aria-hidden="true">
-          Snimka zaslona
-        </div>
-      )
-    }
+    <div class="work__okvir">
+      {
+        rad.slika ? (
+          <img src={rad.slika} alt={`Snimka zaslona: ${rad.naziv}`} width="1600" height="1000" loading="lazy" decoding="async" />
+        ) : (
+          <div class="work__placeholder mono" aria-hidden="true">
+            <div class="odsjaj" style="--odsjaj:.12; mix-blend-mode: screen" />
+            Snimka zaslona
+          </div>
+        )
+      }
+    </div>
     {rad.uIzradi && <span class="work__badge mono">U izradi</span>}
   </figure>
   <div class="work__body">

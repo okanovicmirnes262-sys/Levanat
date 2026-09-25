@@ -33,7 +33,7 @@ const work = [
   description="SEO optimizacija u Šibeniku za obrte i male firme: lokalni SEO, Google Business profil i tehnička osnova, kako bi Vas pronašli na Googleu i Google kartama."
   schema={[breadcrumbSchema(crumbs), faqSchema(seoFaq)]}
 >
-  <PageHero crumbs={crumbs} label="Usluga 02">
+  <PageHero glava={0} crumbs={crumbs} label="Usluga 02">
     <h1>SEO optimizacija u Šibeniku: <em>neka Vas pronađu</em> oni koji Vas već traže</h1>
     <p class="lead">
       Lokalni SEO za obrte i male firme. Cilj je jednostavan: kad netko u Šibeniku ili okolici upiše ono čime se
@@ -44,7 +44,7 @@ const work = [
   <div class="wrap">
     <section class="grid block" aria-labelledby="sto-je">
       <div class="block__head">
-        <p class="mono label">Lokalni SEO</p>
+        <p class="label">Lokalni SEO</p>
         <h2 id="sto-je" data-reveal="line">Što je lokalni SEO i zašto je važan malim poslovima?</h2>
       </div>
       <div class="block__body">
@@ -62,7 +62,7 @@ const work = [
 
     <section class="grid block" aria-labelledby="sto-radim">
       <div class="block__head">
-        <p class="mono label">Što radim</p>
+        <p class="label">Što radim</p>
         <h2 id="sto-radim" data-reveal="line">SEO optimizacija, korak po korak</h2>
       </div>
       <div class="block__body">
@@ -70,7 +70,7 @@ const work = [
           {
             work.map(([t, d], i) => (
               <li data-reveal="fade">
-                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="broj">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{t}</strong>
                   <span>{d}</span>
@@ -84,7 +84,7 @@ const work = [
 
     <section class="grid block" aria-labelledby="iskreno">
       <div class="block__head">
-        <p class="mono label">Iskreno</p>
+        <p class="label">Iskreno</p>
         <h2 id="iskreno" data-reveal="line">SEO nije gumb koji se jednom pritisne.</h2>
       </div>
       <div class="block__body">

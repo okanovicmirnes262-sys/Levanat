@@ -28,7 +28,7 @@ const how = [
   description="AI chatbot za web stranicu koji posjetiteljima odgovara na osnovna pitanja o Vašem poslovanju. Baza znanja iz Vaših materijala ili postojeće stranice."
   schema={[breadcrumbSchema(crumbs), faqSchema(chatbotFaq)]}
 >
-  <PageHero crumbs={crumbs} label="Usluga 03">
+  <PageHero glava={4} crumbs={crumbs} label="Usluga 03">
     <h1>AI chatbot za web stranicu: <em>odgovara Vašim kupcima</em> i kad Vi ne stignete</h1>
     <p class="lead">
       Asistent na Vašoj stranici koji posjetiteljima odgovara na osnovna pitanja o Vašem poslovanju: radno vrijeme,
@@ -39,7 +39,7 @@ const how = [
   <div class="wrap">
     <section class="grid block" aria-labelledby="kako-radi">
       <div class="block__head">
-        <p class="mono label">Kako radi</p>
+        <p class="label">Kako radi</p>
         <h2 id="kako-radi" data-reveal="line">Od Vaših materijala do chatbota na stranici</h2>
       </div>
       <div class="block__body">
@@ -47,7 +47,7 @@ const how = [
           {
             how.map(([t, d], i) => (
               <li data-reveal="fade">
-                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="broj">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{t}</strong>
                   <span>{d}</span>
@@ -61,7 +61,7 @@ const how = [
 
     <section class="grid block" aria-labelledby="granice">
       <div class="block__head">
-        <p class="mono label">Granice</p>
+        <p class="label">Granice</p>
         <h2 id="granice" data-reveal="line">Što chatbot zna, a što ne</h2>
       </div>
       <div class="block__body">
@@ -78,7 +78,7 @@ const how = [
 
     <section class="grid block" aria-labelledby="za-koga">
       <div class="block__head">
-        <p class="mono label">Za koga</p>
+        <p class="label">Za koga</p>
         <h2 id="za-koga" data-reveal="line">Kome AI chatbot ima smisla?</h2>
       </div>
       <div class="block__body">

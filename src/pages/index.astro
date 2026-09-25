@@ -1,12 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import Wind from '../components/Wind.astro';
+import { Picture } from 'astro:assets';
+import Reljef from '../components/Reljef.astro';
+import Plima from '../components/Plima.astro';
 import Faq from '../components/Faq.astro';
 import Cta from '../components/Cta.astro';
 import WorkItem from '../components/WorkItem.astro';
 import { brand, services } from '../config';
 import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
+import { glave, kipovi } from '../data/kamen';
 import { faqSchema, splitWords } from '../lib';
 
 const t1 = splitWords('Kad Vas netko potraži na Googleu, neka ga dočeka');
@@ -32,6 +35,18 @@ const steps = [
     text: 'Po Vašem izboru: cijeli projekt predajem u Vaše ruke ili se i dalje brinem o stranici uz mjesečno održavanje, s uključenim izmjenama.',
   },
 ];
+
+// Friz: glave i kratke misli naizmjence, kao šetnja oko apside
+const misli = [
+  ['Svaka je glava drukčija.', 'Predaja kaže da je Juraj Dalmatinac u kamen uklesao lica svojih suvremenika. Ni Vaša stranica ne bi trebala biti kopija tuđe.'],
+  ['Detalji nisu sitnica.', 'Razmak, riječ, trenutak u kojem se nešto pomakne. Posjetitelj to ne mora primijetiti, ali osjeti.'],
+  ['Jasan jezik.', 'Bez stručnog žargona. Uvijek znate što radim, zašto i koliko to košta.'],
+  ['Stranica ostaje Vaša.', 'Domena i hosting glase na Vas. Nitko Vas ne drži taocem vlastite stranice.'],
+];
+
+// Val za liniju plime u procesu
+const valH = Array.from({ length: 41 }, (_, i) => `${i * 25},${(10 + Math.sin(i * 0.9) * 5).toFixed(1)}`).join(' L');
+const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4).toFixed(1)},${i * 25}`).join(' L');
 ---
 
 <Base
@@ -39,10 +54,11 @@ const steps = [
   description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
   schema={[faqSchema(homeFaq)]}
 >
-  <!-- Hero -->
-  <section class="hero" aria-labelledby="naslov">
-    <Wind />
-    <div class="wrap grid hero__grid">
+  <!-- Hero: kamene glave izranjaju iz sjene, svjetlo prati kursor -->
+  <section class="hero more" aria-labelledby="naslov" data-svjetlo>
+    <Reljef glave={[glave[0], glave[1], glave[2]]} prioritet />
+    <div class="odsjaj" aria-hidden="true"></div>
+    <div class="wrap grid hero__content">
       <p class="hero__eyebrow mono">
         <span data-greeting>Dobro došli.</span>
         <span>Web dizajn · Šibenik</span>
@@ -88,14 +104,14 @@ const steps = [
         </div>
       </dl>
     </div>
-    <div class="hero__horizon" aria-hidden="true"></div>
+    <Plima polozaj="dolje" boja="var(--kamen)" />
   </section>
 
   <!-- Problem -->
-  <section class="section" aria-labelledby="problem-naslov">
+  <section class="section" aria-labelledby="problem-naslov" style="padding-top: calc(var(--section) + var(--tide-h) * 0.5);">
     <div class="wrap grid problem">
       <div class="problem__text">
-        <p class="mono label">01 · Problem</p>
+        <p class="label">01 · Problem</p>
         <h2 id="problem-naslov" data-reveal="line">Samo Facebook stranica? Onda ste za Google gotovo nevidljivi.</h2>
         <p data-reveal="fade">
           Kad netko upiše ono čime se bavite i ime grada, Google traži stranice koje jasno odgovaraju na to pitanje.
@@ -150,11 +166,49 @@ const steps = [
     </div>
   </section>
 
+  <!-- Friz glava: šetnja oko apside -->
+  <section class="friz more" aria-labelledby="friz-naslov" data-friz data-svjetlo>
+    <Plima polozaj="gore" />
+    <div class="odsjaj" aria-hidden="true"></div>
+    <div class="friz__pin">
+      <div class="wrap grid friz__head">
+        <p class="label">02 · Friz</p>
+        <h2 id="friz-naslov" data-reveal="line">Sedamdeset i jedno lice. <em>Nijedno isto.</em></h2>
+      </div>
+      <div class="friz__traka" tabindex="0" aria-label="Friz kamenih glava s katedrale sv. Jakova; pomičite vodoravno">
+        {
+          glave.map((g, i) => (
+            <Fragment>
+              <figure class="friz__glava">
+                <Picture src={g.src} alt={g.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[320, 520, 760]} sizes="(min-width: 900px) 400px, 62vw" loading="lazy" decoding="async" />
+                <figcaption class="mono">
+                  <span>{String(i + 1).padStart(2, '0')} · {g.opis}</span>
+                  <span>Jedna od 71</span>
+                </figcaption>
+              </figure>
+              {misli[i] && (
+                <div class="friz__misao">
+                  <p>{misli[i][0]}</p>
+                  <p>{misli[i][1]}</p>
+                </div>
+              )}
+            </Fragment>
+          ))
+        }
+      </div>
+      <div class="wrap">
+        <div class="friz__napredak" aria-hidden="true"><span></span></div>
+      </div>
+    </div>
+    <Plima polozaj="dolje" boja="var(--kamen)" />
+  </section>
+
   <!-- Usluge -->
-  <section class="section" aria-labelledby="usluge-naslov" style="padding-top: 0;">
-    <div class="wrap">
+  <section class="section" aria-labelledby="usluge-naslov" style="padding-top: calc(var(--section) + var(--tide-h) * 0.5);">
+    <div class="odsjaj" aria-hidden="true" style="--odsjaj: .08"></div>
+    <div class="wrap" style="position: relative">
       <div class="grid section-head">
-        <p class="mono label">02 · Usluge</p>
+        <p class="label">03 · Usluge</p>
         <h2 id="usluge-naslov" data-reveal="line">
           Sve što Vam treba kako bi Vas pronašli, <em>i zadržali se</em> na Vašoj stranici.
         </h2>
@@ -165,13 +219,11 @@ const steps = [
           services.map((s) => (
             <li class="service">
               <a href={s.href}>
-                <span class="service__n mono">{s.n}</span>
+                <span class="service__n broj">{s.n}</span>
                 <h3 class="service__title">{s.title}</h3>
                 <p class="service__short">{s.short}</p>
                 <span class="service__meta mono">{s.meta}</span>
-                <span class="service__arrow" aria-hidden="true">
-                  →
-                </span>
+                <span class="service__arrow" aria-hidden="true">→</span>
               </a>
             </li>
           ))
@@ -179,7 +231,7 @@ const steps = [
       </ol>
 
       <div class="grid included">
-        <p class="mono label">Uključeno u svaku izradu</p>
+        <p class="label">Uključeno u svaku izradu</p>
         <p data-reveal="fade">
           Pomoć oko kupnje domene i postavljanja hostinga te izrada Google Business profila. Ne morate se sami snalaziti
           s tehničkim stvarima.
@@ -188,25 +240,28 @@ const steps = [
     </div>
   </section>
 
-  <!-- Proces -->
-  <section class="section" aria-labelledby="proces-naslov" style="background: var(--kamen-svijetli);">
+  <!-- Proces: linija plime -->
+  <section class="section" aria-labelledby="proces-naslov" style="background-color: var(--kamen-svijetli); padding-top: calc(var(--section) * 0.8);">
     <div class="wrap">
       <div class="grid section-head">
-        <p class="mono label">03 · Proces</p>
+        <p class="label">04 · Proces</p>
         <h2 id="proces-naslov" data-reveal="line">Od prvog razgovora do stranice koja radi za Vas.</h2>
       </div>
 
       <ol class="process" data-process>
+        <svg class="process__val process__val--h" viewBox="0 0 1000 20" preserveAspectRatio="none" aria-hidden="true">
+          <path class="trag" d={`M${valH}`}></path>
+          <path class="plima-crta" d={`M${valH}`} pathLength="1"></path>
+        </svg>
+        <svg class="process__val process__val--v" viewBox="0 0 12 1000" preserveAspectRatio="none" aria-hidden="true">
+          <path class="trag" d={`M${valV}`}></path>
+          <path class="plima-crta" d={`M${valV}`} pathLength="1"></path>
+        </svg>
         {
           steps.map((s, i) => (
             <li class="process__step">
-              <span class="process__num" aria-hidden="true">
-                {i + 1}
-              </span>
-              <h3>
-                <span class="sr-only">Korak {i + 1}: </span>
-                {s.title}
-              </h3>
+              <span class="process__num broj" aria-hidden="true">{i + 1}</span>
+              <h3><span class="sr-only">Korak {i + 1}: </span>{s.title}</h3>
               <p>{s.text}</p>
             </li>
           ))
@@ -215,11 +270,36 @@ const steps = [
     </div>
   </section>
 
+  <!-- Sv. Mihovil nad riječju „Detalji” -->
+  <section class="mihovil" aria-labelledby="o-meni-naslov">
+    <div class="odsjaj" aria-hidden="true" style="--odsjaj: .1"></div>
+    <div class="mihovil__rijec" data-rijec="Detalji" aria-hidden="true"></div>
+    <figure class="mihovil__kip">
+      <Picture src={kipovi.mihovil.src} alt={kipovi.mihovil.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[420, 640, 900]} sizes="(min-width: 900px) 34vw, 62vw" loading="lazy" decoding="async" />
+    </figure>
+    <div class="wrap grid mihovil__tekst">
+      <blockquote class="mihovil__citat" data-reveal="fade">
+        <p>„Tek sam sad vidio ovo, pa ti si i o tome razmišljao.”</p>
+        <footer class="mono muted">Poruka tjedan dana nakon predaje</footer>
+      </blockquote>
+      <div class="mihovil__o">
+        <p class="label">05 · O meni</p>
+        <h2 id="o-meni-naslov" data-reveal="line" style="font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem)">Sitni detalji čine razliku.</h2>
+        <p data-reveal="fade">
+          Ja sam Mirnes, web dizajner iz Šibenika. Ne žalim sate provedene u promišljanju svakog elementa, jer upravo
+          ono što većina ne primijeti na prvi pogled čini stranicu dobrom. Najdraža mi je poruka koja stigne tjedan dana
+          nakon predaje, ona lijevo.
+        </p>
+        <p data-reveal="fade"><a class="link" href="/o-meni">Više o meni →</a></p>
+      </div>
+    </div>
+  </section>
+
   <!-- Radovi -->
-  <section class="section" aria-labelledby="radovi-naslov">
+  <section class="section" aria-labelledby="radovi-naslov" style="padding-top: 0;">
     <div class="wrap">
       <div class="grid section-head">
-        <p class="mono label">04 · Radovi</p>
+        <p class="label">06 · Radovi</p>
         <h2 id="radovi-naslov" data-reveal="line">Odabrani radovi</h2>
         <p class="section-head__text muted" data-reveal="fade">
           Projekti na kojima trenutno radim. Dok ne pređu na svoje domene, označeni su kao „U izradi”.
@@ -234,32 +314,9 @@ const steps = [
     </div>
   </section>
 
-  <!-- O meni -->
-  <section class="section" aria-labelledby="o-meni-naslov" style="padding-top: 0;">
-    <div class="wrap grid about">
-      <figure class="portrait">
-        <!-- [FOTO_MIRNES] zamijenite s: <img src="/mirnes.webp" alt="Mirnes Okanović, web dizajner iz Šibenika" width="1200" height="1500" loading="lazy" /> -->
-        <div class="portrait__placeholder mono" aria-hidden="true">[FOTO_MIRNES]</div>
-      </figure>
-      <div class="about__body">
-        <p class="mono label">05 · O meni</p>
-        <h2 id="o-meni-naslov" data-reveal="line">Sitni detalji čine razliku.</h2>
-        <p data-reveal="fade">
-          Ja sam Mirnes, web dizajner iz Šibenika. Ne žalim sate provedene u promišljanju svakog elementa, jer upravo
-          ono što većina ne primijeti na prvi pogled čini stranicu dobrom. Najdraža mi je poruka koja stigne tjedan dana
-          nakon predaje:
-        </p>
-        <blockquote class="quote" data-reveal="fade">
-          <p>„Tek sam sad vidio ovo, pa ti si i o tome razmišljao.”</p>
-        </blockquote>
-        <p data-reveal="fade"><a class="link" href="/o-meni">Više o meni →</a></p>
-      </div>
-    </div>
-  </section>
-
   <Faq
     items={homeFaq}
-    label="06 · Pitanja"
+    label="07 · Pitanja"
     intro='Ne vidite svoje pitanje? <a class="link" href="/kontakt">Pošaljite mi ga</a>, odgovaram osobno.'
   />
 

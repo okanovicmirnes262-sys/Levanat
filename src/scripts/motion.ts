@@ -1,4 +1,5 @@
 // Scroll animacije (GSAP + ScrollTrigger) i glatki scroll (Lenis, samo za miš/touchpad).
+// Ritam: kamen je težak (sporiji ulazak, kratko zadržavanje), voda je lagana (meko ubrzanje).
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -6,71 +7,84 @@ import { lenisRef } from './lenis-ref';
 
 gsap.registerPlugin(ScrollTrigger);
 
-let lenis: Lenis | null = null;
-
 export function initMotion() {
-  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const mm = gsap.matchMedia();
 
   if (fine) {
-    lenis = new Lenis({ lerp: 0.11, anchors: { offset: -88 } });
+    const lenis = new Lenis({ lerp: 0.1, anchors: { offset: -88 } });
     lenisRef.current = lenis;
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis?.raf(time * 1000));
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
   }
 
-  // Naslovi: otkrivaju se zdesna nalijevo, kao da ih nanosi levanat.
+  // Naslovi se „isklesavaju” slijeva nadesno, s težinom kamena
   gsap.utils.toArray<HTMLElement>('[data-reveal="line"]').forEach((el) => {
     gsap.fromTo(
       el,
-      { clipPath: 'inset(-10% 0% -10% 100%)', x: 24 },
+      { clipPath: 'inset(-10% 100% -20% 0%)', y: 18 },
       {
-        clipPath: 'inset(-10% 0% -10% 0%)',
-        x: 0,
-        duration: 1.35,
-        ease: 'expo.out',
+        clipPath: 'inset(-10% -5% -20% 0%)',
+        y: 0,
+        duration: 1.4,
+        ease: 'power4.inOut',
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
       },
     );
   });
 
-  // Tekst: tiho se pojavi uz blagi pomak ulijevo, u skupinama.
+  // Tekst izranja kao iz vode: meko, bez naglog skoka
   const fades = gsap.utils.toArray<HTMLElement>('[data-reveal="fade"]');
-  gsap.set(fades, { x: 14 });
+  gsap.set(fades, { y: 22 });
   ScrollTrigger.batch(fades, {
     start: 'top 92%',
     once: true,
     onEnter: (batch) =>
-      gsap.to(batch, { opacity: 1, x: 0, duration: 1, ease: 'power3.out', stagger: 0.09, overwrite: true }),
+      gsap.to(batch, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: 0.08, overwrite: true }),
   });
 
-  // Tanke crte: iscrtavaju se od desnog ruba.
-  gsap.utils.toArray<HTMLElement>('[data-reveal="rule"]').forEach((el) => {
-    gsap.to(el, {
-      scaleX: 1,
-      duration: 1.6,
-      ease: 'expo.out',
-      scrollTrigger: { trigger: el, start: 'top 95%', once: true },
+  // Hero: glave se na scroll dižu različitom brzinom (paralaksa), sadržaj lagano tone
+  const hero = document.querySelector<HTMLElement>('.hero, .page-hero');
+  if (hero) {
+    const figs = hero.querySelectorAll<HTMLElement>('.reljef__slika');
+    figs.forEach((f, i) => {
+      gsap.to(f, {
+        yPercent: -(10 + i * 9),
+        ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+      });
     });
-  });
+    const content = hero.querySelector('.hero__content, .page-hero__grid');
+    if (content)
+      gsap.to(content, {
+        y: 80,
+        opacity: 0.2,
+        ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+      });
+  }
 
-  // Rezultat pretraživanja: Facebook → vlastita stranica, vezano uz scroll.
+  // Rezultat pretraživanja: Facebook → vlastita stranica (tirkizna crta vode prelazi)
   const serp = document.querySelector<HTMLElement>('[data-serp]');
   if (serp) {
     const before = serp.querySelector('.serp__layer--before');
     const after = serp.querySelector('.serp__layer--after');
     const edge = serp.querySelector<HTMLElement>('.serp__edge');
     const swap = serp.querySelector<HTMLElement>('.serp__swap');
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: serp, start: 'top 62%', end: 'bottom 38%', scrub: 0.8 },
-    });
-    tl.fromTo(after, { clipPath: 'inset(-4% 0% -4% 100%)' }, { clipPath: 'inset(-4% 0% -4% 0%)', ease: 'none' }, 0)
-      .fromTo(before, { clipPath: 'inset(-4% 0% -4% 0%)' }, { clipPath: 'inset(-4% 100% -4% 0%)', ease: 'none' }, 0);
-    if (edge && swap) {
+    const frame = serp.querySelector<HTMLElement>('.serp__frame');
+    const tl = gsap.timeline({ scrollTrigger: { trigger: serp, start: 'top 62%', end: 'bottom 38%', scrub: 0.8 } });
+    tl.fromTo(after, { clipPath: 'inset(-4% 0% -4% 100%)' }, { clipPath: 'inset(-4% 0% -4% 0%)', ease: 'none' }, 0).fromTo(
+      before,
+      { clipPath: 'inset(-4% 0% -4% 0%)' },
+      { clipPath: 'inset(-4% 100% -4% 0%)', ease: 'none' },
+      0,
+    );
+    if (edge && swap && frame) {
       const place = () => {
-        const fr = serp.querySelector<HTMLElement>('.serp__frame')!.getBoundingClientRect();
+        const fr = frame.getBoundingClientRect();
         const sr = swap.getBoundingClientRect();
-        gsap.set(edge, { top: sr.top - fr.top - 6, height: sr.height + 12, bottom: 'auto' });
+        gsap.set(edge, { top: sr.top - fr.top - 6, height: sr.height + 12 });
         return { from: sr.right - fr.left, to: sr.left - fr.left };
       };
       let pos = place();
@@ -81,37 +95,89 @@ export function initMotion() {
     }
   }
 
-  // Proces: linija napreduje sa scrollom i pali točke koraka.
+  // Friz glava: na većim ekranima sekcija se prikuje i traka klizi vodoravno
+  const friz = document.querySelector<HTMLElement>('[data-friz]');
+  if (friz) {
+    const traka = friz.querySelector<HTMLElement>('.friz__traka')!;
+    const glave = [...friz.querySelectorAll<HTMLElement>('.friz__glava')];
+    const bar = friz.querySelector<HTMLElement>('.friz__napredak');
+    const light = () => {
+      const c = innerWidth / 2;
+      glave.forEach((g) => {
+        const r = g.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - c) / (innerWidth * 0.55);
+        g.style.setProperty('--lit', Math.max(0, 1 - d * d).toFixed(3));
+      });
+    };
+    mm.add('(min-width: 900px)', () => {
+      friz.classList.add('friz--pinned');
+      const dist = () => Math.max(traka.scrollWidth - innerWidth, 0);
+      const tw = gsap.to(traka, {
+        x: () => -dist(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: friz,
+          start: 'top top',
+          end: () => `+=${dist()}`,
+          pin: true,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onUpdate: (s) => {
+            bar?.style.setProperty('--p', s.progress.toFixed(4));
+            light();
+          },
+        },
+      });
+      light();
+      return () => {
+        friz.classList.remove('friz--pinned');
+        tw.kill();
+      };
+    });
+    mm.add('(max-width: 899px)', () => {
+      const onS = () => {
+        light();
+        bar?.style.setProperty('--p', (traka.scrollLeft / Math.max(traka.scrollWidth - traka.clientWidth, 1)).toFixed(4));
+      };
+      traka.addEventListener('scroll', onS, { passive: true });
+      onS();
+      return () => traka.removeEventListener('scroll', onS);
+    });
+  }
+
+  // Proces: val plime se puni sa scrollom i pali korake
   const proc = document.querySelector<HTMLElement>('[data-process]');
   if (proc) {
     const steps = proc.querySelectorAll<HTMLElement>('.process__step');
     const n = steps.length;
     const set = (p: number) => {
       proc.style.setProperty('--p', p.toFixed(4));
-      steps.forEach((s, i) => s.classList.toggle('is-lit', p >= i / n + 0.01 || p > 0.995));
+      steps.forEach((s, i) => s.classList.toggle('is-lit', p >= i / n + 0.02 || p > 0.995));
     };
     set(0);
-    ScrollTrigger.create({
-      trigger: proc,
-      start: 'top 75%',
-      end: 'bottom 55%',
-      scrub: true,
-      onUpdate: (self) => set(self.progress),
-    });
+    ScrollTrigger.create({ trigger: proc, start: 'top 75%', end: 'bottom 55%', scrub: true, onUpdate: (s) => set(s.progress) });
   }
 
-  // Radovi: vrlo blagi paralaks snimki zaslona, samo na većim ekranima.
+  // Sv. Mihovil izranja iznad riječi „Detalji”, sporije od teksta
+  const mih = document.querySelector<HTMLElement>('.mihovil');
+  if (mih) {
+    const kip = mih.querySelector('.mihovil__kip');
+    const rijec = mih.querySelector('.mihovil__rijec');
+    if (kip) gsap.fromTo(kip, { yPercent: 14 }, { yPercent: -6, ease: 'none', scrollTrigger: { trigger: mih, start: 'top bottom', end: 'bottom top', scrub: true } });
+    if (rijec) gsap.fromTo(rijec, { xPercent: 6 }, { xPercent: -6, ease: 'none', scrollTrigger: { trigger: mih, start: 'top bottom', end: 'bottom top', scrub: true } });
+  }
+
+  // Katedrala: lagano izranja iz mora
+  const kat = document.querySelector<HTMLElement>('.obala__katedrala');
+  if (kat) gsap.fromTo(kat, { y: 60 }, { y: 0, ease: 'none', scrollTrigger: { trigger: kat, start: 'top bottom', end: 'bottom 70%', scrub: true } });
+
+  // Radovi: vrlo blagi paralaks snimki zaslona
   if (fine) {
-    gsap.utils.toArray<HTMLElement>('.work__media img').forEach((img) => {
-      gsap.fromTo(
-        img,
-        { yPercent: -8 },
-        { yPercent: 0, ease: 'none', scrollTrigger: { trigger: img.parentElement, scrub: true } },
-      );
+    gsap.utils.toArray<HTMLElement>('.work__okvir img').forEach((img) => {
+      gsap.fromTo(img, { yPercent: -8 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: img.parentElement, scrub: true } });
     });
   }
 
-  // Fontovi i slike mogu promijeniti visine; osvježi okidače kad je sve učitano.
   document.fonts?.ready.then(() => ScrollTrigger.refresh());
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }

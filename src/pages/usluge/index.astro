@@ -17,7 +17,7 @@ const main = services.filter((s) => !s.href.includes('#'));
   description="Web dizajn u Šibeniku: izrada web stranica, lokalna SEO optimizacija, AI chatbot za web stranicu i održavanje. Pomoć oko domene i hostinga uključena."
   schema={[breadcrumbSchema(crumbs)]}
 >
-  <PageHero crumbs={crumbs} label="Usluge">
+  <PageHero glava={3} crumbs={crumbs} label="Usluge">
     <h1>Usluge web dizajna, <em>od prve skice</em> do održavanja</h1>
     <p class="lead">
       Sve što malom poslu treba kako bi ga pronašli na internetu, na jednom mjestu. Bez posrednika: sa mnom razgovarate od
@@ -50,7 +50,7 @@ const main = services.filter((s) => !s.href.includes('#'));
   <section class="section" id="odrzavanje" aria-labelledby="odrzavanje-naslov">
     <div class="wrap grid upkeep">
       <div class="upkeep__head">
-        <p class="mono label">04 · Održavanje</p>
+        <p class="label">04 · Održavanje</p>
         <h2 id="odrzavanje-naslov" data-reveal="line">Nakon izrade birate Vi.</h2>
         <p class="muted" data-reveal="fade" style="margin-top: 1.25rem; max-width: 30em;">
           Održavanje nije obavezno. Neki klijenti žele da se netko brine o stranici, a drugi je radije preuzmu sami. Oba
@@ -59,7 +59,7 @@ const main = services.filter((s) => !s.href.includes('#'));
       </div>
       <div class="upkeep__options">
         <div class="upkeep__option" data-reveal="fade">
-          <span class="mono">a</span>
+          <span class="broj">a</span>
           <h3>Mjesečno održavanje</h3>
           <p>
             Za mjesečnu naknadu brinem se o stranici: ažuriranja, sigurnosne kopije i izmjene koje Vam zatrebaju.
@@ -67,7 +67,7 @@ const main = services.filter((s) => !s.href.includes('#'));
           </p>
         </div>
         <div class="upkeep__option" data-reveal="fade">
-          <span class="mono">b</span>
+          <span class="broj">b</span>
           <h3>Jednokratna predaja</h3>
           <p>
             Cijeli projekt, sa svim pristupima, predajem u Vaše ruke. Nemate mjesečnih obveza prema meni, a za kasnije
@@ -81,22 +81,22 @@ const main = services.filter((s) => !s.href.includes('#'));
   <section class="section" style="padding-top: 0;" aria-labelledby="ukljuceno-naslov">
     <div class="wrap grid upkeep">
       <div class="upkeep__head">
-        <p class="mono label">Uključeno</p>
+        <p class="label">Uključeno</p>
         <h2 id="ukljuceno-naslov" data-reveal="line">U svakoj izradi, bez doplate</h2>
       </div>
       <div class="upkeep__options">
         <div class="upkeep__option" data-reveal="fade">
-          <span class="mono">01</span>
+          <span class="broj">01</span>
           <h3>Domena</h3>
           <p>Pomoć oko odabira i kupnje domene na Vaše ime.</p>
         </div>
         <div class="upkeep__option" data-reveal="fade">
-          <span class="mono">02</span>
+          <span class="broj">02</span>
           <h3>Hosting</h3>
           <p>Postavljanje hostinga i povezivanje s domenom, kako bi stranica radila brzo i pouzdano.</p>
         </div>
         <div class="upkeep__option" data-reveal="fade">
-          <span class="mono">03</span>
+          <span class="broj">03</span>
           <h3>Google Business profil</h3>
           <p>Izrada profila, kako biste bili vidljivi u Google tražilici i na Google kartama.</p>
         </div>

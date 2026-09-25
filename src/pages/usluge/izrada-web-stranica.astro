@@ -31,7 +31,7 @@ const included = [
   description="Izrada web stranica u Šibeniku za obrte i male firme: dizajn po mjeri, prilagodba mobitelu i osnovni SEO. Cijena okvirno od 200 €. Besplatna ponuda."
   schema={[breadcrumbSchema(crumbs), faqSchema(webFaq)]}
 >
-  <PageHero crumbs={crumbs} label="Usluga 01">
+  <PageHero glava={1} crumbs={crumbs} label="Usluga 01">
     <h1>Izrada web stranica u Šibeniku, <em>za obrte i male firme</em></h1>
     <p class="lead">
       Vlastita stranica na Vašoj domeni: pregledna, brza, složena za mobitel i spremna za Google. Bez predložaka i bez
@@ -42,7 +42,7 @@ const included = [
   <div class="wrap">
     <section class="grid block" aria-labelledby="dobivate">
       <div class="block__head">
-        <p class="mono label">Što dobivate</p>
+        <p class="label">Što dobivate</p>
         <h2 id="dobivate" data-reveal="line">Stranica koja radi posao i kad Vi ne stignete.</h2>
       </div>
       <div class="block__body">
@@ -50,7 +50,7 @@ const included = [
           {
             included.map(([t, d], i) => (
               <li data-reveal="fade">
-                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="broj">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{t}</strong>
                   <span>{d}</span>
@@ -64,7 +64,7 @@ const included = [
 
     <section class="grid block" aria-labelledby="za-koga">
       <div class="block__head">
-        <p class="mono label">Za koga</p>
+        <p class="label">Za koga</p>
         <h2 id="za-koga" data-reveal="line">Izrada web stranica za obrte, male poduzetnike i firme.</h2>
       </div>
       <div class="block__body">
@@ -82,7 +82,7 @@ const included = [
 
     <section class="grid block" aria-labelledby="cijena">
       <div class="block__head">
-        <p class="mono label">Cijena</p>
+        <p class="label">Cijena</p>
         <h2 id="cijena" data-reveal="line">Koliko košta izrada web stranice?</h2>
       </div>
       <div class="block__body">
@@ -103,27 +103,27 @@ const included = [
 
     <section class="grid block" aria-labelledby="suradnja">
       <div class="block__head">
-        <p class="mono label">Suradnja</p>
+        <p class="label">Suradnja</p>
         <h2 id="suradnja" data-reveal="line">Kako izgleda suradnja</h2>
       </div>
       <div class="block__body">
         <ol class="list">
           <li data-reveal="fade">
-            <span class="mono">01</span>
+            <span class="broj">01</span>
             <div><strong>Besplatan razgovor i ponuda</strong><span>Popričamo o Vašem poslu i o tome što Vam treba.</span></div>
           </li>
           <li data-reveal="fade">
-            <span class="mono">02</span>
+            <span class="broj">02</span>
             <div><strong>Dizajn i izrada</strong><span>Uz međuverzije, kako biste na vrijeme vidjeli kamo stranica ide.</span></div>
           </li>
           <li data-reveal="fade">
-            <span class="mono">03</span>
+            <span class="broj">03</span>
             <div>
               <strong>Domena, hosting i Google Business profil</strong><span>Sve povežem i postavim, uz Vaše odobrenje.</span>
             </div>
           </li>
           <li data-reveal="fade">
-            <span class="mono">04</span>
+            <span class="broj">04</span>
             <div><strong>Predaja ili održavanje</strong><span>Po Vašem izboru.</span></div>
           </li>
         </ol>

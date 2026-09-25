@@ -1,6 +1,9 @@
 ---
+import { Picture } from 'astro:assets';
 import Wind from './Wind.astro';
+import Plima from './Plima.astro';
 import { brand } from '../config';
+import { kipovi } from '../data/kamen';
 
 interface Props {
   title?: string;
@@ -12,16 +15,44 @@ const {
 } = Astro.props;
 ---
 
-<section class="dark cta" aria-labelledby="cta-naslov">
-  <Wind tone="light" />
+<section class="more cta" aria-labelledby="cta-naslov">
+  <Plima polozaj="gore" />
   <div class="wrap grid cta__grid">
     <h2 id="cta-naslov" class="cta__title" data-reveal="line">{title}</h2>
     <div class="cta__body">
       <p data-reveal="fade">{text}</p>
-      <a class="btn btn--light" href="/kontakt" data-reveal="fade">
+      <a class="btn" href="/kontakt" data-reveal="fade">
         {brand.primaryCta}
         <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
+  </div>
+
+  <!-- Katedrala sv. Jakova nad morem; levanat mreška vodu zdesna nalijevo -->
+  <div class="obala" data-obala data-svjetlo>
+    <figure class="obala__katedrala">
+      <Picture
+        src={kipovi.katedrala.src}
+        alt={kipovi.katedrala.alt}
+        formats={['avif', 'webp']} fallbackFormat="webp"
+        widths={[600, 900, 1300]}
+        sizes="(min-width: 1000px) 900px, 86vw"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+    <div class="obala__more" aria-hidden="true"></div>
+    <Picture
+      src={kipovi.katedrala.src}
+      alt=""
+      class="obala__odraz"
+      formats={['webp']} fallbackFormat="webp"
+      widths={[600, 900]}
+      sizes="(min-width: 1000px) 900px, 86vw"
+      loading="lazy"
+      aria-hidden="true"
+    />
+    <canvas aria-hidden="true"></canvas>
+    <Wind tone="light" />
   </div>
 </section>

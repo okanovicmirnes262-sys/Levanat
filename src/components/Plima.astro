@@ -1,0 +1,27 @@
+---
+// Valovita granica između kamena i mora. JS je lagano njiše (zdesna nalijevo).
+interface Props {
+  polozaj?: 'gore' | 'dolje';
+  boja?: string;
+  crta?: boolean;
+}
+const { polozaj = 'gore', boja = 'var(--more)', crta = true } = Astro.props;
+
+// Početni oblik vala (isti izračun koristi i skripta)
+const W = 1440;
+const H = 100;
+const pts: string[] = [];
+for (let x = 0; x <= W; x += 24) {
+  const y = 52 + Math.sin(x * 0.0052 + 0.8) * 18 + Math.sin(x * 0.013 + 2.1) * 7;
+  pts.push(`${x},${y.toFixed(1)}`);
+}
+const top = `M0,${H} L${pts.join(' L')} L${W},${H} Z`;
+const line = `M${pts.join(' L')}`;
+---
+
+<div class={`plima plima--${polozaj}`} style={`--plima-boja:${boja}`} aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" data-plima>
+    <path d={top}></path>
+    {crta && <path d={line}></path>}
+  </svg>
+</div>
