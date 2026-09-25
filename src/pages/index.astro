@@ -13,10 +13,8 @@ import { glave, kipovi } from '../data/kamen';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
-const t1 = splitWords('Kad Vas netko potraži na Googleu, neka ga dočeka');
-const t2 = splitWords('Vaša stranica.', t1.next);
-const t3 = splitWords('Ne samo', t2.next);
-const t4 = splitWords('Facebook profil.', t3.next);
+const t1 = splitWords('Web stranica koja jasno pokazuje');
+const t2 = splitWords('tko ste i što nudite.', t1.next);
 
 const steps = [
   {
@@ -29,7 +27,7 @@ const steps = [
   },
   {
     title: 'Domena, hosting i Google Business profil',
-    text: 'Pomognem Vam kupiti domenu i postaviti hosting, povežem sve što treba i izradim Vaš Google Business profil, kako biste bili vidljivi i na Google kartama.',
+    text: 'Pomognem Vam kupiti domenu i postaviti hosting, povežem sve što treba i izradim Vaš Google Business profil, da se Vaš posao prikazuje i na Google kartama.',
   },
   {
     title: 'Predaja ili održavanje',
@@ -76,16 +74,16 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       </p>
 
       <h1 id="naslov" class="hero__title">
-        <Fragment set:html={t1.html} />{' '}<em set:html={t2.html} />{' '}
-        <span class="hero__title-aside"
-          ><Fragment set:html={t3.html} /> <span class="hero__strike"><Fragment set:html={t4.html} /></span></span
-        >
+        <Fragment set:html={t1.html} />{' '}<em set:html={t2.html} />
       </h1>
 
       <div class="hero__foot">
         <p class="lead">
-          Izrađujem web stranice za male poduzetnike, obrtnike i firme iz Šibenika i cijele Hrvatske. Pregledne, brze i
-          složene tako da Vas ljudi pronađu na Googleu.
+          Izrađujem web stranice za obrtnike, male firme i poduzetnike iz Šibenika i cijele Hrvatske.
+        </p>
+        <p class="hero__opis">
+          Pregledan dizajn, brzo učitavanje, prilagodba mobitelu i tekst koji na jednom mjestu kaže čime se bavite, gdje
+          ste i kako Vas dobiti.
         </p>
         <div class="hero__actions">
           <a class="btn" href="/kontakt">
@@ -110,17 +108,17 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
   <section class="section" aria-labelledby="problem-naslov" style="padding-top: calc(var(--section) + var(--tide-h) * 0.5);">
     <div class="wrap grid problem">
       <div class="problem__text">
-        <p class="label">01 · Problem</p>
-        <h2 id="problem-naslov" data-reveal="line">Samo Facebook stranica? Onda ste za Google gotovo nevidljivi.</h2>
+        <p class="label">01 · Zašto stranica</p>
+        <h2 id="problem-naslov" data-reveal="line">Društvene mreže i web stranica <em>rade različite poslove.</em></h2>
         <p data-reveal="fade">
-          Kad netko upiše ono čime se bavite i ime grada, Google traži stranice koje jasno odgovaraju na to pitanje.
-          Facebook profil rijetko je među njima. A ako se i pojavi, dočeka Vas prozor za prijavu, objave od prije
-          nekoliko mjeseci i broj telefona zatrpan negdje u postovima.
+          Facebook i Instagram dobri su za obavijesti, fotografije i razgovor s ljudima koji Vas već prate. Ali objave
+          brzo potonu, a važne informacije se izgube među njima.
         </p>
         <p data-reveal="fade">
-          Vlastita stranica, na Vašoj domeni, na jednom mjestu kaže ono što kupac želi znati: čime se bavite, gdje ste,
-          kada radite i kako Vas dobiti. I pojavljuje se onda kad Vas netko traži.
+          Web stranica je mjesto gdje sve stoji složeno: koje usluge nudite, gdje radite, kada ste dostupni i kako Vas
+          kontaktirati. Na nju možete uputiti ljude s društvenih mreža, iz Google profila ili iz poruke.
         </p>
+        <p data-reveal="fade">Stranica ne zamjenjuje društvene mreže. Nadopunjuje ih.</p>
       </div>
 
       <figure class="serp" data-serp aria-labelledby="serp-opis">
@@ -137,17 +135,17 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
           </div>
 
           <div class="serp__stanje serp__stanje--prije">
-            <p class="serp__oznaka mono">Danas: samo Facebook</p>
+            <p class="serp__oznaka mono">Samo Facebook</p>
             <div class="serp__rezultat">
               <p class="serp__url">facebook.com › vodoinstalater.marko</p>
               <p class="serp__title">Vodoinstalater Marko | Facebook</p>
               <p class="serp__desc">Prijavite se ili se registrirajte da biste vidjeli više sadržaja…</p>
             </div>
-            <p class="serp__ishod">Kupac vidi prozor za prijavu i odlazi dalje.</p>
+            <p class="serp__ishod">Posjetitelj prvo naiđe na prozor za prijavu.</p>
           </div>
 
           <div class="serp__stanje serp__stanje--poslije">
-            <p class="serp__oznaka mono">S Vašom stranicom</p>
+            <p class="serp__oznaka mono">Vlastita stranica</p>
             <div class="serp__rezultat">
               <p class="serp__url">vodoinstalater-marko.hr</p>
               <p class="serp__title">Vodoinstalater u Šibeniku · Popravci i ugradnja | Marko</p>
@@ -156,7 +154,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
                 mjestu.
               </p>
             </div>
-            <p class="serp__ishod">Kupac odmah vidi čime se bavite i kako Vas dobiti.</p>
+            <p class="serp__ishod">Posjetitelj odmah vidi usluge, radno vrijeme i kontakt.</p>
           </div>
         </div>
         <figcaption id="serp-opis" class="mono">
@@ -166,14 +164,15 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
     </div>
   </section>
 
-  <!-- Šibenčani: ljudi koji su gledali dalje -->
+  <!-- Šibenik: četiri Šibenčanina -->
   <section class="friz more" aria-labelledby="friz-naslov" data-friz data-svjetlo>
     <Plima polozaj="gore" />
     <div class="odsjaj" aria-hidden="true"></div>
     <div class="friz__pin">
       <div class="wrap grid friz__head">
         <p class="label">02 · Šibenik</p>
-        <h2 id="friz-naslov" data-reveal="line">Šibenik je uvijek imao ljude <em>koji su gledali dalje.</em></h2>
+        <h2 id="friz-naslov" data-reveal="line">Radim iz Šibenika.</h2>
+        <p class="friz__uvod" data-reveal="fade">Četiri Šibenčanina i ono što od njih uzimam u svoj posao.</p>
       </div>
       <div class="friz__traka" tabindex="0" aria-label="Poznati Šibenčani; pomičite vodoravno">
         {
@@ -209,7 +208,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       <div class="grid section-head">
         <p class="label">03 · Usluge</p>
         <h2 id="usluge-naslov" data-reveal="line">
-          Sve što Vam treba kako bi Vas pronašli, <em>i zadržali se</em> na Vašoj stranici.
+          Izrada stranice <em>i sve što uz nju ide.</em>
         </h2>
       </div>
 
@@ -232,8 +231,8 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       <div class="grid included">
         <p class="label">Uključeno u svaku izradu</p>
         <p data-reveal="fade">
-          Pomoć oko kupnje domene i postavljanja hostinga te izrada Google Business profila. Ne morate se sami snalaziti
-          s tehničkim stvarima.
+          Pomoć oko kupnje domene i postavljanja hostinga te izrada Google Business profila. Tehničke stvari rješavam ja,
+          a Vi dobivate pristupe i objašnjenje što je gdje.
         </p>
       </div>
     </div>
@@ -244,7 +243,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
     <div class="wrap">
       <div class="grid section-head">
         <p class="label">04 · Proces</p>
-        <h2 id="proces-naslov" data-reveal="line">Od prvog razgovora do stranice koja radi za Vas.</h2>
+        <h2 id="proces-naslov" data-reveal="line">Kako izgleda suradnja.</h2>
       </div>
 
       <ol class="process" data-process>
@@ -285,9 +284,9 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
         <p class="label">05 · O meni</p>
         <h2 id="o-meni-naslov" data-reveal="line" style="font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem)">Sitni detalji čine razliku.</h2>
         <p data-reveal="fade">
-          Ja sam Mirnes, web dizajner iz Šibenika. Ne žalim sate provedene u promišljanju svakog elementa, jer upravo
-          ono što većina ne primijeti na prvi pogled čini stranicu dobrom. Najdraža mi je poruka koja stigne tjedan dana
-          nakon predaje, ona lijevo.
+          Ja sam Mirnes, web dizajner iz Šibenika. Svaku stranicu radim sam, od prvog razgovora do predaje, pa uvijek
+          znate s kim razgovarate. Puno vremena potrošim na sitnice: razmake, tekst, ponašanje na mobitelu. Većina
+          ljudi ih ne primijeti odmah, ali se po njima vidi razlika.
         </p>
         <p data-reveal="fade"><a class="link" href="/o-meni">Više o meni →</a></p>
       </div>

@@ -3271,3 +3271,26 @@ body.menu-open .asistent {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* Kratko objašnjenje ispod podnaslova u heroju */
+.hero__opis {
+  max-width: 34em;
+  margin: 0;
+  color: var(--na-moru-2);
+}
+.hero__foot {
+  gap: 1.25rem;
+}
+.hero__actions {
+  margin-top: 0.75rem;
+}
+/* Uvodna rečenica sekcije Šibenik */
+.friz__uvod {
+  color: var(--na-moru-2);
+  max-width: 32em;
+}
+@media (min-width: 900px) {
+  .friz__head .friz__uvod {
+    grid-column: 4 / span 7;
+  }
+}

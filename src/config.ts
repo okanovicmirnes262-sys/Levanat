@@ -29,7 +29,7 @@ export const services = [
     href: '/usluge/izrada-web-stranica',
     title: 'Izrada web stranica',
     short:
-      'Brza, pregledna stranica s Vašim imenom i domenom. Složena za mobitel, jer Vas tako većina ljudi i traži.',
+      'Stranica na Vašoj domeni, složena najprije za mobitel, s jasnim popisom usluga i kontaktom.',
     meta: 'Okvirno od 200 €',
   },
   {
@@ -37,7 +37,7 @@ export const services = [
     href: '/usluge/seo-optimizacija',
     title: 'SEO optimizacija',
     short:
-      'Lokalni SEO: kako biste se pojavili kad netko u Šibeniku ili okolici na Googleu upiše ono čime se bavite.',
+      'Tehnička osnova, sadržaj i Google Business profil složeni onako kako Google preporučuje.',
     meta: 'Lokalna vidljivost',
   },
   {
@@ -45,7 +45,7 @@ export const services = [
     href: '/usluge/ai-chatbot',
     title: 'AI chatbot',
     short:
-      'Asistent na Vašoj stranici koji posjetiteljima odgovara na osnovna pitanja, i usred noći i nedjeljom.',
+      'Odgovara posjetiteljima na česta pitanja o Vašem poslu, i kad Vi ne stignete.',
     meta: 'Iz Vaših materijala',
   },
   {

@@ -24,10 +24,10 @@ export const sibencani: Sibencanin[] = [
     godine: 'oko 1410.–1473.',
     uloga: 'Graditelj katedrale sv. Jakova',
     tekst:
-      'Od 1441. vodio je gradnju šibenske katedrale i na njezine apside uklesao 71 kamenu glavu. Nijedna nije ista. Njegov kip, djelo Ivana Meštrovića, i danas stoji ispred katedrale.',
+      'Gradnju je vodio od 1441. Na apside katedrale uklesao je 71 kamenu glavu i nijedna nije ista.',
     misao: [
-      'Detalj je potpis.',
-      'Svaka web stranica koju izrađujem u Šibeniku nastaje s istim uvjerenjem: ono što većina ne primijeti na prvi pogled čini razliku.',
+      '71 lice. Nijedno isto.',
+      'Detalji čine razliku. Zato svaka Levanat stranica ima svoj karakter.',
     ],
   },
   {
@@ -37,10 +37,10 @@ export const sibencani: Sibencanin[] = [
     godine: '1551.–1617.',
     uloga: 'Izumitelj i jezikoslovac',
     tekst:
-      'Šibenčanin koji je u knjizi Machinae novae nacrtao Homo volans, letećeg čovjeka pod padobranom, jedan od najranijih nacrta padobrana. Napisao je i rječnik pet najuglednijih europskih jezika.',
+      'Šibenčanin koji je u knjizi Machinae novae nacrtao Homo volans, jedan od najranijih nacrta padobrana.',
     misao: [
-      'Svaka ideja počinje nacrtom.',
-      'Tako počinje i izrada web stranice: prije prvog retka koda slažem jasan plan onoga što Vaši kupci trebaju vidjeti.',
+      'Od ideje do izvedbe.',
+      'Dobra ideja vrijedi tek kada postane nešto što stvarno radi.',
     ],
   },
   {
@@ -48,12 +48,12 @@ export const sibencani: Sibencanin[] = [
     alt: 'Portret Ante Šupuka, gradonačelnika Šibenika',
     ime: 'Ante Šupuk',
     godine: '1838.–1904.',
-    uloga: 'Gradonačelnik koji je upalio svjetlo',
+    uloga: 'Gradonačelnik Šibenika',
     tekst:
-      'Zahvaljujući njemu Šibenik je 1895. među prvim gradovima na svijetu dobio javnu rasvjetu na izmjeničnu struju, iz hidroelektrane Jaruga na Krki.',
+      'Gradonačelnik za čijeg je mandata Šibenik 1895. dobio javnu rasvjetu na izmjeničnu struju, iz hidroelektrane Jaruga na Krki.',
     misao: [
-      'Šibenik je bio vidljiv prije drugih.',
-      'Neka i Vaš posao bude vidljiv. Web stranica i lokalni SEO u Šibeniku služe upravo tome: da Vas kupci pronađu na Googleu.',
+      'Šibenik se može mijenjati.',
+      'Dobra web stranica ne treba samo izgledati dobro. Treba pomoći Vašem poslu da raste.',
     ],
   },
   {
@@ -61,12 +61,12 @@ export const sibencani: Sibencanin[] = [
     alt: 'Dražen Petrović u dresu Šibenke s brojem 4, s loptom na terenu',
     ime: 'Dražen Petrović',
     godine: '1964.–1993.',
-    uloga: 'Košarkaški genij iz Šibenika',
+    uloga: 'Košarkaš',
     tekst:
-      'Iz šibenske dvorane, u dresu Šibenke, stigao je do NBA lige i Kuće slavnih. Dokaz da talent i rad iz Šibenika mogu stići do cijelog svijeta.',
+      'Iz šibenske dvorane i dresa Šibenke stigao je do NBA lige i Kuće slavnih.',
     misao: [
-      'Iz Šibenika do svijeta.',
-      'Radim s obrtnicima i malim firmama iz Šibenika i cijele Hrvatske. Dobra stranica vodi Vaš posao dalje od Vaše ulice.',
+      'Biti prepoznatljiv.',
+      'Vaša stranica treba jasno pokazati tko ste i po čemu ste drugačiji.',
     ],
   },
 ];
