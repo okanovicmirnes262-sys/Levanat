@@ -116,7 +116,43 @@ export function initMotion() {
         tw.kill();
       };
     });
-    mm.add('(max-width: 899px), (max-height: 559px)', () => {
+    // Mobitel: sekcija se također prikuje, pa scroll prema dolje pomiče traku udesno.
+    // Traka ostaje nativno pomična, pa i swipe radi; oba smjera se međusobno usklađuju.
+    mm.add('(max-width: 899px) and (min-height: 560px)', () => {
+      friz.classList.add('friz--mob');
+      const max = () => Math.max(traka.scrollWidth - traka.clientWidth, 0);
+      let postavljeno = -1;
+      const st = ScrollTrigger.create({
+        trigger: friz,
+        start: 'top top',
+        end: () => `+=${Math.round(max() * 1.15)}`,
+        pin: true,
+        invalidateOnRefresh: true,
+        onUpdate: (s) => {
+          postavljeno = Math.round(s.progress * max());
+          traka.scrollLeft = postavljeno;
+        },
+      });
+      const onS = () => {
+        light();
+        const m = max();
+        const p = traka.scrollLeft / Math.max(m, 1);
+        bar?.style.setProperty('--p', p.toFixed(4));
+        // Swipe korisnika: pomakni stranicu na odgovarajuće mjesto unutar prikovanog dijela
+        if (Math.abs(traka.scrollLeft - postavljeno) > 2 && st.isActive) {
+          postavljeno = traka.scrollLeft;
+          window.scrollTo(0, st.start + p * (st.end - st.start));
+        }
+      };
+      traka.addEventListener('scroll', onS, { passive: true });
+      onS();
+      return () => {
+        traka.removeEventListener('scroll', onS);
+        friz.classList.remove('friz--mob');
+        st.kill();
+      };
+    });
+    mm.add('(max-height: 559px)', () => {
       const onS = () => {
         light();
         bar?.style.setProperty('--p', (traka.scrollLeft / Math.max(traka.scrollWidth - traka.clientWidth, 1)).toFixed(4));

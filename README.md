@@ -52,7 +52,7 @@ Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levana
 |---|---|---|
 | Svjetlo po reljefu (WebGL, normal mape): kursor osvjetljava kamene glave, uvodni snop svjetla, „izlazak sunca” na scroll | hero početne i zaglavlja podstranica | `src/scripts/relief.ts` |
 | More s odrazom katedrale, valovi koje gura levanat, odsjaji sunca | završni poziv | `src/scripts/sea.ts` |
-| Friz glava: prikovana vodoravna šetnja (desktop), swipe (mobitel), mreža (smanjeno kretanje) | početna | `src/scripts/motion.ts` |
+| Friz glava: prikovana vodoravna šetnja na scroll (desktop i mobitel, na mobitelu radi i swipe), mreža (smanjeno kretanje) | početna | `src/scripts/motion.ts` |
 | Plima: valovite granice između kamena i mora | sve stranice | `src/components/Plima.astro`, `src/scripts/plima.ts` |
 | Odsjaji vode (caustics) na kamenu i moru | pozadine | `public/odsjaj.webp` + CSS |
 | Klesanje naslova, izranjanje teksta, linija plime u procesu, paralaksa | sve stranice | `src/scripts/motion.ts` |

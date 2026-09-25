@@ -3628,3 +3628,54 @@ html.motion .kostur [data-puni] {
     display: none;
   }
 }
+
+/* Prikovani friz na mobitelu: scroll prema dolje vozi traku udesno, swipe i dalje radi.
+   Portret i tekst moraju zajedno stati u visinu ekrana. */
+@media (max-width: 899px) {
+  .friz--mob .friz__pin {
+    height: 100svh;
+    min-height: 0;
+    padding-block: calc(var(--header-h) + 0.75rem) 1.25rem;
+  }
+  .friz--mob .friz__head {
+    margin-bottom: clamp(0.75rem, 2.5svh, 1.75rem);
+    row-gap: 0.5rem;
+  }
+  .friz--mob .friz__head h2 {
+    font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.3rem);
+  }
+  .friz--mob .friz__traka {
+    scroll-snap-type: none;
+    align-items: flex-start;
+  }
+  .friz--mob .friz__glava {
+    width: auto;
+    gap: 0.8rem;
+  }
+  .friz--mob .friz__glava picture {
+    display: block;
+    width: max-content;
+  }
+  .friz--mob .friz__glava img {
+    width: auto;
+    height: clamp(170px, 34svh, 330px);
+  }
+  .friz--mob .friz__glava figcaption {
+    width: min(78vw, 20rem);
+  }
+  .friz--mob .friz__misao {
+    align-self: center;
+  }
+  .friz--mob .friz__napredak {
+    margin-top: auto;
+  }
+}
+@media (max-width: 899px) and (max-height: 700px) {
+  .friz--mob .friz__uvod {
+    display: none;
+  }
+  .friz--mob .friz__opis {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+}
