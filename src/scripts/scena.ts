@@ -12,7 +12,7 @@ export function initScena(scena: HTMLElement) {
   if (!hodnik || !tvrdava || !bljesak || !vinjeta || !veo || !tekst) return;
 
   const smanjeno = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const MAX_ZOOM = smanjeno ? 1.15 : 9; // koliko duboko kamera ulazi u hodnik
+  const MAX_ZOOM = smanjeno ? 1.1 : 6; // koliko duboko kamera ulazi u hodnik
 
   const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const faza = (p: number, a: number, b: number) => clamp((p - a) / (b - a));
@@ -30,30 +30,30 @@ export function initScena(scena: HTMLElement) {
   };
 
   const crtaj = (p: number) => {
-    // 0) Tekst i tamni veo odlaze čim šetnja krene
-    const t = faza(p, 0, 0.14);
-    tekst.style.opacity = String(1 - t);
-    tekst.style.transform = `translate3d(0, ${-t * 6}vh, 0)`;
-    tekst.style.visibility = t >= 1 ? 'hidden' : '';
-    veo.style.opacity = String(1 - faza(p, 0, 0.18));
+    // Tekst i tamni veo ostaju cijelo vrijeme; scena je samo pozadina.
 
-    // 1) Kretanje kroz hodnik
-    const h = faza(p, 0, 0.62);
+    // 1) Kretanje kroz hodnik (mirnije nego prije)
+    const h = faza(p, 0, 0.55);
     const zoom = Math.pow(MAX_ZOOM, h);
-    const korak = smanjeno ? 0 : Math.sin(h * Math.PI * 7) * 0.35 * (1 - h);
+    const korak = smanjeno ? 0 : Math.sin(h * Math.PI * 5) * 0.2 * (1 - h);
     hodnik.style.transform = `translate3d(0, ${korak}%, 0) scale(${zoom})`;
-    vinjeta.style.opacity = String(1 - faza(p, 0.35, 0.6));
+    vinjeta.style.opacity = String(1 - faza(p, 0.3, 0.55));
 
-    // 2) Svjetlo na kraju hodnika, 3) izlaz na tvrđavu
-    const svjetlo = glatko(faza(p, 0.42, 0.64));
-    const izlaz = glatko(faza(p, 0.64, 0.85));
-    bljesak.style.opacity = String(svjetlo * (1 - izlaz));
+    // 2) Blago svjetlo na kraju hodnika (bez jakog bljeska)
+    const svjetlo = glatko(faza(p, 0.4, 0.56));
+    const izlaz = glatko(faza(p, 0.56, 0.7));
+    bljesak.style.opacity = String(0.28 * svjetlo * (1 - izlaz));
 
-    tvrdava.style.opacity = String(faza(p, 0.6, 0.66));
-    hodnik.style.opacity = String(1 - faza(p, 0.62, 0.66));
-    const tz = 1 + (smanjeno ? 0.03 : 0.35) * (1 - easeOut(faza(p, 0.62, 1)));
+    // 3) Izlaz: tvrđava je blizu pa se postupno udaljava
+    const prijelaz = glatko(faza(p, 0.5, 0.62));
+    tvrdava.style.opacity = String(prijelaz);
+    hodnik.style.opacity = String(1 - prijelaz);
+    const daljina = easeOut(faza(p, 0.52, 1));
+    const tz = 1 + (smanjeno ? 0.05 : 1.6) * (1 - daljina);
     tvrdava.style.transform = `scale(${tz})`;
-    if (potpis) potpis.style.opacity = String(faza(p, 0.8, 0.92));
+    if (potpis) potpis.style.opacity = String(faza(p, 0.85, 0.95));
+    veo.style.opacity = '1';
+    tekst.style.opacity = '1';
   };
 
   // S glatkim scrollom (Lenis) dovoljno je malo dodatnog izglađivanja

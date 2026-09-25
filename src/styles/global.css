@@ -3341,8 +3341,8 @@ body.menu-open .asistent {
   --vp-x: 40.6%; /* točka nestajanja u fotografiji hodnika (svjetli luk na kraju) */
   --vp-y: 38%;
   position: relative;
-  height: 460vh;
-  height: 460svh;
+  height: 340vh;
+  height: 340svh;
   background: #081517;
   color: var(--na-moru);
 }
@@ -3393,16 +3393,25 @@ body.menu-open .asistent {
     rgba(255, 246, 228, 0.6) 100%
   );
 }
-/* Tamnomodri veo ispod teksta na početku; nestaje kad šetnja krene */
+/* Stalni tamnomodri veo: scena ostaje u pozadini, tekst je uvijek čitljiv */
 .scena__veo {
+  z-index: 1;
   background:
-    linear-gradient(to right, rgba(11, 42, 60, 0.92) 0%, rgba(11, 42, 60, 0.78) 45%, rgba(11, 42, 60, 0.45) 100%),
-    rgba(11, 42, 60, 0.25);
+    linear-gradient(to right, rgba(8, 26, 36, 0.88) 0%, rgba(8, 26, 36, 0.66) 42%, rgba(8, 26, 36, 0.22) 100%),
+    rgba(8, 26, 36, 0.12);
 }
 @media (max-width: 1099px) {
   .scena__veo {
-    background: linear-gradient(to top, rgba(11, 42, 60, 0.94) 35%, rgba(11, 42, 60, 0.72) 100%);
+    background: linear-gradient(to top, rgba(8, 26, 36, 0.9) 25%, rgba(8, 26, 36, 0.62) 60%, rgba(8, 26, 36, 0.3) 100%);
   }
+}
+/* Mirnije boje fotografija u pozadini */
+.scena__hodnik,
+.scena__tvrdava {
+  filter: saturate(0.75) brightness(0.85);
+}
+.scena__bljesak {
+  background: radial-gradient(circle at var(--vp-x) var(--vp-y), rgba(255, 240, 215, 0.9) 0%, rgba(255, 240, 215, 0.35) 45%, transparent 80%) !important;
 }
 .scena__tekst {
   position: absolute;
@@ -3422,7 +3431,7 @@ body.menu-open .asistent {
 }
 .scena__potpis {
   position: absolute;
-  left: var(--gutter);
+  right: var(--gutter);
   bottom: calc(var(--tide-h) + 1.5rem);
   z-index: 2;
   margin: 0;
@@ -3436,13 +3445,18 @@ body.menu-open .asistent {
 }
 @media (max-width: 899px) {
   .scena {
-    height: 380vh;
-    height: 380svh;
+    height: 300vh;
+    height: 300svh;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .scena {
     height: 220vh;
     height: 220svh;
+  }
+}
+@media (max-width: 1099px) {
+  .scena__potpis {
+    display: none;
   }
 }
