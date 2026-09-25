@@ -46,6 +46,29 @@ document.querySelectorAll<HTMLElement>('[data-reljef]').forEach((stage) => {
   io.observe(stage);
 });
 
+// Šibenčani: slike učitaj unaprijed (prije nego traka uđe na ekran) i prikaži ih mekano
+document.querySelectorAll<HTMLElement>('[data-friz]').forEach((friz) => {
+  const imgs = [...friz.querySelectorAll<HTMLImageElement>('.friz__glava img')];
+  const shown = (img: HTMLImageElement) => {
+    const done = () => img.classList.add('is-loaded');
+    if (img.complete && img.naturalWidth) done();
+    else {
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+    }
+  };
+  imgs.forEach(shown);
+  const io = new IntersectionObserver(
+    ([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      imgs.forEach((img) => (img.loading = 'eager'));
+    },
+    { rootMargin: '1500px 0px' },
+  );
+  io.observe(friz);
+});
+
 // More pod katedralom
 document.querySelectorAll<HTMLElement>('[data-obala]').forEach((el) => {
   if (weak) return;

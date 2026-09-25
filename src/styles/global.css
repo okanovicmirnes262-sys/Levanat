@@ -1272,12 +1272,32 @@ html.motion .friz--pinned .friz__traka {
 .friz__glava picture {
   position: relative;
 }
+.friz__glava picture {
+  /* tamni luk drži mjesto dok se slika ne učita */
+  background: var(--more-duboko);
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  transform: translateY(calc((1 - var(--lit)) * 14px)) scale(calc(0.94 + 0.06 * var(--lit)));
+  will-change: transform;
+}
 .friz__glava img {
   width: 100%;
   height: auto;
-  filter: brightness(calc(0.5 + 0.75 * var(--lit))) contrast(calc(0.92 + 0.18 * var(--lit)));
-  transform: translateY(calc((1 - var(--lit)) * 14px)) scale(calc(0.94 + 0.06 * var(--lit)));
-  transition: filter 0.2s linear;
+  transition: opacity 0.7s ease;
+}
+html.motion .friz__glava img:not(.is-loaded) {
+  opacity: 0;
+}
+/* Zatamnjenje portreta izvan središta: samo prozirnost sloja (bez filtera, bez treperenja) */
+.friz__glava picture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  background: var(--more-noc);
+  opacity: calc((1 - var(--lit)) * 0.5);
+  pointer-events: none;
+  will-change: opacity;
 }
 .friz__glava figcaption {
   display: grid;
