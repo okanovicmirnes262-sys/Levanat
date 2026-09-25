@@ -50,15 +50,15 @@ Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levana
 
 | Efekt | Gdje | Datoteka |
 |---|---|---|
-| Svjetlo po reljefu (WebGL, normal mape): kursor osvjetljava kamene glave, uvodni snop svjetla, „izlazak sunca” na scroll | hero početne i zaglavlja podstranica | `src/scripts/relief.ts` |
 | More s odrazom katedrale, valovi koje gura levanat, odsjaji sunca | završni poziv | `src/scripts/sea.ts` |
-| Friz glava: prikovana vodoravna šetnja na scroll (desktop i mobitel, na mobitelu radi i swipe), mreža (smanjeno kretanje) | početna | `src/scripts/motion.ts` |
+| Friz Šibenčana: prikovana vodoravna šetnja na scroll (desktop i mobitel, na mobitelu radi i swipe), mreža (smanjeno kretanje) | početna | `src/scripts/motion.ts` |
 | Plima: valovite granice između kamena i mora | sve stranice | `src/components/Plima.astro`, `src/scripts/plima.ts` |
 | Odsjaji vode (caustics) na kamenu i moru | pozadine | `public/odsjaj.webp` + CSS |
 | Klesanje naslova, izranjanje teksta, linija plime u procesu, paralaksa | sve stranice | `src/scripts/motion.ts` |
 | Brončani kursor, magnetni gumbi, kamen koji se odiže na hover | desktop | `src/scripts/cursor.ts`, CSS |
 | Prijelazi između stranica | sve | CSS View Transitions |
-| Kontakt forma kao papirnati avion: papir se presavije i odleti na levantu dok se upit šalje | /kontakt | `src/scripts/avion.ts` |
+| Kontakt forma kao papirnati avion: papir se presavije i odleti na levantu dok se upit šalje | /kontakt i prozor na svim stranicama | `src/scripts/avion.ts` |
+| Avion pada s gumba „Zatražite besplatnu ponudu” (na početnoj sam, drugdje na klik) i ostaje u kutu; klik otvara formu | sve osim /kontakt | `src/scripts/avion-gumb.ts` |
 
 **Performanse i pristupačnost:**
 - WebGL se učitava tek kad je preglednik slobodan i kad je sekcija blizu ekrana.
@@ -71,7 +71,7 @@ Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levana
 Izvorne fotografije su u `alati/izvori/`. Obrađene su skriptama u `alati/`:
 
 1. `esrgan.py`: Real-ESRGAN 4× povećanje (model `RealESRGAN_x4plus.pth` s GitHuba projekta xinntao/Real-ESRGAN, PyTorch).
-2. Uklanjanje pozadine pomoću `rembg` (model isnet-general-use), zatim `obrada-slika.py`: izrez glava, meke maske koje tonu u sjenu, jedinstveno toniranje u boji kamena, zrno i karte reljefa (normal map) za WebGL.
+2. Uklanjanje pozadine pomoću `rembg` (model isnet-general-use), zatim `obrada-sibencani.py` i `obrada-slika-lukovi.py`: izrez, meke maske, jedinstveno toniranje u boji kamena i zrno.
 
 Rezultat je u `src/assets/kamen/`. Astro iz toga pri izgradnji generira AVIF i WebP u više veličina.
 
@@ -81,13 +81,13 @@ Rezultat je u `src/assets/kamen/`. Astro iz toga pri izgradnji generira AVIF i W
 alati/             obrada fotografija (nije dio stranice)
 public/            font, favicon, OG slika, teksture (kamen, odsjaji vode)
 site.config.mjs    [DOMENA]
-src/assets/kamen/  obrađene glave, Sv. Mihovil, katedrala + karte reljefa
+src/assets/kamen/  Sv. Mihovil, katedrala, Šibenčani
 src/config.ts      podaci o brendu, navigacija, usluge
 src/data/          FAQ, radovi, slike (kamen.ts), opcije forme
 src/layouts/       Base.astro — <head>, SEO, Open Graph, JSON-LD
-src/components/    Header, Footer, Reljef, Plima, Cta (katedrala nad morem), Faq, PageHero, WorkItem, Wind
+src/components/    Header, Footer, AvionForma, Plima, Cta (katedrala nad morem), Faq, PageHero, WorkItem, Wind
 src/pages/         stranice + api/kontakt.ts (serverless, Resend) + robots.txt.ts
-src/scripts/       relief.ts, sea.ts, gpu.ts, motion.ts, plima.ts, cursor.ts, wind.ts, header.ts, details.ts, sun.ts, avion.ts
+src/scripts/       sea.ts, avion-gumb.ts, gpu.ts, motion.ts, plima.ts, cursor.ts, wind.ts, header.ts, details.ts, sun.ts, avion.ts
 src/styles/        global.css — tokeni, tipografija, raspored, komponente
 ```
 

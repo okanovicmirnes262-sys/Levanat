@@ -1,20 +1,15 @@
 ---
-import Reljef from './Reljef.astro';
 import Plima from './Plima.astro';
-import { glave } from '../data/kamen';
 import type { Crumb } from '../lib';
 
 interface Props {
   crumbs: Crumb[];
   label?: string;
-  /** indeks glave s friza (0–4) koja stoji uz naslov */
-  glava?: number;
 }
-const { crumbs, label, glava = 0 } = Astro.props;
+const { crumbs, label } = Astro.props;
 ---
 
 <header class="page-hero more" data-svjetlo>
-  <Reljef glave={[glave[glava % glave.length]]} prioritet sizes="(min-width: 1000px) 34vw, 70vw" />
   <div class="odsjaj" aria-hidden="true"></div>
   <div class="wrap grid page-hero__grid">
     <nav class="crumbs mono" aria-label="Putanja">

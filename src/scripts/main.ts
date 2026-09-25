@@ -27,28 +27,13 @@ initCursor();
 initPlima(still);
 initAsistent();
 document.querySelectorAll<HTMLElement>('[data-scena]').forEach(initScena);
+if (document.querySelector('[data-avion-leti]')) import('./avion-gumb').then((m) => m.initAvionLet());
 
 const whenIdle = (fn: () => void) => {
   const go = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200));
   document.readyState === 'complete' ? go() : window.addEventListener('load', go, { once: true });
 };
 
-
-// Reljef (WebGL svjetlo po glavama): učitava se kad je pozornica blizu ekrana
-document.querySelectorAll<HTMLElement>('[data-reljef]').forEach((stage) => {
-  const io = new IntersectionObserver(
-    ([e]) => {
-      if (!e.isIntersecting) return;
-      io.disconnect();
-      whenIdle(() => import('./relief').then((m) => {
-        if (weak) m.initReliefFallback(stage);
-        else m.initRelief(stage, { intro: root.classList.contains('uvod'), still }).catch(() => m.initReliefFallback(stage));
-      }));
-    },
-    { rootMargin: '200px' },
-  );
-  io.observe(stage);
-});
 
 // Šibenčani: slike učitaj unaprijed (prije nego traka uđe na ekran) i prikaži ih mekano
 document.querySelectorAll<HTMLElement>('[data-friz]').forEach((friz) => {

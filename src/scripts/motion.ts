@@ -44,17 +44,9 @@ export function initMotion() {
       gsap.to(batch, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: 0.08, overwrite: true }),
   });
 
-  // Hero: glave se na scroll dižu različitom brzinom (paralaksa), sadržaj lagano tone
+  // Hero podstranica: sadržaj na scroll lagano tone
   const hero = document.querySelector<HTMLElement>('.hero, .page-hero');
   if (hero) {
-    const figs = hero.querySelectorAll<HTMLElement>('.reljef__slika, .hero__tvrdava');
-    figs.forEach((f, i) => {
-      gsap.to(f, {
-        yPercent: -(10 + i * 9),
-        ease: 'none',
-        scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
-      });
-    });
     const content = hero.querySelector('.hero__content, .page-hero__grid');
     if (content)
       gsap.to(content, {

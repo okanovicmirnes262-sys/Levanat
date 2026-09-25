@@ -57,7 +57,9 @@ async function letaj(papir: HTMLElement) {
       <path class="avion__pregib" d="M100 0V260" vector-effect="non-scaling-stroke"/>
     </svg>`;
   Object.assign(layer.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
-  document.body.append(layer);
+  // U otvorenom <dialog> avion mora letjeti unutar njega (gornji sloj preglednika)
+  const host = papir.closest('dialog') ?? document.body;
+  host.append(layer);
   const poly = layer.querySelector('polygon')!;
   const pregib = layer.querySelector<SVGPathElement>('.avion__pregib')!;
 
@@ -90,7 +92,7 @@ async function letaj(papir: HTMLElement) {
   put.setAttribute('pathLength', '1');
   put.setAttribute('stroke-dasharray', '1');
   trag.append(put);
-  document.body.append(trag);
+  host.append(trag);
   const let_ = layer.animate(
     [
       { transform: 'translate(0,0) rotate(0deg) scale(1)' },
@@ -113,9 +115,13 @@ async function letaj(papir: HTMLElement) {
   trag.remove();
 }
 
-export function initAvion() {
-  const root = document.querySelector<HTMLElement>('[data-avion]');
-  if (!root) return;
+export function initAvion(scope: ParentNode = document) {
+  scope.querySelectorAll<HTMLElement>('[data-avion]').forEach(init);
+}
+
+function init(root: HTMLElement) {
+  if (root.dataset.avionSpreman) return;
+  root.dataset.avionSpreman = '1';
   const form = root.querySelector<HTMLFormElement>('[data-avion-papir]')!;
   const status = form.querySelector<HTMLElement>('[data-form-status]')!;
   const time = form.querySelector<HTMLInputElement>('[data-form-time]')!;
@@ -123,7 +129,7 @@ export function initAvion() {
   const label = form.querySelector<HTMLElement>('[data-submit-label]')!;
   const stigao = root.querySelector<HTMLElement>('[data-avion-stigao]')!;
   const imeOut = root.querySelector<HTMLElement>('[data-avion-ime]')!;
-  const opet = root.querySelector<HTMLButtonElement>('[data-avion-opet]')!;
+  const opet = root.querySelector<HTMLButtonElement>('[data-avion-opet]');
   const motion = !matchMedia('(prefers-reduced-motion: reduce)').matches;
   time.value = String(Date.now());
 
@@ -167,7 +173,7 @@ export function initAvion() {
     form.hidden = false;
     stigao.hidden = true;
   };
-  opet.addEventListener('click', () => {
+  opet?.addEventListener('click', () => {
     vrati();
     time.value = String(Date.now());
     field('ime').focus();
@@ -211,6 +217,7 @@ export function initAvion() {
       if (r.top < 80 || r.bottom > innerHeight)
         stigao.scrollIntoView({ block: 'center', behavior: motion ? 'smooth' : 'auto' });
       label.textContent = 'Pošaljite avion';
+      root.dispatchEvent(new CustomEvent('avion:poslan', { bubbles: true }));
     } else {
       // Avion se nije vratio prazan: papir je opet tu, s upisanim tekstom
       vrati();

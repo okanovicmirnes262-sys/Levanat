@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Asistent from '../components/Asistent.astro';
+import AvionForma from '../components/AvionForma.astro';
 import { abs, businessSchema } from '../lib';
 
 interface Props {
@@ -18,6 +19,8 @@ const { title, description, schema = [], noindex = false, ogImage = '/og.png' } 
 const canonical = abs(Astro.url.pathname);
 const ogUrl = abs(ogImage);
 const jsonLd = [businessSchema(), ...schema];
+// Na /kontakt forma je već na stranici, pa tamo nema aviona ni prozora
+const avion = !Astro.url.pathname.startsWith('/kontakt');
 ---
 
 <!doctype html>
@@ -48,7 +51,7 @@ const jsonLd = [businessSchema(), ...schema];
     <meta property="og:image" content={ogUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Kamena glava s katedrale sv. Jakova — Levanat, web dizajn iz Šibenika" />
+    <meta property="og:image:alt" content="Levanat, web dizajn iz Šibenika: katedrala sv. Jakova nad morem" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -63,7 +66,7 @@ const jsonLd = [businessSchema(), ...schema];
         var d = document.documentElement;
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           d.classList.add('motion');
-          // Puni uvod (svjetlo preko glava, klesanje naslova) samo pri prvom otvaranju u sesiji.
+          // Puni uvod (klesanje naslova) samo pri prvom otvaranju u sesiji.
           try {
             if (location.pathname === '/' && !sessionStorage.getItem('levanat.uvod')) {
               d.classList.add('uvod');
@@ -87,6 +90,24 @@ const jsonLd = [businessSchema(), ...schema];
     </main>
     <Footer />
     <Asistent />
+    {
+      avion && (
+        <>
+          {/* Papirnati avion: pada s gumba „Zatražite besplatnu ponudu”, klik na njega otvara kontakt formu */}
+          <button type="button" class="avion-leti" hidden aria-haspopup="dialog" aria-controls="avion-prozor" data-avion-leti>
+            <svg viewBox="0 0 48 40" aria-hidden="true">
+              <path class="avion-leti__gore" d="M2 17 46 3 22 24Z" />
+              <path class="avion-leti__dolje" d="M2 17 22 24 40 36Z" />
+              <path class="avion-leti__pregib" d="M2 17 22 24" />
+            </svg>
+            <span class="avion-leti__natpis">Kontakt forma</span>
+          </button>
+          <dialog class="avion-prozor" id="avion-prozor" aria-labelledby="avion-naslov" data-avion-prozor data-lenis-prevent>
+            <AvionForma uDijalogu />
+          </dialog>
+        </>
+      )
+    }
     <div class="kursor" aria-hidden="true" data-kursor></div>
     <script>
       import '../scripts/main';

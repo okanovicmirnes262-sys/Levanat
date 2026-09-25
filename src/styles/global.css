@@ -747,54 +747,6 @@ body.menu-open .site-header {
   }
 }
 
-/* ---------- Reljef (glave koje osvjetljava WebGL ili CSS) ---------- */
-
-.reljef {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.reljef__slika {
-  position: absolute;
-  margin: 0;
-}
-.reljef__slika img {
-  width: 100%;
-  height: auto;
-  user-select: none;
-}
-.reljef canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-/* Kad WebGL preuzme, slike ostaju samo kao rezerva */
-.reljef.gl-on canvas {
-  opacity: 1;
-}
-.reljef.gl-on .reljef__slika img {
-  opacity: 0;
-}
-
-/* Rezervno CSS svjetlo: svijetli sloj otkriven maskom oko kursora */
-.reljef__svjetlo {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at var(--lx, 70%) var(--ly, 35%),
-    rgba(255, 236, 205, 0.16),
-    transparent 32%
-  );
-  mix-blend-mode: soft-light;
-}
-.reljef.gl-on .reljef__svjetlo {
-  display: none;
-}
-
 /* ---------- Hero ---------- */
 
 .hero {
@@ -803,29 +755,12 @@ body.menu-open .site-header {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-top: calc(var(--header-h) + 35vw + 3rem);
+  padding-top: calc(var(--header-h) + 3rem);
   padding-bottom: calc(var(--tide-h) + clamp(1.5rem, 4vw, 3.5rem));
   overflow: clip;
 }
 
-/* Lučni portreti glava (kao lukovi apside): na mobitelu u nizu iznad teksta */
-.hero .reljef__slika {
-  width: 24vw;
-  top: calc(var(--header-h) + 1.6rem);
-}
-.hero .reljef__slika--1 {
-  width: 28vw;
-  left: 36vw;
-  top: calc(var(--header-h) + 0.4rem);
-}
-.hero .reljef__slika--2 {
-  left: 8.5vw;
-}
-.hero .reljef__slika--3 {
-  right: 8.5vw;
-}
 /* Tanki brončani luk oko svakog portreta */
-.reljef__slika::after,
 .friz__glava picture::after {
   content: '';
   position: absolute;
@@ -939,49 +874,12 @@ body.menu-open .site-header {
   .hero__meta {
     grid-template-columns: 1fr;
   }
-  .hero .reljef__slika {
-    width: 19vw;
-  }
-  .hero .reljef__slika--1 {
-    width: 23vw;
-    left: 38.5vw;
-  }
-  .hero .reljef__slika--2 {
-    left: 14vw;
-  }
-  .hero .reljef__slika--3 {
-    right: 14vw;
-  }
-  .hero {
-    padding-top: calc(var(--header-h) + 29vw + 3.5rem);
-  }
 }
 
 @media (min-width: 1100px) {
   .hero {
     justify-content: center;
     padding-top: calc(var(--header-h) + 2rem);
-  }
-  /* Na desktopu: skupina od tri luka desno od teksta, u različitim visinama kao friz */
-  .hero .reljef__slika {
-    top: 50%;
-    left: auto;
-    right: auto;
-  }
-  .hero .reljef__slika--1 {
-    width: min(16vw, 320px);
-    right: 16vw;
-    transform: translateY(-64%);
-  }
-  .hero .reljef__slika--2 {
-    width: min(12.5vw, 250px);
-    right: 2vw;
-    transform: translateY(-30%);
-  }
-  .hero .reljef__slika--3 {
-    width: min(12.5vw, 250px);
-    right: 33.5vw;
-    transform: translateY(-16%);
   }
   .hero__eyebrow,
   .hero__title,
@@ -2189,19 +2087,13 @@ html.motion .friz__glava img:not(.is-loaded) {
   padding-top: calc(var(--header-h) + clamp(3rem, 8vw, 7rem));
   padding-bottom: calc(var(--tide-h) + clamp(3rem, 6vw, 5rem));
   overflow: clip;
-  min-height: min(80svh, 760px);
+  min-height: min(62svh, 600px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
-.page-hero .reljef__slika--1 {
-  width: 30vw;
-  right: var(--gutter);
-  top: calc(var(--header-h) + 1rem);
-}
 @media (max-width: 999px) {
   .page-hero {
-    padding-top: calc(var(--header-h) + 37.5vw + 2.5rem);
     min-height: 0;
   }
 }
@@ -2227,12 +2119,6 @@ html.motion .friz__glava img:not(.is-loaded) {
 @media (min-width: 1000px) {
   .page-hero::before {
     background: linear-gradient(to right, var(--more) 30%, rgba(11, 42, 60, 0.3) 60%, rgba(11, 42, 60, 0) 75%);
-  }
-  .page-hero .reljef__slika--1 {
-    width: min(19vw, 320px);
-    right: 9vw;
-    top: 50%;
-    transform: translateY(-52%);
   }
   .page-hero h1 {
     grid-column: 1 / span 8;
@@ -3710,4 +3596,220 @@ html.motion .kostur [data-puni] {
     opacity: 0;
     transform: translateY(1rem);
   }
+}
+
+/* ---------- Papirnati avion na početnoj ---------- */
+
+.hero__actions {
+  position: relative;
+}
+.avion-leti {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tekst);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.avion-leti[hidden] {
+  display: none;
+}
+.avion-leti svg {
+  width: 46px;
+  height: 38px;
+  flex: none;
+  overflow: visible;
+  filter: drop-shadow(0 6px 6px rgba(11, 42, 60, 0.25));
+  transition: transform 0.4s var(--ease-voda);
+}
+.avion-leti__gore {
+  fill: var(--kamen-svijetli);
+  stroke: var(--kamen-sjena);
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+.avion-leti__dolje {
+  fill: var(--kamen-2);
+  stroke: var(--kamen-sjena);
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+.avion-leti__pregib {
+  fill: none;
+  stroke: var(--kamen-sjena);
+  stroke-width: 0.8;
+}
+/* Natpis se vidi tek kad avion sleti, da je jasno što otvara */
+.avion-leti__natpis {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: var(--more);
+  color: var(--na-moru);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-0.4rem);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s var(--ease-voda);
+  pointer-events: none;
+}
+.avion-leti:focus-visible {
+  outline: 2px solid var(--bronca);
+  outline-offset: 4px;
+}
+@media (hover: hover) {
+  .avion-leti:hover svg {
+    transform: translate(-3px, -3px) rotate(-6deg);
+  }
+  .avion-leti:hover .avion-leti__natpis {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Dok sjedi na gumbu, lagano se njiše na vjetru */
+  .avion-leti:not(.is-pada, .is-sletio) svg {
+    transform-origin: 70% 90%;
+    animation: avion-njihanje 2.6s ease-in-out infinite;
+  }
+  .avion-leti.is-sletio svg {
+    animation: avion-lebdi 3.4s ease-in-out infinite;
+  }
+}
+@keyframes avion-njihanje {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes avion-lebdi {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+}
+.avion-leti.is-pada {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 65;
+}
+/* Kad ga je posjetitelj sam spustio klikom, natpis se vidi već u padu */
+.avion-leti.is-pada.is-pozvan .avion-leti__natpis {
+  opacity: 1;
+  transform: none;
+}
+.avion-leti.is-sletio {
+  position: fixed;
+  left: max(1rem, env(safe-area-inset-left));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  top: auto;
+  z-index: 70;
+}
+.avion-leti.is-sletio .avion-leti__natpis {
+  opacity: 1;
+  transform: none;
+}
+.avion-leti.is-otisao {
+  opacity: 0;
+  transform: translate(-3rem, -2rem);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+body.menu-open .avion-leti,
+.asistent-open .avion-leti {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Prozor s kontakt formom */
+.avion-prozor {
+  width: min(40rem, 100% - 1.5rem);
+  max-width: none;
+  max-height: calc(100svh - 1.5rem);
+  margin: auto;
+  padding: 0.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--tekst);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.avion-prozor::backdrop {
+  background: rgba(4, 18, 26, 0.62);
+  backdrop-filter: blur(3px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .avion-prozor[open] {
+    animation: avion-prozor 0.5s var(--ease-voda);
+  }
+}
+@keyframes avion-prozor {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+}
+.avion-prozor .avion__stigao {
+  background: var(--kamen-svijetli);
+}
+.avion__zatvori {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--tekst);
+  cursor: pointer;
+}
+.avion__zatvori svg {
+  width: 1rem;
+  height: 1rem;
+}
+.avion__zatvori:hover {
+  background: var(--linija);
+}
+.avion-prozor .avion__zaglavlje {
+  padding-right: 2.5rem;
+}
+.avion-prozor .avion__papir {
+  gap: 1.1rem;
+}
+.hero__actions.ima-avion {
+  padding-top: 1.6rem;
+}
+@media (max-height: 820px) {
+  .hero__actions.ima-avion {
+    padding-top: 0.9rem;
+  }
+  .hero__actions .avion-leti svg {
+    width: 32px;
+    height: 27px;
+  }
+}
+/* Sadržaj koji uklizava sa strane (npr. rezultat pretraživanja) ne smije proširiti
+   stranicu na mobitelu; body overflow-x tamo ne sprječava odzumiravanje. */
+main {
+  overflow-x: clip;
 }

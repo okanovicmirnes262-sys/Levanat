@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
+import AvionForma from '../../components/AvionForma.astro';
 import { brand } from '../../config';
 import { breadcrumbSchema, isPlaceholder, type Crumb } from '../../lib';
 
@@ -16,7 +17,7 @@ const emailIsReal = !isPlaceholder(brand.email);
   description="Zatražite besplatnu ponudu za izradu web stranice, SEO optimizaciju ili AI chatbot. Web dizajner iz Šibenika, za klijente iz cijele Hrvatske."
   schema={[breadcrumbSchema(crumbs)]}
 >
-  <PageHero glava={2} crumbs={crumbs} label="Kontakt">
+  <PageHero crumbs={crumbs} label="Kontakt">
     <h1>Zatražite <em>besplatnu</em> ponudu</h1>
     <p class="lead">
       Kontakt forma je ispod, na listu papira. Upišite tko ste i čime se bavite, a papir će se presaviti u avion i
@@ -47,60 +48,7 @@ const emailIsReal = !isPlaceholder(brand.email);
         </p>
       </aside>
 
-      <div class="contact__form avion" data-avion>
-        <form class="avion__papir" id="obrazac" action="/api/kontakt" method="post" novalidate data-avion-papir>
-          <header class="avion__zaglavlje">
-            <p class="mono avion__oznaka">Kontakt forma · upit</p>
-            <p class="avion__za mono">Za: Mirnes, Levanat, Šibenik</p>
-          </header>
-          <h2 class="avion__naslov">Napišite mi par riječi, <em>presavijte i pošaljite.</em></h2>
-
-          <div class="field avion__polje">
-            <label for="ime">Kako se zovete?</label>
-            <input id="ime" name="ime" type="text" autocomplete="name" required minlength="2" maxlength="100" placeholder="Ime i prezime" aria-describedby="ime-greska" />
-            <p class="field__error" id="ime-greska" aria-live="polite"></p>
-          </div>
-
-          <div class="field avion__polje">
-            <label for="poruka">Čime se bavite i što Vam treba?</label>
-            <textarea id="poruka" name="poruka" required minlength="5" maxlength="5000" rows="3" placeholder="Npr. frizerski salon u Vodicama, imam samo Instagram…" aria-describedby="poruka-greska"></textarea>
-            <p class="field__error" id="poruka-greska" aria-live="polite"></p>
-          </div>
-
-          <div class="field avion__polje">
-            <label for="kontakt">Kako da Vam se javim?</label>
-            <input id="kontakt" name="kontakt" type="text" autocomplete="email" inputmode="email" required maxlength="200" placeholder="E-mail ili broj telefona" aria-describedby="kontakt-greska" />
-            <p class="field__error" id="kontakt-greska" aria-live="polite"></p>
-          </div>
-
-          <input type="hidden" name="usluga" value="" data-avion-usluga />
-          <div class="form__hp" aria-hidden="true">
-            <label for="web">Ne ispunjavajte ovo polje</label>
-            <input id="web" name="web" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-          <input type="hidden" name="t" value="" data-form-time />
-
-          <div class="avion__dno">
-            <button class="btn avion__gumb" type="submit">
-              <svg class="avion__ikona" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 2 11l7 2.5L22 3Zm0 0-9.5 12L9 13.5M22 3l-4 18-5.5-6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" /></svg>
-              <span data-submit-label>Pošaljite avion</span>
-            </button>
-            <p class="avion__pomoc">Gumb šalje upit izravno na moj e-mail. Javim se osobno, bez obveze.</p>
-            <p class="form__status" role="status" aria-live="polite" data-form-status></p>
-            <p class="form__note">
-              Podatke koristim samo da Vam odgovorim. Više u{' '}
-              <a class="link" href="/pravila-privatnosti">pravilima privatnosti</a>.
-            </p>
-          </div>
-        </form>
-
-        <div class="avion__stigao" hidden tabindex="-1" data-avion-stigao>
-          <p class="mono avion__oznaka">Upit poslan</p>
-          <p class="avion__stigao-naslov">Avion je stigao.</p>
-          <p>Hvala<span data-avion-ime></span>. Pročitat ću poruku i javiti Vam se s prijedlogom kako bi mogla izgledati Vaša stranica.</p>
-          <button type="button" class="link avion__opet" data-avion-opet>Pošaljite još jedan avion</button>
-        </div>
-      </div>
+      <AvionForma class="contact__form" />
     </div>
   </section>
 </Base>

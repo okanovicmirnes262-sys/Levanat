@@ -1,12 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import Reljef from '../components/Reljef.astro';
-import { glave } from '../data/kamen';
 ---
 
 <Base title="Stranica nije pronađena | Levanat" description="Tražena stranica ne postoji." noindex>
   <section class="hero more" style="padding-bottom: clamp(3rem, 8vw, 6rem);" data-svjetlo>
-    <Reljef glave={[glave[1]]} prioritet />
     <div class="odsjaj" aria-hidden="true"></div>
     <div class="wrap grid hero__content">
       <p class="hero__eyebrow mono"><span>Pogreška 404</span></p>
