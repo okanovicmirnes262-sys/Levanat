@@ -1676,6 +1676,58 @@ html.motion .friz__glava img:not(.is-loaded) {
   object-fit: cover;
   object-position: top center;
 }
+/* Projekt se „prolista”: visoka snimka klizi od vrha do dna */
+.work__cijela {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: auto !important;
+  object-fit: initial !important;
+  transform: translate3d(0, 0, 0);
+  transition: transform 1.2s cubic-bezier(0.45, 0, 0.2, 1);
+  will-change: transform;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .work__media--lista:hover .work__cijela {
+    transform: translate3d(0, var(--pomak, -80%), 0);
+    transition-duration: var(--trajanje, 7s);
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .work__media--lista.is-lista .work__cijela {
+    animation: listanje var(--trajanje, 7s) cubic-bezier(0.45, 0, 0.2, 1) 0.6s 1 alternate both;
+    animation-iteration-count: 2;
+  }
+}
+@keyframes listanje {
+  0%,
+  8% {
+    transform: translate3d(0, 0, 0);
+  }
+  92%,
+  100% {
+    transform: translate3d(0, var(--pomak, -80%), 0);
+  }
+}
+.work__hint {
+  position: absolute;
+  left: calc(clamp(0.6rem, 1.2vw, 1rem) + 0.9rem);
+  bottom: calc(clamp(0.6rem, 1.2vw, 1rem) + 0.9rem);
+  z-index: 2;
+  padding: 0.45rem 0.75rem;
+  background: rgba(11, 42, 60, 0.85);
+  color: var(--kamen);
+  transition: opacity 0.4s ease;
+}
+.work__media--lista:hover .work__hint {
+  opacity: 0;
+}
+@media (hover: none) {
+  .work__hint {
+    display: none;
+  }
+}
+
 .work__placeholder {
   position: absolute;
   inset: 0;
@@ -2521,6 +2573,11 @@ html.motion .friz__glava img:not(.is-loaded) {
 .kursor.is-on {
   opacity: 1;
 }
+@media (hover: none), (pointer: coarse) {
+  .kursor {
+    display: none;
+  }
+}
 .kursor.is-link {
   width: 64px;
   height: 64px;
@@ -2649,4 +2706,463 @@ html.lenis body {
   .friz--pinned .friz__misao {
     width: clamp(220px, 22vw, 320px);
   }
+}
+
+/* ---------- Demo chatbota ---------- */
+
+.chat {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  height: min(600px, 80svh);
+  background: var(--kamen-svijetli);
+  border: 1px solid var(--linija);
+  box-shadow: 0 40px 60px -40px rgba(11, 42, 60, 0.45);
+  overflow: hidden;
+}
+.chat__glava {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  background: var(--more);
+  color: var(--na-moru);
+}
+.chat__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--bronca);
+  color: var(--more-noc);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.chat__ime {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.chat__ime + .chat__status {
+  margin: 0;
+  color: var(--na-moru-2);
+}
+.chat__poruke {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.chat__msg {
+  max-width: 85%;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+.chat__msg + .chat__msg {
+  margin-top: 0;
+}
+.chat__msg--bot {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid var(--linija);
+  border-radius: 2px 14px 14px 14px;
+}
+.chat__msg--ja {
+  align-self: flex-end;
+  background: var(--more);
+  color: var(--na-moru);
+  border-radius: 14px 2px 14px 14px;
+}
+.chat__tipka {
+  display: flex;
+  gap: 0.3rem;
+  padding: 1rem;
+}
+.chat__tipka span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kamen-sjena);
+  animation: tipka 1s ease-in-out infinite;
+}
+.chat__tipka span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.chat__tipka span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes tipka {
+  50% {
+    transform: translateY(-4px);
+    opacity: 0.5;
+  }
+}
+.chat__ponuda {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-top: 1px solid var(--linija);
+}
+.chat__ponuda::-webkit-scrollbar {
+  display: none;
+}
+.chat__chip {
+  flex: none;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--tirkiz);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tirkiz-tekst);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+@media (hover: hover) {
+  .chat__chip:hover {
+    background: var(--tirkiz);
+    color: #fff;
+  }
+}
+.chat__unos {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem 1rem;
+  border-top: 1px solid var(--linija);
+}
+.chat__unos input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--linija-jaka);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 1rem;
+}
+.chat__unos input:focus {
+  outline: none;
+  border-color: var(--tirkiz);
+}
+.chat__posalji {
+  width: 2.8rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bronca);
+  color: var(--more-noc);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* ---------- Prije / poslije ---------- */
+
+.pp {
+  margin: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+.pp__okvir {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--more);
+  box-shadow: 0 40px 60px -45px rgba(11, 42, 60, 0.5);
+}
+.pp__slika {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.pp__slika--prije {
+  clip-path: inset(0 calc(100% - var(--x)) 0 0);
+}
+.pp__crta {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--x);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--bronca);
+  pointer-events: none;
+}
+.pp__rucka {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--bronca);
+  color: var(--more-noc);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  box-shadow: 0 6px 20px rgba(4, 18, 26, 0.35);
+}
+.pp__oznaka {
+  position: absolute;
+  top: 1rem;
+  padding: 0.4rem 0.7rem;
+  background: rgba(11, 42, 60, 0.85);
+  color: var(--kamen);
+  pointer-events: none;
+}
+.pp__oznaka--prije {
+  left: 1rem;
+}
+.pp__oznaka--poslije {
+  right: 1rem;
+  background: var(--bronca);
+  color: var(--more-noc);
+}
+.pp__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.pp__okvir:has(.pp__range:focus-visible) {
+  outline: 2px solid var(--bronca);
+  outline-offset: 4px;
+}
+.work__pp {
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+}
+
+/* ---------- Kalkulator okvirne cijene ---------- */
+
+.kalk {
+  display: grid;
+  gap: 1.75rem;
+  padding: clamp(1.4rem, 3.5vw, 2.5rem);
+  background: var(--kamen-svijetli);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 40px 60px -45px rgba(11, 42, 60, 0.45);
+}
+.kalk__pitanje {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+.kalk__pitanje legend {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+  font-size: 1.2rem;
+  font-weight: 450;
+}
+.kalk__opcije {
+  display: grid;
+  gap: 0.6rem;
+}
+@media (min-width: 640px) {
+  .kalk__opcije--red {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.kalk__opcija {
+  position: relative;
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--linija-jaka);
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+.kalk__opcija input {
+  margin-top: 0.3rem;
+  accent-color: var(--tirkiz);
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+.kalk__opcija span {
+  display: grid;
+  gap: 0.1rem;
+}
+.kalk__opcija strong {
+  font-weight: 500;
+}
+.kalk__opcija small {
+  color: var(--tekst-2);
+  font-size: 0.9rem;
+}
+.kalk__opcija:has(input:checked) {
+  border-color: var(--tirkiz);
+  background: rgba(31, 122, 128, 0.07);
+}
+.kalk__opcija:has(input:focus-visible) {
+  outline: 2px solid var(--bronca);
+  outline-offset: 2px;
+}
+.kalk__rezultat {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linija);
+}
+.kalk__rezultat p {
+  margin: 0;
+}
+.kalk__rezultat .mono {
+  color: var(--tekst-2);
+}
+.kalk__iznos {
+  font-size: clamp(2.2rem, 1.6rem + 2vw, 3.2rem);
+  font-weight: 360;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.kalk__napomena {
+  color: var(--tekst-2);
+  font-size: 0.95rem;
+  max-width: 34em;
+  margin-bottom: 0.6rem !important;
+}
+
+/* ---------- Kontakt forma kao razgovor ---------- */
+
+.korak {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 1.1rem;
+  min-width: 0;
+}
+.korak__pitanje {
+  display: block;
+  padding: 0;
+  margin-bottom: 0.4rem;
+  font-size: clamp(1.45rem, 1.15rem + 1vw, 2rem);
+  font-weight: 360;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.korak__izbor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.korak__opcija {
+  position: relative;
+  cursor: pointer;
+}
+.korak__opcija input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.korak__opcija span {
+  display: inline-block;
+  padding: 0.75rem 1.1rem;
+  border: 1px solid var(--linija-jaka);
+  border-radius: 999px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+.korak__opcija input:checked + span {
+  background: var(--more);
+  border-color: var(--more);
+  color: var(--na-moru);
+}
+.korak__opcija input:focus-visible + span {
+  outline: 2px solid var(--bronca);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .korak__opcija:hover span {
+    border-color: var(--tirkiz);
+  }
+}
+.koraci__napredak {
+  display: grid;
+  gap: 0.6rem;
+  color: var(--tekst-2);
+}
+.koraci__napredak[hidden],
+.koraci__gumbi[hidden],
+.koraci__gumbi [data-dalje][hidden],
+.form__foot[hidden],
+.korak[hidden] {
+  display: none;
+}
+.koraci__traka {
+  display: block;
+  height: 2px;
+  background: var(--linija);
+  position: relative;
+}
+.koraci__traka span {
+  position: absolute;
+  inset: 0;
+  background: var(--tirkiz);
+  transform-origin: left;
+  transform: scaleX(var(--p, 0.25));
+  transition: transform 0.6s var(--ease-voda);
+}
+.koraci__gumbi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.koraci__natrag {
+  border: 0;
+  background: none;
+  padding: 0.3rem 0;
+  cursor: pointer;
+  color: var(--tekst-2);
+}
+.koraci__natrag[hidden] {
+  visibility: hidden;
+  display: inline-block;
+}
+.koraci__gumbi .btn {
+  margin-left: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .form--koraci .korak.is-active {
+    animation: korak-ulaz 0.55s var(--ease-voda) both;
+  }
+}
+@keyframes korak-ulaz {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+}
+.form--koraci {
+  min-height: 24rem;
+  align-content: start;
 }

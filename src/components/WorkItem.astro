@@ -1,6 +1,7 @@
 ---
 import type { Rad } from '../data/radovi';
 import { isPlaceholder } from '../lib';
+import PrijePoslije from './PrijePoslije.astro';
 
 interface Props {
   rad: Rad;
@@ -14,10 +15,20 @@ const n = String(index + 1).padStart(2, '0');
 ---
 
 <article class="grid work">
-  <figure class="work__media">
+  <figure class={`work__media${rad.cijela ? ' work__media--lista' : ''}`} data-lista={rad.cijela ? '' : undefined}>
     <div class="work__okvir">
       {
-        rad.slika ? (
+        rad.cijela ? (
+          <img
+            class="work__cijela"
+            src={rad.cijela}
+            alt={`Cijela stranica projekta ${rad.naziv}`}
+            width="1000"
+            height="5000"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : rad.slika ? (
           <img src={rad.slika} alt={`Snimka zaslona: ${rad.naziv}`} width="1600" height="1000" loading="lazy" decoding="async" />
         ) : (
           <div class="work__placeholder mono" aria-hidden="true">
@@ -28,6 +39,7 @@ const n = String(index + 1).padStart(2, '0');
       }
     </div>
     {rad.uIzradi && <span class="work__badge mono">U izradi</span>}
+    {rad.cijela && <span class="work__hint mono" aria-hidden="true">Pređite mišem i prolistajte</span>}
   </figure>
   <div class="work__body">
     <p class="mono">{n} · {rad.vrsta}</p>
@@ -43,4 +55,11 @@ const n = String(index + 1).padStart(2, '0');
       )
     }
   </div>
+  {
+    rad.prije && rad.slika && (
+      <div class="work__pp">
+        <PrijePoslije prije={rad.prije} poslije={rad.slika} naziv={rad.naziv} />
+      </div>
+    )
+  }
 </article>

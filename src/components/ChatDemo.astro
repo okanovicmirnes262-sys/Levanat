@@ -1,0 +1,87 @@
+---
+// Demo AI chatbota: posjetitelj bira pitanje ili ga upiše, asistent „tipka” odgovor.
+import { demoOdgovori, demoNeznam } from '../data/chatDemo';
+const data = JSON.stringify({ odgovori: demoOdgovori, neznam: demoNeznam });
+---
+
+<div class="chat" data-chat data-chat-podaci={data}>
+  <div class="chat__glava">
+    <span class="chat__avatar" aria-hidden="true">L</span>
+    <div>
+      <p class="chat__ime">Asistent</p>
+      <p class="chat__status mono">Pokazni primjer</p>
+    </div>
+  </div>
+  <div class="chat__poruke" role="log" aria-live="polite" aria-label="Razgovor s asistentom" data-chat-poruke>
+    <p class="chat__msg chat__msg--bot">Dobar dan! Ja sam asistent na web stranici. Odaberite pitanje ispod ili ga napišite sami.</p>
+  </div>
+  <div class="chat__ponuda" data-chat-ponuda>
+    {demoOdgovori.map((o, i) => <button type="button" class="chat__chip" data-i={i}>{o.pitanje}</button>)}
+  </div>
+  <form class="chat__unos" data-chat-forma>
+    <label class="sr-only" for="chat-pitanje">Vaše pitanje</label>
+    <input id="chat-pitanje" type="text" placeholder="Napišite pitanje…" autocomplete="off" maxlength="200" />
+    <button type="submit" class="chat__posalji" aria-label="Pošalji">→</button>
+  </form>
+</div>
+
+<script>
+  type O = { pitanje: string; kljucne: string[]; odgovor: string };
+  document.querySelectorAll<HTMLElement>('[data-chat]').forEach((root) => {
+    const { odgovori, neznam } = JSON.parse(root.dataset.chatPodaci!) as { odgovori: O[]; neznam: string };
+    const log = root.querySelector<HTMLElement>('[data-chat-poruke]')!;
+    const form = root.querySelector<HTMLFormElement>('[data-chat-forma]')!;
+    const input = form.querySelector('input')!;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let busy = false;
+
+    const add = (cls: string, text = '') => {
+      const p = document.createElement('p');
+      p.className = `chat__msg ${cls}`;
+      p.textContent = text;
+      log.appendChild(p);
+      log.scrollTop = log.scrollHeight;
+      return p;
+    };
+
+    const odgovori_ = async (pitanje: string, odgovor: string) => {
+      if (busy) return;
+      busy = true;
+      add('chat__msg--ja', pitanje);
+      const t = add('chat__msg--bot chat__tipka');
+      t.setAttribute('aria-label', 'Asistent piše');
+      t.innerHTML = '<span></span><span></span><span></span>';
+      await new Promise((r) => setTimeout(r, still ? 200 : 900));
+      t.classList.remove('chat__tipka');
+      t.removeAttribute('aria-label');
+      if (still) t.textContent = odgovor;
+      else {
+        t.textContent = '';
+        const words = odgovor.split(' ');
+        for (let i = 0; i < words.length; i++) {
+          t.textContent += (i ? ' ' : '') + words[i];
+          log.scrollTop = log.scrollHeight;
+          await new Promise((r) => setTimeout(r, 28));
+        }
+      }
+      busy = false;
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('.chat__chip').forEach((b) =>
+      b.addEventListener('click', () => {
+        const o = odgovori[Number(b.dataset.i)];
+        odgovori_(o.pitanje, o.odgovor);
+      }),
+    );
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = input.value.trim();
+      if (!q) return;
+      input.value = '';
+      const low = q.toLowerCase();
+      const hit = odgovori.find((o) => o.kljucne.some((k) => low.includes(k)));
+      odgovori_(q, hit ? hit.odgovor : neznam);
+    });
+  });
+</script>

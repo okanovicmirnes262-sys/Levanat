@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
 import Cta from '../../components/Cta.astro';
+import Kalkulator from '../../components/Kalkulator.astro';
 import { brand } from '../../config';
 import { webFaq } from '../../data/faq';
 import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
@@ -94,6 +95,8 @@ const included = [
           Konačna cijena ovisi o broju podstranica, količini sadržaja i dodatnim mogućnostima, poput obrasca za upite ili
           AI chatbota. Nakon kratkog razgovora dobivate besplatnu ponudu u kojoj je svaka stavka jasno navedena.
         </p>
+        <p class="label" style="margin-top: 1rem">Izračunajte okvirnu cijenu</p>
+        <Kalkulator />
         <p data-reveal="fade">
           Nakon izrade birate: <a class="link" href="/usluge#odrzavanje">mjesečno održavanje</a> s uključenim izmjenama ili
           jednokratnu predaju cijelog projekta u Vaše ruke.

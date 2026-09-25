@@ -1,0 +1,30 @@
+---
+// Usporedba stare i nove stranice: okomiti klizač (miš, prst, tipkovnica).
+interface Props {
+  prije: string;
+  poslije: string;
+  naziv: string;
+}
+const { prije, poslije, naziv } = Astro.props;
+---
+
+<figure class="pp" data-pp style="--x: 50%">
+  <div class="pp__okvir">
+    <img class="pp__slika" src={poslije} alt={`${naziv}: nova stranica`} width="1600" height="1000" loading="lazy" decoding="async" />
+    <img class="pp__slika pp__slika--prije" src={prije} alt={`${naziv}: stara stranica`} width="1600" height="1000" loading="lazy" decoding="async" />
+    <span class="pp__crta" aria-hidden="true"><span class="pp__rucka">‹ ›</span></span>
+    <span class="pp__oznaka pp__oznaka--prije mono" aria-hidden="true">Prije</span>
+    <span class="pp__oznaka pp__oznaka--poslije mono" aria-hidden="true">Poslije</span>
+    <input class="pp__range" type="range" min="0" max="100" value="50" aria-label={`Usporedba stare i nove stranice: ${naziv}`} />
+  </div>
+  <figcaption class="mono muted">Povucite crtu lijevo ili desno: stara stranica i nova stranica.</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-pp]').forEach((fig) => {
+    const r = fig.querySelector<HTMLInputElement>('.pp__range')!;
+    const set = () => fig.style.setProperty('--x', `${r.value}%`);
+    r.addEventListener('input', set);
+    set();
+  });
+</script>

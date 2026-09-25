@@ -155,7 +155,7 @@ export function initMotion() {
 
   // Radovi: vrlo blagi paralaks snimki zaslona
   if (fine) {
-    gsap.utils.toArray<HTMLElement>('.work__okvir img').forEach((img) => {
+    gsap.utils.toArray<HTMLElement>('.work__okvir img:not(.work__cijela)').forEach((img) => {
       gsap.fromTo(img, { yPercent: 0 }, { yPercent: -8, ease: 'none', scrollTrigger: { trigger: img.parentElement, scrub: true } });
     });
   }

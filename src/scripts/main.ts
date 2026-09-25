@@ -69,6 +69,35 @@ document.querySelectorAll<HTMLElement>('[data-friz]').forEach((friz) => {
   io.observe(friz);
 });
 
+// Radovi: izračunaj koliko visoka snimka treba kliznuti; na dodirnim ekranima
+// prolistaj je sama kad kartica uđe na ekran
+document.querySelectorAll<HTMLElement>('[data-lista]').forEach((fig) => {
+  const img = fig.querySelector<HTMLImageElement>('.work__cijela');
+  const box = fig.querySelector<HTMLElement>('.work__okvir');
+  if (!img || !box) return;
+  const measure = () => {
+    if (!img.naturalWidth) return;
+    const h = (box.clientWidth / img.naturalWidth) * img.naturalHeight;
+    const move = Math.max(h - box.clientHeight, 0);
+    fig.style.setProperty('--pomak', `${-move}px`);
+    fig.style.setProperty('--trajanje', `${Math.min(Math.max(move / 450, 3), 10).toFixed(1)}s`);
+  };
+  img.complete ? measure() : img.addEventListener('load', measure, { once: true });
+  new ResizeObserver(measure).observe(box);
+  if (matchMedia('(hover: none)').matches) {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio > 0.6) {
+          fig.classList.add('is-lista');
+          io.disconnect();
+        }
+      },
+      { threshold: [0, 0.6, 1] },
+    );
+    io.observe(fig);
+  }
+});
+
 // More pod katedralom
 document.querySelectorAll<HTMLElement>('[data-obala]').forEach((el) => {
   if (weak) return;

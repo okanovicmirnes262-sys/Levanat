@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
 import Cta from '../../components/Cta.astro';
+import ChatDemo from '../../components/ChatDemo.astro';
 import { chatbotFaq } from '../../data/faq';
 import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
 
@@ -56,6 +57,19 @@ const how = [
             ))
           }
         </ol>
+      </div>
+    </section>
+
+    <section class="grid block" aria-labelledby="isprobajte">
+      <div class="block__head">
+        <p class="label">Isprobajte</p>
+        <h2 id="isprobajte" data-reveal="line">Ovako izgleda razgovor s asistentom</h2>
+        <p class="muted">
+          Pokazni primjer s pripremljenim odgovorima. Postavite pitanje kao da ste posjetitelj stranice.
+        </p>
+      </div>
+      <div class="block__body">
+        <ChatDemo />
       </div>
     </section>
 

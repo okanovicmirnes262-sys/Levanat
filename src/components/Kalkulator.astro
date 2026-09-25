@@ -1,0 +1,93 @@
+---
+// Kalkulator okvirne cijene: nekoliko pitanja → raspon; odgovori se prenose u kontakt formu.
+import { velicine, jezici, dodaci } from '../data/kalkulator';
+const data = JSON.stringify({ velicine, jezici, dodaci });
+---
+
+<form class="kalk" data-kalk data-kalk-podaci={data} action="/kontakt" method="get">
+  <fieldset class="kalk__pitanje">
+    <legend><span class="broj">1</span> Koliko velika stranica Vam treba?</legend>
+    <div class="kalk__opcije">
+      {
+        velicine.map((o, i) => (
+          <label class="kalk__opcija">
+            <input type="radio" name="velicina" value={i} checked={i === 0} />
+            <span>
+              <strong>{o.oznaka}</strong>
+              {o.opis && <small>{o.opis}</small>}
+            </span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="kalk__pitanje">
+    <legend><span class="broj">2</span> Na koliko jezika?</legend>
+    <div class="kalk__opcije kalk__opcije--red">
+      {
+        jezici.map((o, i) => (
+          <label class="kalk__opcija">
+            <input type="radio" name="jezici" value={i} checked={i === 0} />
+            <span><strong>{o.oznaka}</strong></span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="kalk__pitanje">
+    <legend><span class="broj">3</span> Dodaci</legend>
+    <div class="kalk__opcije">
+      {
+        dodaci.map((o, i) => (
+          <label class="kalk__opcija kalk__opcija--check">
+            <input type="checkbox" name="dodaci" value={i} />
+            <span>
+              <strong>{o.oznaka}</strong>
+              {o.opis && <small>{o.opis}</small>}
+            </span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="kalk__rezultat" aria-live="polite">
+    <p class="mono">Okvirno</p>
+    <p class="kalk__iznos" data-kalk-iznos>200–350 €</p>
+    <p class="kalk__napomena">
+      Uključeno: pomoć oko domene i hostinga te Google Business profil. Točnu cijenu dobivate u besplatnoj ponudi.
+    </p>
+    <input type="hidden" name="usluga" value="Izrada web stranice" />
+    <input type="hidden" name="poruka" value="" data-kalk-poruka />
+    <button class="btn" type="submit">Zatražite točnu ponudu <span class="btn__arrow" aria-hidden="true">→</span></button>
+  </div>
+</form>
+
+<script>
+  type O = { oznaka: string; raspon: [number, number] };
+  document.querySelectorAll<HTMLFormElement>('[data-kalk]').forEach((form) => {
+    const d = JSON.parse(form.dataset.kalkPodaci!) as { velicine: O[]; jezici: O[]; dodaci: O[] };
+    const out = form.querySelector<HTMLElement>('[data-kalk-iznos]')!;
+    const msg = form.querySelector<HTMLInputElement>('[data-kalk-poruka]')!;
+    const fmt = (n: number) => n.toLocaleString('hr-HR');
+    const update = () => {
+      const fd = new FormData(form);
+      const v = d.velicine[Number(fd.get('velicina'))];
+      const j = d.jezici[Number(fd.get('jezici'))];
+      const ds = fd.getAll('dodaci').map((i) => d.dodaci[Number(i)]);
+      const all = [v, j, ...ds];
+      const od = all.reduce((s, o) => s + o.raspon[0], 0);
+      const doo = all.reduce((s, o) => s + o.raspon[1], 0);
+      out.textContent = `${fmt(od)}–${fmt(doo)} €`;
+      msg.value =
+        `Zanima me izrada web stranice.\n` +
+        `Veličina: ${v.oznaka}\nJezici: ${j.oznaka}\n` +
+        `Dodaci: ${ds.length ? ds.map((o) => o.oznaka).join(', ') : 'bez dodataka'}\n` +
+        `Okvirni raspon iz kalkulatora: ${out.textContent}\n\nO mom poslu: `;
+    };
+    form.addEventListener('change', update);
+    update();
+  });
+</script>
