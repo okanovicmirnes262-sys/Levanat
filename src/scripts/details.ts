@@ -1,8 +1,4 @@
-// Skriveni detalji: pozdrav pri ponovnom posjetu, sat, izlazak sunca, poruka u konzoli.
-import { sunrise, formatTime } from './sun';
-
-const LAT = 43.735;
-const LON = 15.8897;
+// Skriveni detalji: pozdrav pri ponovnom posjetu i poruka u konzoli.
 
 function store(kind: 'local' | 'session') {
   try {
@@ -31,37 +27,6 @@ function greeting() {
   }
 }
 
-function clockAndSun() {
-  const clock = document.querySelector<HTMLElement>('[data-clock]');
-  const sunEl = document.querySelector<HTMLElement>('[data-sunrise]');
-  const line = document.querySelector<HTMLElement>('[data-sun-line]');
-
-  const update = () => {
-    const now = new Date();
-    if (clock) {
-      clock.textContent = formatTime(now);
-      clock.setAttribute('datetime', now.toISOString());
-    }
-    const rise = sunrise(now, LAT, LON);
-    if (!rise) return;
-    const t = formatTime(rise);
-    if (sunEl) sunEl.textContent = t;
-    if (line) {
-      line.textContent =
-        now < rise ? `Danas sunce nad Šibenikom izlazi u ${t}.` : `Danas je sunce nad Šibenikom izašlo u ${t}.`;
-    }
-  };
-  update();
-  if (clock) {
-    // Osvježi na početku sljedeće minute, zatim svake minute.
-    const toNextMinute = 60000 - (Date.now() % 60000);
-    setTimeout(() => {
-      update();
-      setInterval(update, 60000);
-    }, toNextMinute);
-  }
-}
-
 function consoleNote() {
   const style = 'font: 14px Georgia, serif; color: #0f2a33; line-height: 1.6;';
   const accent = 'font: 14px Georgia, serif; color: #a9471f;';
@@ -74,7 +39,6 @@ function consoleNote() {
 
 export function initDetails() {
   greeting();
-  clockAndSun();
   if (!store('session')?.getItem('levanat.konzola')) {
     consoleNote();
     try {

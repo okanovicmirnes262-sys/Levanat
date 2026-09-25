@@ -2081,24 +2081,9 @@ html.motion .friz--pinned .friz__traka {
 }
 @media (min-width: 900px) {
   .footer__bottom {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr;
     align-items: baseline;
   }
-  .footer__sun {
-    justify-self: end;
-  }
-}
-.footer__sun {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-}
-.footer__sun::before {
-  content: '';
-  width: 0.9rem;
-  height: 1px;
-  background: var(--bronca);
-  align-self: center;
 }
 .colophon {
   margin-top: 1rem;
