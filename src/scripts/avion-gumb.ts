@@ -1,7 +1,7 @@
 // Papirnati avion: na početnoj sjedi na gumbu „Zatražite besplatnu ponudu” i nakon
-// nekoliko sekundi polako padne kao list na vjetru. Klik na bilo koji takav gumb
-// spusti avion s tog gumba. Avion ostaje u donjem lijevom kutu, a klik na njega
-// otvara kontakt formu u prozoru; sama forma (avion.ts) učitava se tek tada.
+// nekoliko sekundi polako padne kao list na vjetru i ostane u donjem lijevom kutu.
+// Klik na avion ili na bilo koji gumb „Zatražite besplatnu ponudu” otvara kontakt
+// formu u prozoru; sama forma (avion.ts) učitava se tek tada.
 import { lenisRef } from './lenis-ref';
 
 type Stanje = 'skriven' | 'sjedi' | 'pada' | 'sletio';
@@ -11,8 +11,9 @@ export function initAvionLet() {
   const dlg = document.querySelector<HTMLDialogElement>('[data-avion-prozor]');
   if (!plane || !dlg || typeof dlg.showModal !== 'function') return;
 
+  let poslan = false;
   try {
-    if (sessionStorage.getItem('levanat.avion') === '1') return;
+    poslan = sessionStorage.getItem('levanat.avion') === '1';
   } catch {
     /* bez sessionStoragea avion se samo ponovno pojavi */
   }
@@ -32,6 +33,7 @@ export function initAvionLet() {
       m.initAvion(dlg);
     }
     if (dlg.open) return;
+    dlg.querySelector('[data-avion]')?.dispatchEvent(new Event('avion:novi'));
     dlg.showModal();
     lenisRef.current?.stop();
     dlg.querySelector<HTMLInputElement>('#ime')?.focus();
@@ -49,7 +51,6 @@ export function initAvionLet() {
     } catch {
       /* nije bitno */
     }
-    odjavi();
     plane.classList.add('is-otisao');
     setTimeout(() => plane.remove(), 600);
   });
@@ -122,7 +123,7 @@ export function initAvionLet() {
     if (scrollY > 60 && stanje === 'sjedi') spustiS(seat!, 4600);
   };
 
-  if (seat) {
+  if (seat && !poslan) {
     stanje = 'sjedi';
     plane.hidden = false;
     // Mjesto iznad gumba, da avion ne dira tekst iznad njega
@@ -137,19 +138,18 @@ export function initAvionLet() {
     }
   }
 
-  // Klik na „Zatražite besplatnu ponudu”: umjesto odlaska na /kontakt, s gumba padne avion
+  // Klik na „Zatražite besplatnu ponudu”: umjesto odlaska na /kontakt odmah se otvori forma
   const gumbi = [...document.querySelectorAll<HTMLAnchorElement>('a.btn[href="/kontakt"]')].filter(
     (a) => !a.closest('.mobile-menu'),
   );
   const naKlik = (e: MouseEvent) => {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
-    if (reduce) {
-      otvori();
-      return;
-    }
-    spustiS(e.currentTarget as HTMLElement, 2400);
+    otvori();
   };
-  gumbi.forEach((a) => a.addEventListener('click', naKlik));
-  const odjavi = () => gumbi.forEach((a) => a.removeEventListener('click', naKlik));
+  gumbi.forEach((a) => {
+    a.addEventListener('click', naKlik);
+    a.addEventListener('pointerenter', () => import('./avion'), { once: true });
+    a.setAttribute('aria-haspopup', 'dialog');
+  });
 }

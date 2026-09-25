@@ -58,7 +58,7 @@ Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levana
 | Brončani kursor, magnetni gumbi, kamen koji se odiže na hover | desktop | `src/scripts/cursor.ts`, CSS |
 | Prijelazi između stranica | sve | CSS View Transitions |
 | Kontakt forma kao papirnati avion: papir se presavije i odleti na levantu dok se upit šalje | /kontakt i prozor na svim stranicama | `src/scripts/avion.ts` |
-| Avion pada s gumba „Zatražite besplatnu ponudu” (na početnoj sam, drugdje na klik) i ostaje u kutu; klik otvara formu | sve osim /kontakt | `src/scripts/avion-gumb.ts` |
+| Avion na početnoj pada s gumba „Zatražite besplatnu ponudu” i ostaje u kutu; klik na avion ili na taj gumb (na svim stranicama) otvara formu | sve osim /kontakt | `src/scripts/avion-gumb.ts` |
 
 **Performanse i pristupačnost:**
 - WebGL se učitava tek kad je preglednik slobodan i kad je sekcija blizu ekrana.

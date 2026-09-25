@@ -173,6 +173,12 @@ function init(root: HTMLElement) {
     form.hidden = false;
     stigao.hidden = true;
   };
+  // Ponovno otvaranje prozora nakon poslanog upita počinje s praznim papirom
+  root.addEventListener('avion:novi', () => {
+    if (stigao.hidden) return;
+    vrati();
+    time.value = String(Date.now());
+  });
   opet?.addEventListener('click', () => {
     vrati();
     time.value = String(Date.now());
