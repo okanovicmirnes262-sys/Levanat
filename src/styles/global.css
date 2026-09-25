@@ -3547,8 +3547,8 @@ html.motion .kostur [data-puni] {
 @media (min-width: 1100px) {
   .scena__kostur {
     left: auto;
-    right: 3.5vw;
-    width: min(46vw, 820px);
+    right: 3vw;
+    width: min(40vw, 760px);
     top: 50%;
     transform: translateY(-46%);
     opacity: 1;
@@ -3574,6 +3574,33 @@ html.motion .kostur [data-puni] {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .scena {
+    height: 100vh;
+    height: 100svh;
+  }
+}
+
+/* Tekst heroja zauzima lijevu polovicu, kostur desnu: bez preklapanja */
+@media (min-width: 1100px) {
+  .scena .hero__eyebrow,
+  .scena .hero__title,
+  .scena .hero__foot,
+  .scena .hero__meta {
+    grid-column: 1 / span 6;
+  }
+  .scena .hero__title {
+    font-size: clamp(2.6rem, 0.6rem + 4.1vw, 5.6rem);
+  }
+  .scena .lead,
+  .scena .hero__opis {
+    max-width: none;
+  }
+}
+/* Mobitel i tablet: nema mjesta za kostur uz tekst, pa se ne prikazuje (bez preklapanja) */
+@media (max-width: 1099px) {
+  .scena__kostur {
+    display: none;
+  }
   .scena {
     height: 100vh;
     height: 100svh;

@@ -3,7 +3,7 @@
 
 export function initScena(scena: HTMLElement) {
   const kostur = scena.querySelector<SVGSVGElement>('[data-kostur]');
-  if (!kostur) return;
+  if (!kostur || !kostur.getClientRects().length) return; // skriven na manjim ekranima
   const zice = [...kostur.querySelectorAll<SVGGeometryElement>('[data-zica]')];
   const puni = [...kostur.querySelectorAll<SVGElement>('[data-puni]')];
   const smanjeno = matchMedia('(prefers-reduced-motion: reduce)').matches;
