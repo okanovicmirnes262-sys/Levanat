@@ -57,16 +57,28 @@ export function initMotion() {
       });
   }
 
-  // Rezultat pretraživanja: najprije „samo Facebook”, zatim zdesna uklizne Vaša stranica
-  const serp = document.querySelector<HTMLElement>('[data-serp]');
-  if (serp) {
-    const prije = serp.querySelector('.serp__stanje--prije');
-    const poslije = serp.querySelector('.serp__stanje--poslije');
-    gsap.set(poslije, { opacity: 0, x: 60 });
-    gsap
-      .timeline({ scrollTrigger: { trigger: serp, start: 'top 70%', once: true } })
-      .to(poslije, { opacity: 1, x: 0, duration: 1.1, ease: 'expo.out', delay: 0.5 })
-      .to(prije, { opacity: 0.55, duration: 0.8, ease: 'power2.out' }, '<0.2');
+  // Jedna adresa za sve: linije od izvora do stranice crtaju se jedna za drugom
+  const adr = document.querySelector<HTMLElement>('[data-adresa]');
+  if (adr) {
+    const grupe = [...adr.querySelectorAll<SVGGElement>('.adresa__linije g')];
+    const izvori = [...adr.querySelectorAll<HTMLElement>('.adresa__izvor')];
+    const n = grupe.length;
+    const set = (p: number) => {
+      for (let i = 0; i < n; i++) {
+        const t = Math.min(Math.max((p - (i / n) * 0.6) / 0.4, 0), 1).toFixed(3);
+        grupe[i].style.setProperty('--t', t);
+        izvori[i]?.style.setProperty('--t', t);
+      }
+      adr.classList.toggle('is-spojeno', p > 0.98);
+    };
+    set(0);
+    ScrollTrigger.create({
+      trigger: adr,
+      start: 'top 80%',
+      end: 'center 55%',
+      scrub: true,
+      onUpdate: (s) => set(s.progress),
+    });
   }
 
   // Friz glava: na većim ekranima sekcija se prikuje i traka klizi vodoravno

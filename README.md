@@ -54,6 +54,7 @@ Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levana
 | Friz Šibenčana: prikovana vodoravna šetnja na scroll (desktop i mobitel, na mobitelu radi i swipe), mreža (smanjeno kretanje) | početna | `src/scripts/motion.ts` |
 | Plima: valovite granice između kamena i mora | sve stranice | `src/components/Plima.astro`, `src/scripts/plima.ts` |
 | Odsjaji vode (caustics) na kamenu i moru | pozadine | `public/odsjaj.webp` + CSS |
+| Jedna adresa za sve: linije od Google profila, mreža, poruka, letka i preporuke crtaju se na scroll prema stranici | početna | `src/components/JednaAdresa.astro`, `src/scripts/motion.ts` |
 | Klesanje naslova, izranjanje teksta, linija plime u procesu, paralaksa | sve stranice | `src/scripts/motion.ts` |
 | Brončani kursor, magnetni gumbi, kamen koji se odiže na hover | desktop | `src/scripts/cursor.ts`, CSS |
 | Prijelazi između stranica | sve | CSS View Transitions |

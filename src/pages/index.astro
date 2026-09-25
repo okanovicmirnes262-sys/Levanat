@@ -10,6 +10,7 @@ import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
 import { kipovi } from '../data/kamen';
 import Kostur from '../components/Kostur.astro';
+import JednaAdresa from '../components/JednaAdresa.astro';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
@@ -126,46 +127,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
         <p data-reveal="fade">Stranica ne zamjenjuje društvene mreže. Nadopunjuje ih.</p>
       </div>
 
-      <figure class="serp" data-serp aria-labelledby="serp-opis">
-        <div class="serp__frame">
-          <div class="serp__bar" aria-hidden="true">
-            <svg viewBox="0 0 16 16" fill="none"
-              ><circle cx="7" cy="7" r="5.25" stroke="currentColor" stroke-width="1.2"></circle><path
-                d="M11 11l3.5 3.5"
-                stroke="currentColor"
-                stroke-width="1.2"></path></svg
-            >
-            <span>vodoinstalater šibenik</span>
-            <span class="serp__caret"></span>
-          </div>
-
-          <div class="serp__stanje serp__stanje--prije">
-            <p class="serp__oznaka mono">Samo Facebook</p>
-            <div class="serp__rezultat">
-              <p class="serp__url">facebook.com › vodoinstalater.marko</p>
-              <p class="serp__title">Vodoinstalater Marko | Facebook</p>
-              <p class="serp__desc">Prijavite se ili se registrirajte da biste vidjeli više sadržaja…</p>
-            </div>
-            <p class="serp__ishod">Posjetitelj prvo naiđe na prozor za prijavu.</p>
-          </div>
-
-          <div class="serp__stanje serp__stanje--poslije">
-            <p class="serp__oznaka mono">Vlastita stranica</p>
-            <div class="serp__rezultat">
-              <p class="serp__url">vodoinstalater-marko.hr</p>
-              <p class="serp__title">Vodoinstalater u Šibeniku · Popravci i ugradnja | Marko</p>
-              <p class="serp__desc">
-                Popravci, ugradnja i hitne intervencije u Šibeniku i okolici. Usluge, radno vrijeme i kontakt na jednom
-                mjestu.
-              </p>
-            </div>
-            <p class="serp__ishod">Posjetitelj odmah vidi usluge, radno vrijeme i kontakt.</p>
-          </div>
-        </div>
-        <figcaption id="serp-opis" class="mono">
-          Ilustracija: isti obrt u rezultatima pretraživanja, prije i poslije vlastite stranice.
-        </figcaption>
-      </figure>
+      <JednaAdresa />
     </div>
   </section>
 

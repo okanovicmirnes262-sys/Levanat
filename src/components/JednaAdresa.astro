@@ -1,0 +1,53 @@
+---
+// „Jedna adresa za sve”: s raznih mjesta (Google profil, društvene mreže, poruke,
+// letak, preporuka) linije vode na jednu stranicu. Linije se crtaju na scroll.
+const izvori = [
+  { ime: 'Google profil', gdje: 'gumb „Web-lokacija”', x: 50, y: 7 },
+  { ime: 'Facebook', gdje: 'gumb na stranici', x: 15, y: 24 },
+  { ime: 'Instagram', gdje: 'link u opisu profila', x: 85, y: 24 },
+  { ime: 'WhatsApp i poruke', gdje: 'poslani link', x: 15, y: 76 },
+  { ime: 'Letak i posjetnica', gdje: 'adresa ili QR kod', x: 85, y: 76 },
+  { ime: 'Preporuka', gdje: '„pogledaj vasobrt.hr”', x: 50, y: 93 },
+];
+// Krivulja od izvora do sredine; bočne se savijaju prema vodoravnoj osi
+const put = ({ x, y }: { x: number; y: number }) =>
+  x === 50 ? `M${x} ${y} L50 50` : `M${x} ${y} Q${x} 50 50 50`;
+const stavke = ['Usluge', 'Radno vrijeme', 'Lokacija', 'Kontakt'];
+---
+
+<figure class="adresa" data-adresa aria-labelledby="adresa-opis">
+  <div class="adresa__polje">
+    <svg class="adresa__linije" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      {
+        izvori.map((i, n) => (
+          <g style={`--n:${n}`}>
+            <path class="adresa__linija" d={put(i)} pathLength="1" />
+            <path class="adresa__puls" d={put(i)} pathLength="1" />
+          </g>
+        ))
+      }
+    </svg>
+
+    <ul class="adresa__izvori">
+      {
+        izvori.map((i, n) => (
+          <li class="adresa__izvor" style={`left:${i.x}%;top:${i.y}%;--n:${n}`}>
+            <span class="adresa__ime">{i.ime}</span>
+            <span class="adresa__gdje">{i.gdje}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="adresa__stranica">
+      <p class="adresa__traka mono"><span aria-hidden="true"></span>vasobrt.hr</p>
+      <p class="adresa__oznaka mono">Vaša stranica</p>
+      <ul>
+        {stavke.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+  </div>
+  <figcaption id="adresa-opis" class="mono">
+    Ilustracija: ljudi dolaze s različitih mjesta, a sve važno pronađu na jednoj adresi.
+  </figcaption>
+</figure>
