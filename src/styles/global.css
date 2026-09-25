@@ -3585,3 +3585,46 @@ html.motion .kostur [data-puni] {
     height: 100svh;
   }
 }
+
+/* ---------- Hero: bez preklapanja sa zaglavljem na niskim ekranima ---------- */
+.scena__tekst {
+  /* „safe”: ako tekst ne stane, poravna se ispod zaglavlja, a ne preko njega */
+  justify-content: safe flex-end;
+  padding-top: calc(var(--header-h) + 1.25rem);
+}
+@media (min-width: 1100px) {
+  .scena__tekst {
+    justify-content: safe center;
+  }
+}
+/* Naslov se ravna i prema visini ekrana */
+.scena .hero__title {
+  font-size: clamp(2.3rem, min(1.3rem + 4.6vw, 10.5svh), 6.2rem);
+}
+.scena .hero__content {
+  row-gap: clamp(0.9rem, 2.4svh, 1.75rem);
+}
+.scena .hero__foot {
+  gap: clamp(0.6rem, 1.6svh, 1.25rem);
+}
+@media (max-height: 820px) {
+  .scena .lead {
+    font-size: clamp(1.05rem, 2.3svh, 1.3rem);
+  }
+  .scena .hero__opis {
+    font-size: 0.95rem;
+  }
+  .scena .hero__actions {
+    margin-top: 0.25rem;
+  }
+}
+@media (max-height: 720px) {
+  .scena .hero__meta {
+    display: none;
+  }
+}
+@media (max-height: 620px) {
+  .scena .hero__opis {
+    display: none;
+  }
+}
