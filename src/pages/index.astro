@@ -9,7 +9,6 @@ import { brand, services } from '../config';
 import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
 import { kipovi } from '../data/kamen';
-import hodnik from '../assets/scena/hodnik.webp';
 import nikola from '../assets/scena/nikola.webp';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
@@ -64,22 +63,9 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
   description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
   schema={[faqSchema(homeFaq), pageSchema]}
 >
-  <!-- Hero: šetnja kroz hodnik tvrđave sv. Nikole (scroll scena) -->
+  <!-- Hero: tvrđava sv. Nikole izbliza; kamera se udaljava sa scrollom -->
   <section class="scena" aria-labelledby="naslov" data-scena>
     <div class="scena__kadar">
-      <Picture
-        src={hodnik}
-        alt=""
-        class="scena__sloj scena__hodnik"
-        formats={['avif', 'webp']}
-        fallbackFormat="webp"
-        widths={[800, 1280, 1920]}
-        sizes="100vw"
-        loading="eager"
-        fetchpriority="high"
-        data-scena-hodnik
-      />
-      <div class="scena__vinjeta" data-scena-vinjeta></div>
       <Picture
         src={nikola}
         alt="Tvrđava sv. Nikole na ulazu u šibenski kanal, iz zraka"
@@ -89,9 +75,9 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
         widths={[800, 1280, 1920]}
         sizes="100vw"
         loading="eager"
+        fetchpriority="high"
         data-scena-tvrdava
       />
-      <div class="scena__bljesak" data-scena-bljesak></div>
       <div class="scena__veo" data-scena-veo></div>
       <p class="scena__potpis mono" data-scena-potpis>Tvrđava sv. Nikole · Šibenik</p>
       <div class="scena__tekst" data-scena-tekst>
@@ -130,12 +116,12 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       </dl>
     </div>
       </div>
+      <Plima polozaj="dolje" boja="var(--kamen)" />
     </div>
-    <Plima polozaj="dolje" boja="var(--kamen)" />
   </section>
 
   <!-- Problem -->
-  <section class="section" aria-labelledby="problem-naslov" style="padding-top: calc(var(--section) + var(--tide-h) * 0.5);">
+  <section class="section" aria-labelledby="problem-naslov">
     <div class="wrap grid problem">
       <div class="problem__text">
         <p class="label">01 · Zašto stranica</p>
