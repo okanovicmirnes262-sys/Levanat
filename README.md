@@ -58,6 +58,7 @@ Kamen katedrale sv. Jakova, duboko Jadransko more i mediteransko svjetlo. Levana
 | Klesanje naslova, izranjanje teksta, linija plime u procesu, paralaksa | sve stranice | `src/scripts/motion.ts` |
 | Brončani kursor, magnetni gumbi, kamen koji se odiže na hover | desktop | `src/scripts/cursor.ts`, CSS |
 | Prijelazi između stranica | sve | CSS View Transitions |
+| Kontakt forma kao papirnati avion: papir se presavije i odleti na levantu dok se upit šalje | /kontakt | `src/scripts/avion.ts` |
 
 **Performanse i pristupačnost:**
 - WebGL se učitava tek kad je preglednik slobodan i kad je sekcija blizu ekrana.
@@ -86,7 +87,7 @@ src/data/          FAQ, radovi, slike (kamen.ts), opcije forme
 src/layouts/       Base.astro — <head>, SEO, Open Graph, JSON-LD
 src/components/    Header, Footer, Reljef, Plima, Cta (katedrala nad morem), Faq, PageHero, WorkItem, Wind
 src/pages/         stranice + api/kontakt.ts (serverless, Resend) + robots.txt.ts
-src/scripts/       relief.ts, sea.ts, gpu.ts, motion.ts, plima.ts, cursor.ts, wind.ts, header.ts, details.ts, sun.ts, form.ts
+src/scripts/       relief.ts, sea.ts, gpu.ts, motion.ts, plima.ts, cursor.ts, wind.ts, header.ts, details.ts, sun.ts, avion.ts
 src/styles/        global.css — tokeni, tipografija, raspored, komponente
 ```
 

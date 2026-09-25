@@ -9,7 +9,7 @@ const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 5;
 const hits = new Map<string, number[]>();
 
-type Fields = { ime: string; email: string; telefon: string; usluga: string; poruka: string; web: string; t: string };
+type Fields = { ime: string; kontakt: string; usluga: string; poruka: string; web: string; t: string };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^[+\d][\d\s()/.-]{5,24}$/;
@@ -17,10 +17,10 @@ const PHONE_RE = /^[+\d][\d\s()/.-]{5,24}$/;
 function validate(f: Fields): Record<string, string> {
   const e: Record<string, string> = {};
   if (f.ime.length < 2 || f.ime.length > 100) e.ime = 'Upišite svoje ime.';
-  if (!EMAIL_RE.test(f.email) || f.email.length > 200) e.email = 'Upišite ispravnu e-mail adresu.';
-  if (f.telefon && !PHONE_RE.test(f.telefon)) e.telefon = 'Broj telefona nije ispravan.';
-  if (!(serviceOptions as readonly string[]).includes(f.usluga)) e.usluga = 'Odaberite vrstu usluge.';
-  if (f.poruka.length < 10) e.poruka = 'Napišite barem kratku poruku (najmanje 10 znakova).';
+  if (f.kontakt.length > 200 || !(EMAIL_RE.test(f.kontakt) || PHONE_RE.test(f.kontakt)))
+    e.kontakt = 'Upišite e-mail adresu ili broj telefona.';
+  if (f.usluga && !(serviceOptions as readonly string[]).includes(f.usluga)) e.usluga = 'Nepoznata vrsta usluge.';
+  if (f.poruka.length < 5) e.poruka = 'Napišite barem nekoliko riječi o svom poslu.';
   if (f.poruka.length > 5000) e.poruka = 'Poruka je predugačka (najviše 5000 znakova).';
   return e;
 }
@@ -58,8 +58,7 @@ export const POST: APIRoute = async ({ request, clientAddress, redirect }) => {
   const get = (k: string) => String(data.get(k) ?? '').trim();
   const f: Fields = {
     ime: get('ime'),
-    email: get('email'),
-    telefon: get('telefon'),
+    kontakt: get('kontakt'),
     usluga: get('usluga'),
     poruka: get('poruka'),
     web: get('web'),
@@ -95,12 +94,12 @@ export const POST: APIRoute = async ({ request, clientAddress, redirect }) => {
     return reply(500, { ok: false, message: 'Slanje trenutno nije moguće. Pišite mi izravno na e-mail.' });
   }
 
+  const isEmail = EMAIL_RE.test(f.kontakt);
   const rows: [string, string][] = [
     ['Ime', f.ime],
-    ['E-mail', f.email],
-    ['Telefon', f.telefon || '—'],
-    ['Usluga', f.usluga],
+    [isEmail ? 'E-mail' : 'Telefon', f.kontakt],
   ];
+  if (f.usluga) rows.push(['Usluga', f.usluga]);
   const text = `${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}\n\nPoruka:\n${f.poruka}`;
   const html = `<div style="font-family:Georgia,serif;color:#0f2a33;line-height:1.6">
 <h2 style="font-weight:400">Novi upit s levanat stranice</h2>
@@ -117,8 +116,8 @@ export const POST: APIRoute = async ({ request, clientAddress, redirect }) => {
     const { error } = await resend.emails.send({
       from,
       to: to.split(',').map((s) => s.trim()),
-      replyTo: f.email,
-      subject: `Novi upit: ${f.usluga} — ${f.ime}`,
+      ...(isEmail ? { replyTo: f.kontakt } : {}),
+      subject: `Novi avion s Levanata: ${f.ime}`,
       text,
       html,
     });
