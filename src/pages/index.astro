@@ -10,7 +10,8 @@ import { brand, services } from '../config';
 import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
 import { glave, kipovi } from '../data/kamen';
-import { faqSchema, splitWords } from '../lib';
+import { sibencani } from '../data/sibenik';
+import { abs, faqSchema, splitWords } from '../lib';
 
 const t1 = splitWords('Kad Vas netko potraži na Googleu, neka ga dočeka');
 const t2 = splitWords('Vaša stranica.', t1.next);
@@ -36,13 +37,23 @@ const steps = [
   },
 ];
 
-// Friz: glave i kratke misli naizmjence, kao šetnja oko apside
-const misli = [
-  ['Svaka je glava drukčija.', 'Predaja kaže da je Juraj Dalmatinac u kamen uklesao lica svojih suvremenika. Ni Vaša stranica ne bi trebala biti kopija tuđe.'],
-  ['Detalji nisu sitnica.', 'Razmak, riječ, trenutak u kojem se nešto pomakne. Posjetitelj to ne mora primijetiti, ali osjeti.'],
-  ['Jasan jezik.', 'Bez stručnog žargona. Uvijek znate što radim, zašto i koliko to košta.'],
-  ['Stranica ostaje Vaša.', 'Domena i hosting glase na Vas. Nitko Vas ne drži taocem vlastite stranice.'],
-];
+// Stranica spominje poznate Šibenčane (pomaže Googleu povezati stranicu sa Šibenikom)
+const wiki: Record<string, string> = {
+  'Juraj Dalmatinac': 'https://hr.wikipedia.org/wiki/Juraj_Dalmatinac',
+  'Faust Vrančić': 'https://hr.wikipedia.org/wiki/Faust_Vran%C4%8Di%C4%87',
+  'Ante Šupuk': 'https://hr.wikipedia.org/wiki/Ante_%C5%A0upuk',
+  'Dražen Petrović': 'https://hr.wikipedia.org/wiki/Dra%C5%BEen_Petrovi%C4%87',
+};
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': abs('/') + '#stranica',
+  url: abs('/'),
+  name: 'Izrada web stranica Šibenik | Levanat',
+  inLanguage: 'hr-HR',
+  about: { '@type': 'City', name: 'Šibenik' },
+  mentions: sibencani.map((o) => ({ '@type': 'Person', name: o.ime, description: o.uloga, sameAs: wiki[o.ime] })),
+};
 
 // Val za liniju plime u procesu
 const valH = Array.from({ length: 41 }, (_, i) => `${i * 25},${(10 + Math.sin(i * 0.9) * 5).toFixed(1)}`).join(' L');
@@ -52,7 +63,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
 <Base
   title="Izrada web stranica Šibenik | Levanat — web dizajn"
   description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
-  schema={[faqSchema(homeFaq)]}
+  schema={[faqSchema(homeFaq), pageSchema]}
 >
   <!-- Hero: kamene glave izranjaju iz sjene, svjetlo prati kursor -->
   <section class="hero more" aria-labelledby="naslov" data-svjetlo>
@@ -167,32 +178,31 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
     </div>
   </section>
 
-  <!-- Friz glava: šetnja oko apside -->
+  <!-- Šibenčani: ljudi koji su gledali dalje -->
   <section class="friz more" aria-labelledby="friz-naslov" data-friz data-svjetlo>
     <Plima polozaj="gore" />
     <div class="odsjaj" aria-hidden="true"></div>
     <div class="friz__pin">
       <div class="wrap grid friz__head">
-        <p class="label">02 · Friz</p>
-        <h2 id="friz-naslov" data-reveal="line">Sedamdeset i jedno lice. <em>Nijedno isto.</em></h2>
+        <p class="label">02 · Šibenik</p>
+        <h2 id="friz-naslov" data-reveal="line">Šibenik je uvijek imao ljude <em>koji su gledali dalje.</em></h2>
       </div>
-      <div class="friz__traka" tabindex="0" aria-label="Friz kamenih glava s katedrale sv. Jakova; pomičite vodoravno">
+      <div class="friz__traka" tabindex="0" aria-label="Poznati Šibenčani; pomičite vodoravno">
         {
-          glave.map((g, i) => (
+          sibencani.map((o) => (
             <Fragment>
               <figure class="friz__glava">
-                <Picture src={g.src} alt={g.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[320, 520, 760]} sizes="(min-width: 900px) 400px, 62vw" loading="lazy" decoding="async" />
-                <figcaption class="mono">
-                  <span>{String(i + 1).padStart(2, '0')}</span>
-                  <span>Jedna od 71</span>
+                <Picture src={o.src} alt={o.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[320, 520, 760]} sizes="(min-width: 900px) 330px, 56vw" loading="lazy" decoding="async" />
+                <figcaption>
+                  <span class="mono friz__godine"><span>{o.uloga}</span><span>{o.godine}</span></span>
+                  <h3 class="friz__ime">{o.ime}</h3>
+                  <p class="friz__opis">{o.tekst}</p>
                 </figcaption>
               </figure>
-              {misli[i] && (
-                <div class="friz__misao">
-                  <p>{misli[i][0]}</p>
-                  <p>{misli[i][1]}</p>
-                </div>
-              )}
+              <div class="friz__misao">
+                <p>{o.misao[0]}</p>
+                <p>{o.misao[1]}</p>
+              </div>
             </Fragment>
           ))
         }

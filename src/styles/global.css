@@ -1280,13 +1280,28 @@ html.motion .friz--pinned .friz__traka {
   transition: filter 0.2s linear;
 }
 .friz__glava figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  gap: 0.55rem;
   padding-top: 0.9rem;
   border-top: 1px solid var(--linija-more);
+  opacity: calc(0.45 + 0.55 * var(--lit));
+}
+.friz__godine {
+  display: grid;
+  gap: 0.2rem;
   color: var(--na-moru-2);
-  opacity: calc(0.4 + 0.6 * var(--lit));
+}
+.friz__godine span:last-child {
+  color: var(--bronca-svijetla);
+}
+.friz__ime {
+  font-size: clamp(1.45rem, 1.2rem + 0.8vw, 1.9rem);
+  font-weight: 380;
+}
+.friz__opis {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--na-moru-2);
 }
 
 .friz__misao {
