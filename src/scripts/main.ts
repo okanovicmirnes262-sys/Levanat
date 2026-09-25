@@ -3,6 +3,7 @@ import { initDetails } from './details';
 import { initWind } from './wind';
 import { initCursor } from './cursor';
 import { initPlima } from './plima';
+import { initAsistent } from './asistent';
 
 declare global {
   interface Window {
@@ -23,6 +24,7 @@ initDetails();
 initWind();
 initCursor();
 initPlima(still);
+initAsistent();
 
 const whenIdle = (fn: () => void) => {
   const go = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200));

@@ -1,0 +1,14 @@
+---
+// Plutajući asistent: gumb u donjem desnom kutu na svakoj stranici.
+---
+
+<div class="asistent">
+  <div class="asistent__panel" id="asistent" role="dialog" aria-label="Asistent Levanat" hidden data-asistent>
+    <button type="button" class="asistent__zatvori" aria-label="Zatvori asistenta" data-asistent-zatvori>×</button>
+    <div class="chat chat--plutajuci" id="asistent-chat" data-lenis-prevent></div>
+  </div>
+  <button type="button" class="asistent__gumb" aria-expanded="false" aria-controls="asistent" data-asistent-gumb>
+    <span class="asistent__ikona" aria-hidden="true">L</span>
+    <span class="asistent__tekst">Pitajte asistenta</span>
+  </button>
+</div>

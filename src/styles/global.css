@@ -3166,3 +3166,108 @@ html.lenis body {
   min-height: 24rem;
   align-content: start;
 }
+
+/* ---------- Plutajući asistent ---------- */
+
+.asistent {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 80;
+  display: grid;
+  justify-items: end;
+  gap: 0.8rem;
+}
+body.menu-open .asistent {
+  display: none;
+}
+.asistent__gumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 1.1rem 0.45rem 0.45rem;
+  border: 1px solid rgba(201, 169, 118, 0.5);
+  border-radius: 999px;
+  background: var(--more);
+  color: var(--na-moru);
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 14px 30px -10px rgba(4, 18, 26, 0.55);
+  transition: transform 0.4s var(--ease-voda);
+}
+@media (hover: hover) {
+  .asistent__gumb:hover {
+    transform: translateY(-2px);
+  }
+}
+.asistent__ikona {
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--bronca);
+  color: var(--more-noc);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+.asistent-open .asistent__gumb .asistent__tekst::after {
+  content: '';
+}
+@media (max-width: 480px) {
+  .asistent__gumb {
+    padding-right: 0.45rem;
+  }
+  .asistent__tekst {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}
+.asistent__panel {
+  position: relative;
+  width: min(380px, calc(100vw - 2rem));
+}
+.asistent__panel[hidden] {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .asistent__panel:not([hidden]) {
+    animation: asistent-ulaz 0.45s var(--ease-voda) both;
+  }
+}
+@keyframes asistent-ulaz {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.98);
+  }
+}
+.chat--plutajuci {
+  height: min(560px, calc(100svh - 7.5rem));
+  box-shadow: 0 30px 60px -20px rgba(4, 18, 26, 0.6);
+}
+.asistent__zatvori {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(237, 230, 218, 0.12);
+  color: var(--na-moru);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.chat__veza {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--tirkiz-tekst);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
