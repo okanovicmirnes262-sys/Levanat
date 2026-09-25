@@ -91,7 +91,7 @@ export function initMotion() {
         g.style.setProperty('--lit', Math.max(0, 1 - d * d).toFixed(3));
       });
     };
-    mm.add('(min-width: 900px)', () => {
+    mm.add('(min-width: 900px) and (min-height: 560px)', () => {
       friz.classList.add('friz--pinned');
       const dist = () => Math.max(traka.scrollWidth - innerWidth, 0);
       const tw = gsap.to(traka, {
@@ -116,7 +116,7 @@ export function initMotion() {
         tw.kill();
       };
     });
-    mm.add('(max-width: 899px)', () => {
+    mm.add('(max-width: 899px), (max-height: 559px)', () => {
       const onS = () => {
         light();
         bar?.style.setProperty('--p', (traka.scrollLeft / Math.max(traka.scrollWidth - traka.clientWidth, 1)).toFixed(4));

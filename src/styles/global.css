@@ -914,7 +914,7 @@ body.menu-open .site-header {
 .hero__meta {
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem 1.5rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--linija-more);
@@ -937,7 +937,7 @@ body.menu-open .site-header {
 
 @media (min-width: 768px) {
   .hero__meta {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
   .hero .reljef__slika {
     width: 19vw;
@@ -2608,5 +2608,40 @@ html.lenis body {
   }
   .friz__napredak {
     display: none;
+  }
+}
+
+/* Prikovani friz (Šibenčani) na desktopu: portret i tekst jedno do drugog,
+   visina prema visini ekrana, da sav tekst uvijek stane na zaslon. */
+@media (min-width: 900px) {
+  .friz--pinned .friz__pin {
+    min-height: 100svh;
+    padding-block: calc(var(--header-h) + 1rem) calc(var(--tide-h) * 0.9);
+  }
+  .friz--pinned .friz__head {
+    margin-bottom: clamp(1rem, 4svh, 2.75rem);
+  }
+  .friz--pinned .friz__head h2 {
+    font-size: clamp(1.9rem, 1rem + 2.2vw, 3.2rem);
+  }
+  .friz--pinned .friz__glava {
+    width: auto;
+    grid-template-columns: auto minmax(15rem, 19rem);
+    column-gap: 2.25rem;
+    align-items: end;
+  }
+  .friz--pinned .friz__glava img {
+    width: auto;
+    height: min(50svh, 440px);
+  }
+  .friz--pinned .friz__glava figcaption {
+    padding-top: 0;
+    padding-left: 1.5rem;
+    border-top: 0;
+    border-left: 1px solid var(--linija-more);
+    align-self: end;
+  }
+  .friz--pinned .friz__misao {
+    width: clamp(220px, 22vw, 320px);
   }
 }
