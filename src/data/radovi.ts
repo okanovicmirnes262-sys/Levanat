@@ -1,4 +1,4 @@
-// [PORTFOLIO_LINKOVI]
+// Radovi (portfolio).
 // Svaki projekt je jedna stavka. Snimke zaslona spremite u /public/radovi/
 // (preporuka: WebP, 1600 × 1000 px) i upišite putanju u polje `slika`.
 // Dok je `slika` prazna, prikazuje se elegantan okvir umjesto snimke.
@@ -15,27 +15,21 @@ export type Rad = {
 
 export const radovi: Rad[] = [
   {
-    naziv: '[NAZIV_PROJEKTA_1]',
-    opis: '[Kratki opis projekta: za koga je stranica, što je bio cilj i što je posebno u njoj.]',
-    vrsta: 'Web stranica',
-    slika: '',
-    link: '[LINK_PROJEKTA_1]',
+    naziv: 'Pandora Turist — Villa Roza',
+    opis:
+      'Stranica obiteljske turističke tvrtke iz Srime kraj Vodica: vile s privatnim bazenima, izleti brodom po šibenskom arhipelagu i restoran Villa Roza. Na tri jezika (hrvatski, engleski, njemački), s AI chatbotom Nikom koji gostima odgovara na pitanja.',
+    vrsta: 'Turizam · Srima, Vodice',
+    slika: '/radovi/villa-roza.webp',
+    link: 'https://okanovicmirnes262-sys.github.io/Villa-roza/',
     uIzradi: true,
   },
   {
-    naziv: '[NAZIV_PROJEKTA_2]',
-    opis: '[Kratki opis projekta: za koga je stranica, što je bio cilj i što je posebno u njoj.]',
-    vrsta: 'Web stranica',
-    slika: '',
-    link: '[LINK_PROJEKTA_2]',
-    uIzradi: true,
-  },
-  {
-    naziv: '[NAZIV_PROJEKTA_3]',
-    opis: '[Kratki opis projekta: za koga je stranica, što je bio cilj i što je posebno u njoj.]',
-    vrsta: 'Web stranica',
-    slika: '',
-    link: '[LINK_PROJEKTA_3]',
+    naziv: 'MAR-KOP — strojni iskopi',
+    opis:
+      'Stranica za obrt iz Drniša koji radi strojne iskope, prijevoz materijala i rušenje u Šibensko-kninskoj županiji. Jasan poziv na telefon i WhatsApp, zasebne stranice za usluge i područje rada.',
+    vrsta: 'Obrt · Drniš',
+    slika: '/radovi/mar-kop.webp',
+    link: 'https://marko-op.vercel.app',
     uIzradi: true,
   },
 ];
