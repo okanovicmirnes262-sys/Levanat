@@ -47,7 +47,7 @@ export function initMotion() {
   // Hero: glave se na scroll dižu različitom brzinom (paralaksa), sadržaj lagano tone
   const hero = document.querySelector<HTMLElement>('.hero, .page-hero');
   if (hero) {
-    const figs = hero.querySelectorAll<HTMLElement>('.reljef__slika');
+    const figs = hero.querySelectorAll<HTMLElement>('.reljef__slika, .hero__tvrdava');
     figs.forEach((f, i) => {
       gsap.to(f, {
         yPercent: -(10 + i * 9),

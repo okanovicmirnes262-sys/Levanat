@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import { Picture } from 'astro:assets';
-import Reljef from '../components/Reljef.astro';
 import Plima from '../components/Plima.astro';
 import Faq from '../components/Faq.astro';
 import Cta from '../components/Cta.astro';
@@ -9,7 +8,7 @@ import WorkItem from '../components/WorkItem.astro';
 import { brand, services } from '../config';
 import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
-import { glave, kipovi } from '../data/kamen';
+import { kipovi } from '../data/kamen';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
@@ -63,9 +62,21 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
   description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
   schema={[faqSchema(homeFaq), pageSchema]}
 >
-  <!-- Hero: kamene glave izranjaju iz sjene, svjetlo prati kursor -->
+  <!-- Hero: tvrđava sv. Nikole u pozadini -->
   <section class="hero more" aria-labelledby="naslov" data-svjetlo>
-    <Reljef glave={[glave[0], glave[1], glave[2]]} prioritet />
+    <!-- Tvrđava sv. Nikole: prigušena pozadina iza teksta -->
+    <figure class="hero__tvrdava" aria-hidden="true">
+      <Picture
+        src={kipovi.tvrdava.src}
+        alt=""
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[800, 1200, 1620]}
+        sizes="(min-width: 1100px) 78vw, 140vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </figure>
     <div class="odsjaj" aria-hidden="true"></div>
     <div class="wrap grid hero__content">
       <p class="hero__eyebrow mono">

@@ -3294,3 +3294,43 @@ body.menu-open .asistent {
     grid-column: 4 / span 7;
   }
 }
+
+/* ---------- Tvrđava sv. Nikole u heroju početne ---------- */
+
+/* Cijela tvrđava, prigušena, iza teksta (omjer slike ≈ 4 : 1) */
+.hero__tvrdava {
+  position: absolute;
+  z-index: 0;
+  margin: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: calc(var(--header-h) + 1.25rem);
+  opacity: 0.34;
+  pointer-events: none;
+}
+.hero__tvrdava img {
+  width: 100%;
+  height: auto;
+  filter: saturate(0.7);
+}
+.hero:has(.hero__tvrdava) {
+  padding-top: calc(var(--header-h) + 25vw + 2.5rem);
+}
+@media (min-width: 1100px) {
+  .hero:has(.hero__tvrdava) {
+    padding-top: calc(var(--header-h) + 2rem);
+  }
+  .hero__tvrdava {
+    left: auto;
+    right: 2.5vw;
+    width: 54vw;
+    max-width: 1100px;
+    top: 50%;
+    transform: translateY(-30%);
+    opacity: 0.36;
+  }
+  /* bez tamnog prijelaza s lijeva (služio je glavama), da se vidi cijela tvrđava */
+  .hero:has(.hero__tvrdava)::before {
+    background: none;
+  }
+}

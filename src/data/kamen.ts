@@ -13,6 +13,7 @@ import g5 from '../assets/kamen/glava-5.webp';
 import g5n from '../assets/kamen/glava-5-n.webp';
 import mihovil from '../assets/kamen/mihovil.webp';
 import katedrala from '../assets/kamen/katedrala.webp';
+import tvrdava from '../assets/kamen/tvrdava.webp';
 
 export type Glava = { src: ImageMetadata; normal: ImageMetadata; alt: string };
 
@@ -29,6 +30,10 @@ export const kipovi = {
   mihovil: {
     src: mihovil,
     alt: 'Kip arkanđela Mihovila s kopljem, na vrhu pročelja šibenske katedrale sv. Jakova',
+  },
+  tvrdava: {
+    src: tvrdava,
+    alt: 'Tvrđava sv. Nikole na ulazu u šibenski kanal',
   },
   katedrala: {
     src: katedrala,
