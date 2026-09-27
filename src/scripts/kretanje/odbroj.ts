@@ -7,6 +7,8 @@ import { TRAJANJE, clamp, krivulje, mirno } from './tokeni';
 export function odbroji(grupa: Element, kasnjenje = 0, trajanje = TRAJANJE.sporo) {
   const brojevi = [...grupa.querySelectorAll<HTMLElement>('[data-odbroj]')];
   if (!brojevi.length || mirno()) return;
+  // Širina se zaključa na širinu točnog broja: ni kurziv bez tabularnih znamenki ne pomiče redak
+  brojevi.forEach((b) => (b.style.width = `${b.getBoundingClientRect().width}px`));
   const ciljevi = brojevi.map((b) => ({ el: b, cilj: Number(b.dataset.odbroj), znam: b.dataset.odbroj!.length }));
   const pisi = (t: number) =>
     ciljevi.forEach(({ el, cilj, znam }) => {

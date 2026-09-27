@@ -4269,6 +4269,9 @@ main {
 
 /* ---------- Šibenčani: mali motiv uz misao svakog lika ---------- */
 [data-odbroj] {
+  display: inline-block;
+  text-align: end;
+  white-space: nowrap;
   font-variant-numeric: lining-nums tabular-nums;
 }
 .motiv {
