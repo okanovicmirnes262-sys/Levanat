@@ -4355,3 +4355,27 @@ main {
     transform: scale(1.2);
   }
 }
+
+/* ---------- Mihovil: citat se otkrije riječ po riječ zdesna, tek kad je kip ušao ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.motion .mihovil__citat .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(0.45em);
+    transition:
+      opacity var(--dur-sporo) var(--ease-voda),
+      transform var(--dur-scena) var(--ease-vjetar);
+    transition-delay: calc(var(--wi) * var(--stagger));
+  }
+  html.motion .mihovil__citat footer {
+    opacity: 0;
+    transition: opacity var(--dur-sporo) var(--ease-voda) 900ms;
+  }
+  html.motion .mihovil.is-kip .mihovil__citat .w {
+    opacity: 1;
+    transform: none;
+  }
+  html.motion .mihovil.is-kip .mihovil__citat footer {
+    opacity: 1;
+  }
+}

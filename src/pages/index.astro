@@ -249,8 +249,8 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       <Picture src={kipovi.mihovil.src} alt={kipovi.mihovil.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[420, 640, 900]} sizes="(min-width: 900px) 34vw, 62vw" loading="lazy" decoding="async" />
     </figure>
     <div class="wrap grid mihovil__tekst">
-      <blockquote class="mihovil__citat" data-reveal="fade">
-        <p>„Tek sam sad vidio ovo, pa ti si i o tome razmišljao.”</p>
+      <blockquote class="mihovil__citat">
+        <p>{'„Tek sam sad vidio ovo, pa ti si i o tome razmišljao.”'.split(' ').map((w, i) => <Fragment><span class="w" style={`--wi:${i}`}>{w}</span>{' '}</Fragment>)}</p>
         <footer class="mono muted">Poruka tjedan dana nakon predaje</footer>
       </blockquote>
       <div class="mihovil__o">

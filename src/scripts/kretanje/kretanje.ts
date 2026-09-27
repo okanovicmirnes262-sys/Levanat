@@ -52,8 +52,20 @@ export function initKretanje() {
     prati(mih, ['top', 1], ['bottom', 0], (p) => {
       if (kip) kip.style.transform = `translate3d(0, ${(14 - p * 20).toFixed(2)}%, 0)`;
       if (rijec) rijec.style.transform = `translate3d(${(6 - p * 12).toFixed(2)}%, 0, 0)`;
-      mih.classList.toggle('is-kip', p > 0.18);
     });
+    // citat se otkrije jednom, kad je kip ušao i citat je dobro na ekranu
+    const citat = mih.querySelector('.mihovil__citat');
+    if (citat) {
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting) return;
+          io.disconnect();
+          mih.classList.add('is-kip');
+        },
+        { rootMargin: '0px 0px -22% 0px' },
+      );
+      io.observe(citat);
+    }
   }
 
   // Katedrala lagano izranja iz mora
