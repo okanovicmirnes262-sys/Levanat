@@ -1,6 +1,5 @@
 // Zaglavlje: pozadina nakon scrolla, skrivanje pri scrollu prema dolje, mobilni izbornik.
 
-import { lenisRef } from './lenis-ref';
 
 export function initHeader() {
   const header = document.querySelector<HTMLElement>('[data-header]');
@@ -52,7 +51,6 @@ export function initHeader() {
     if (label) label.textContent = open ? 'Zatvori' : 'Izbornik';
     others().forEach((el) => (open ? el.setAttribute('inert', '') : el.removeAttribute('inert')));
     document.documentElement.style.overflow = open ? 'hidden' : '';
-    open ? lenisRef.current?.stop() : lenisRef.current?.start();
     if (open) {
       header.classList.remove('is-hidden');
       setTimeout(() => menu.querySelector<HTMLElement>('a')?.focus(), 350);

@@ -2,7 +2,6 @@
 // nekoliko sekundi polako padne kao list na vjetru i ostane u donjem lijevom kutu.
 // Klik na avion ili na bilo koji gumb „Zatražite besplatnu ponudu” otvara kontakt
 // formu u prozoru; sama forma (avion.ts) učitava se tek tada.
-import { lenisRef } from './lenis-ref';
 
 type Stanje = 'skriven' | 'sjedi' | 'pada' | 'sletio';
 
@@ -35,12 +34,10 @@ export function initAvionLet() {
     if (dlg.open) return;
     dlg.querySelector('[data-avion]')?.dispatchEvent(new Event('avion:novi'));
     dlg.showModal();
-    lenisRef.current?.stop();
     dlg.querySelector<HTMLInputElement>('#ime')?.focus();
   };
   plane.addEventListener('pointerenter', () => import('./avion'), { once: true });
   plane.addEventListener('click', otvori);
-  dlg.addEventListener('close', () => lenisRef.current?.start());
   dlg.addEventListener('click', (e) => {
     if (e.target === dlg) dlg.close();
   });

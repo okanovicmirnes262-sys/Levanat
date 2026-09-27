@@ -70,7 +70,7 @@ export function initScena(scena: HTMLElement) {
     popuni(faza(p, 0.66, 0.92));
   };
 
-  const lerp = document.documentElement.classList.contains('lenis') ? 0.4 : 0.16;
+  const lerp = 0.16;
   const petlja = () => {
     trenutno += (cilj - trenutno) * lerp;
     if (Math.abs(cilj - trenutno) < 0.0004) trenutno = cilj;

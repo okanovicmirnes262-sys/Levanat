@@ -5,6 +5,8 @@ import { initCursor } from './cursor';
 import { initPlima } from './plima';
 import { initAsistent } from './asistent-gumb';
 import { initScena } from './scena';
+import { initUlaz } from './kretanje/ulaz';
+import { initKretanje } from './kretanje/kretanje';
 
 declare global {
   interface Window {
@@ -29,10 +31,6 @@ initAsistent();
 document.querySelectorAll<HTMLElement>('[data-scena]').forEach(initScena);
 if (document.querySelector('[data-avion-leti]')) import('./avion-gumb').then((m) => m.initAvionLet());
 
-const whenIdle = (fn: () => void) => {
-  const go = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200));
-  document.readyState === 'complete' ? go() : window.addEventListener('load', go, { once: true });
-};
 
 
 // Šibenčani: slike učitaj unaprijed (prije nego traka uđe na ekran) i prikaži ih mekano
@@ -102,14 +100,8 @@ document.querySelectorAll<HTMLElement>('[data-obala]').forEach((el) => {
 });
 
 if (motion) {
-  // GSAP i Lenis tek kad je preglednik slobodan
-  whenIdle(() =>
-    import('./motion')
-      .then((m) => {
-        if (!root.classList.contains('motion')) return;
-        m.initMotion();
-        window.__levanatMotion = true;
-      })
-      .catch(() => root.classList.remove('motion')),
-  );
+  // Ulasci i scroll animacije: vlastiti mali moduli (bez GSAP-a i Lenisa), odmah pri učitavanju
+  initUlaz();
+  initKretanje();
+  window.__levanatMotion = true;
 }

@@ -72,9 +72,18 @@
   --header-h: 4.75rem;
   --tide-h: clamp(48px, 7vw, 110px);
 
-  /* Kretanje: težina kamena i lakoća vode */
-  --ease-kamen: cubic-bezier(0.7, 0, 0.2, 1);
-  --ease-voda: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Kretanje: zajednički tokeni (zrcaljeni u src/scripts/kretanje/tokeni.ts).
+     Levanat puše zdesna nalijevo: ulasci dolaze zdesna, odlasci idu nalijevo. */
+  --ease-kamen: cubic-bezier(0.7, 0, 0.2, 1); /* težina kamena: sporo-brzo-sporo */
+  --ease-voda: cubic-bezier(0.22, 1, 0.36, 1); /* lakoća vode: meko zaustavljanje */
+  --ease-vjetar: cubic-bezier(0.3, 0, 0.1, 1); /* nalet vjetra: ulazak zdesna */
+  --ease-odlazak: cubic-bezier(0.5, 0, 0.9, 0.4); /* odlazak nalijevo */
+  --dur-brzo: 180ms;
+  --dur-srednje: 420ms;
+  --dur-sporo: 900ms;
+  --dur-scena: 1400ms;
+  --stagger: 70ms;
+  --pomak-vjetar: 1.5rem;
 
   color-scheme: light;
 }
@@ -1233,9 +1242,11 @@ html.motion .adresa:not(.is-spojeno) .adresa__stranica {
   display: none;
 }
 
-html.motion .friz--pinned .friz__traka {
-  overflow: visible;
-  width: max-content;
+@media (min-width: 900px) and (min-height: 560px) {
+  html.motion .friz .friz__traka {
+    overflow: visible;
+    width: max-content;
+  }
 }
 
 .friz__glava {
@@ -2537,11 +2548,45 @@ html.motion .friz__glava img:not(.is-loaded) {
 
 /* ---------- Otkrivanje na scroll ---------- */
 
-html.motion [data-reveal='line'] {
-  clip-path: inset(-10% 100% -20% 0);
+/* ---------- Ulasci (motion sustav): sve dolazi zdesna, kao levanat ----------
+   Početna stanja samo pod html.motion (bez JS-a sve je vidljivo). JS doda .is-in. */
+html.motion [data-reveal='line'],
+html.motion [data-ulaz='linija'] {
+  /* maska se otvara od desnog ruba prema lijevom */
+  clip-path: inset(-12% 0 -22% 100%);
+  transform: translateX(var(--pomak-vjetar));
+  transition:
+    clip-path var(--dur-scena) var(--ease-kamen),
+    transform var(--dur-scena) var(--ease-voda);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
 }
-html.motion [data-reveal='fade'] {
+html.motion [data-reveal='fade'],
+html.motion [data-ulaz='desno'] {
   opacity: 0;
+  transform: translateX(calc(var(--pomak-vjetar) * 0.8));
+  transition:
+    opacity var(--dur-sporo) var(--ease-voda),
+    transform var(--dur-sporo) var(--ease-voda);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+html.motion [data-ulaz='fade'] {
+  opacity: 0;
+  transition: opacity var(--dur-sporo) var(--ease-voda);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+html.motion [data-reveal].is-in,
+html.motion [data-ulaz].is-in {
+  clip-path: inset(-12% -6% -22% -6%);
+  opacity: 1;
+  transform: none;
+}
+/* Smanjeno kretanje: samo kratki fade */
+@media (prefers-reduced-motion: reduce) {
+  html.motion [data-reveal],
+  html.motion [data-ulaz] {
+    clip-path: none;
+    transform: none;
+  }
 }
 
 /* ---------- Prijelazi između stranica ---------- */
@@ -2578,6 +2623,16 @@ html.motion [data-reveal='fade'] {
 }
 
 /* ---------- Smanjeno kretanje ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-brzo: 1ms;
+    --dur-srednje: 1ms;
+    --dur-sporo: 1ms;
+    --dur-scena: 1ms;
+    --stagger: 0ms;
+    --pomak-vjetar: 0px;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -2592,16 +2647,6 @@ html.motion [data-reveal='fade'] {
 
 /* ---------- Lenis ---------- */
 
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis:not(.lenis-autoToggle).lenis-stopped {
-  overflow: clip;
-}
-.lenis [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
 
 /* Mirna verzija friza: glave i misli u mreži, bez vodoravnog klizanja */
 @media (prefers-reduced-motion: reduce) and (min-width: 900px) {
@@ -2617,36 +2662,37 @@ html.lenis body {
 }
 
 /* Prikovani friz (Šibenčani) na desktopu: portret i tekst jedno do drugog,
-   visina prema visini ekrana, da sav tekst uvijek stane na zaslon. */
-@media (min-width: 900px) {
-  .friz--pinned .friz__pin {
+   visina prema visini ekrana, da sav tekst uvijek stane na zaslon.
+   Raspored ovisi samo o CSS-u (html.motion se postavlja prije prikaza), pa nema pomaka. */
+@media (min-width: 900px) and (min-height: 560px) {
+  html.motion .friz .friz__pin {
     min-height: 100svh;
     padding-block: calc(var(--header-h) + 1rem) calc(var(--tide-h) * 0.9);
   }
-  .friz--pinned .friz__head {
+  html.motion .friz .friz__head {
     margin-bottom: clamp(1rem, 4svh, 2.75rem);
   }
-  .friz--pinned .friz__head h2 {
+  html.motion .friz .friz__head h2 {
     font-size: clamp(1.9rem, 1rem + 2.2vw, 3.2rem);
   }
-  .friz--pinned .friz__glava {
+  html.motion .friz .friz__glava {
     width: auto;
     grid-template-columns: auto minmax(15rem, 19rem);
     column-gap: 2.25rem;
     align-items: end;
   }
-  .friz--pinned .friz__glava img {
+  html.motion .friz .friz__glava img {
     width: auto;
     height: min(50svh, 440px);
   }
-  .friz--pinned .friz__glava figcaption {
+  html.motion .friz .friz__glava figcaption {
     padding-top: 0;
     padding-left: 1.5rem;
     border-top: 0;
     border-left: 1px solid var(--linija-more);
     align-self: end;
   }
-  .friz--pinned .friz__misao {
+  html.motion .friz .friz__misao {
     width: clamp(220px, 22vw, 320px);
   }
 }
@@ -3454,50 +3500,50 @@ html.motion .kostur [data-puni] {
 
 /* Prikovani friz na mobitelu: scroll prema dolje vozi traku udesno, swipe i dalje radi.
    Portret i tekst moraju zajedno stati u visinu ekrana. */
-@media (max-width: 899px) {
-  .friz--mob .friz__pin {
+@media (max-width: 899px) and (min-height: 560px) {
+  html.motion .friz .friz__pin {
     height: 100svh;
     min-height: 0;
     padding-block: calc(var(--header-h) + 0.75rem) 1.25rem;
   }
-  .friz--mob .friz__head {
+  html.motion .friz .friz__head {
     margin-bottom: clamp(0.75rem, 2.5svh, 1.75rem);
     row-gap: 0.5rem;
   }
-  .friz--mob .friz__head h2 {
+  html.motion .friz .friz__head h2 {
     font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.3rem);
   }
-  .friz--mob .friz__traka {
+  html.motion .friz .friz__traka {
     scroll-snap-type: none;
     align-items: flex-start;
   }
-  .friz--mob .friz__glava {
+  html.motion .friz .friz__glava {
     width: auto;
     gap: 0.8rem;
   }
-  .friz--mob .friz__glava picture {
+  html.motion .friz .friz__glava picture {
     display: block;
     width: max-content;
   }
-  .friz--mob .friz__glava img {
+  html.motion .friz .friz__glava img {
     width: auto;
     height: clamp(170px, 34svh, 330px);
   }
-  .friz--mob .friz__glava figcaption {
+  html.motion .friz .friz__glava figcaption {
     width: min(78vw, 20rem);
   }
-  .friz--mob .friz__misao {
+  html.motion .friz .friz__misao {
     align-self: center;
   }
-  .friz--mob .friz__napredak {
+  html.motion .friz .friz__napredak {
     margin-top: auto;
   }
 }
-@media (max-width: 899px) and (max-height: 700px) {
-  .friz--mob .friz__uvod {
+@media (max-width: 899px) and (min-height: 560px) and (max-height: 700px) {
+  html.motion .friz .friz__uvod {
     display: none;
   }
-  .friz--mob .friz__opis {
+  html.motion .friz .friz__opis {
     font-size: 0.9rem;
     line-height: 1.45;
   }
@@ -3877,17 +3923,17 @@ body.menu-open .avion-leti,
   gap: 1.1rem;
 }
 /* Prostor iznad gumba za avion: avion stoji na vrhu, dno mu dodiruje gumb */
-.hero__actions.ima-avion {
+html.motion .scena .hero__actions {
   padding-top: 38px;
 }
-.hero__actions.ima-avion .avion-leti {
+html.motion .scena .hero__actions .avion-leti {
   height: 42px;
 }
 @media (max-height: 820px) {
-  .hero__actions.ima-avion {
+  html.motion .scena .hero__actions {
     padding-top: 30px;
   }
-  .hero__actions.ima-avion .avion-leti {
+  html.motion .scena .hero__actions .avion-leti {
     height: 33px;
   }
   .hero__actions .avion-leti svg {
@@ -3948,5 +3994,28 @@ main {
   }
   .scena__kostur {
     display: block;
+  }
+}
+
+/* Friz: visoka sekcija s „prikovanim” (sticky) unutarnjim dijelom. Scroll kroz dodatnu visinu
+   pomiče traku (kretanje.ts). Dodatna visina ≈ duljina trake, da tempo bude 1 : 1. */
+@media (min-width: 900px) and (min-height: 560px) {
+  html.motion .friz {
+    height: calc(100svh + 2450px + 35vw);
+  }
+  html.motion .friz .friz__pin {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+}
+@media (max-width: 899px) and (min-height: 560px) {
+  html.motion .friz {
+    height: calc(100svh + 590vw);
+  }
+  html.motion .friz .friz__pin {
+    position: sticky;
+    top: 0;
   }
 }
