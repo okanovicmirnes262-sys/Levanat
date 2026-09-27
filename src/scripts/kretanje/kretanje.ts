@@ -82,7 +82,39 @@ export function initKretanje() {
         img.style.transform = `translate3d(0, ${(-p * 8).toFixed(2)}%, 0)`;
       });
     });
+    document.querySelectorAll<HTMLElement>('.work__media').forEach(nagib);
   }
+}
+
+/** Radovi: kartica se blago nagne prema mišu (najviše 4°) i glatko vrati kad miš ode. */
+function nagib(el: HTMLElement) {
+  const MAX = 4;
+  let cx = 0, cy = 0, x = 0, y = 0;
+  let raf = 0;
+  const korak = () => {
+    x += (cx - x) * 0.12;
+    y += (cy - y) * 0.12;
+    el.style.transform = `perspective(1400px) rotateX(${(-y * MAX).toFixed(3)}deg) rotateY(${(x * MAX).toFixed(3)}deg)`;
+    if (Math.abs(cx - x) + Math.abs(cy - y) > 0.001) raf = requestAnimationFrame(korak);
+    else {
+      raf = 0;
+      if (!cx && !cy) el.style.transform = '';
+    }
+  };
+  const pokreni = () => {
+    if (!raf) raf = requestAnimationFrame(korak);
+  };
+  el.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = el.getBoundingClientRect();
+    cx = clamp((e.clientX - r.left) / r.width) * 2 - 1;
+    cy = clamp((e.clientY - r.top) / r.height) * 2 - 1;
+    pokreni();
+  });
+  el.addEventListener('pointerleave', () => {
+    cx = cy = 0;
+    pokreni();
+  });
 }
 
 /** Upali/ugasi „svjetlo” na portretu prema udaljenosti od sredine ekrana. */
