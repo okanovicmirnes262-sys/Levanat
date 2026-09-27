@@ -16,6 +16,14 @@ export type Primjer = {
   slika: string;
 };
 
-export const primjeri: Primjer[] = [];
+export const primjeri: Primjer[] = [
+  {
+    kod: 'gradevina',
+    djelatnost: 'Građevina',
+    firma: 'Veluna gradnja',
+    opis: 'Stranica građevinske tvrtke: usluge, projekti s detaljima, način rada i obrazac za besplatnu procjenu.',
+    slika: '/primjeri/gradevina/snimka.webp',
+  },
+];
 
 export const poveznicaPrimjera = (p: Primjer) => `/primjeri/${p.kod}`;

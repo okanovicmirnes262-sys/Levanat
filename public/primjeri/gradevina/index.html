@@ -1,0 +1,613 @@
+<!doctype html>
+<!--
+  DEMO PRIMJER — građevina. „Veluna gradnja” je izmišljena tvrtka (provjereno pretragom da ne postoji u HR).
+  Dizajn: složen u stilu predloška koji je poslao Mirnes (tamnoplava arhitektura), bez kopiranja tuđeg koda, tekstova i slika.
+  Slike: izvorne ilustracije (alati/primjeri/gradevina-ilustracije.py), nisu fotografije.
+  Font: Archivo (Omnibus-Type, SIL Open Font License 1.1), lokalno.
+-->
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Veluna gradnja — demo primjer | Levanat web dizajn</title>
+    <meta name="description" content="Demo primjer web stranice za građevinski obrt. Izmišljena tvrtka, izradio Levanat web dizajn." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face {
+        font-family: "Archivo";
+        font-style: normal;
+        font-weight: 300 600;
+        font-stretch: 75% 100%;
+        font-display: swap;
+        src: url("archivo-latin-ext.woff2") format("woff2");
+        unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+          U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      @font-face {
+        font-family: "Archivo";
+        font-style: normal;
+        font-weight: 300 600;
+        font-stretch: 75% 100%;
+        font-display: swap;
+        src: url("archivo-latin.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+          U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      /* --- Odricanje (ne mijenjati) --- */
+      body { margin: 0; }
+      .demo-traka {
+        position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; gap: .25rem .75rem;
+        align-items: center; justify-content: center; padding: .55rem 1rem; background: #111; color: #fff;
+        font: 500 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center;
+      }
+      .demo-traka a { color: #f6b3c8; text-decoration: underline; text-underline-offset: 2px; }
+      .demo-odricanje {
+        padding: 1.25rem 1rem 2rem; background: #111; color: #cfcfcf; text-align: center;
+        font: 13px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      .demo-odricanje a { color: #fff; }
+
+      /* --- Veluna gradnja --- */
+      :root {
+        --noc: #0f1529;
+        --plava: #1d2d52;
+        --plava-2: #2c4270;
+        --magla: #eef1f6;
+        --linija: rgba(255, 255, 255, 0.22);
+        --linija-tamna: rgba(15, 21, 41, 0.12);
+        --toplo: #f3c380;
+        --tekst: #0f1529;
+        --siva: #6d7690;
+        --sirina: 1200px;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+      body {
+        font-family: "Archivo", system-ui, sans-serif; font-weight: 400; color: var(--tekst); background: #fff;
+        line-height: 1.55; overflow-x: clip;
+      }
+      img { display: block; max-width: 100%; height: auto; }
+      [id] { scroll-margin-top: 64px; }
+      a { color: inherit; }
+      .omot { width: min(100% - 2.5rem, var(--sirina)); margin-inline: auto; }
+      .naslov {
+        font-stretch: 80%; font-weight: 500; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.02;
+        margin: 0;
+      }
+      .oznaka {
+        display: inline-flex; align-items: center; gap: .5rem; font-size: .8rem; font-weight: 500;
+        letter-spacing: .06em; text-transform: uppercase; margin: 0 0 1rem;
+      }
+      .oznaka::before { content: ""; width: .5rem; height: .5rem; background: currentColor; transform: rotate(45deg); }
+      .gumb {
+        display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: .55rem 1rem; border: 1px solid;
+        font: 500 .95rem "Archivo", sans-serif; text-decoration: none; cursor: pointer; background: transparent;
+        color: inherit; transition: background .2s, color .2s;
+      }
+      .gumb svg { width: 14px; height: 14px; }
+      .gumb--svijetli { background: #fff; color: var(--noc); border-color: #fff; }
+      .gumb--tamni { background: var(--noc); color: #fff; border-color: var(--noc); }
+      .gumb--obrub { border-color: rgba(255, 255, 255, .6); color: #fff; }
+      .gumb--obrub:hover { background: #fff; color: var(--noc); }
+      .gumb--tamni:hover { background: var(--plava-2); border-color: var(--plava-2); }
+
+      /* Zaglavlje + naslovna */
+      .naslovna { position: relative; min-height: min(100svh, 860px); color: #fff; isolation: isolate; display: grid; }
+      .naslovna__slika { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+      .naslovna::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(180deg, rgba(15, 21, 41, .25) 0%, rgba(15, 21, 41, .05) 40%, rgba(15, 21, 41, .75) 100%);
+      }
+      .mreza { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+      .mreza span { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--linija); }
+      .zaglavlje {
+        display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 76px;
+        border-bottom: 1px solid var(--linija);
+      }
+      .logo { font-stretch: 80%; font-weight: 600; letter-spacing: .04em; text-decoration: none; font-size: 1.05rem; }
+      .izbornik { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
+      .izbornik a { text-decoration: none; opacity: .85; }
+      .izbornik a:hover { opacity: 1; }
+      .telefon {
+        display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: .35rem .8rem .35rem .35rem;
+        background: #fff; color: var(--noc); text-decoration: none; font-weight: 500; font-size: .92rem;
+      }
+      .telefon span { display: grid; place-items: center; width: 30px; height: 30px; background: var(--noc); color: #fff; }
+      .telefon svg { width: 14px; height: 14px; }
+      .naslovna__dno {
+        align-self: end; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem;
+        padding: 0 0 clamp(2.5rem, 6vw, 4.5rem);
+      }
+      .naslovna h1 { font-size: clamp(2.6rem, 6.4vw, 5.2rem); }
+      .naslovna__pod {
+        display: inline-block; margin-top: 1.4rem; padding-bottom: .9rem; border-bottom: 1px solid rgba(255, 255, 255, .6);
+        font-size: 1rem; letter-spacing: .03em; text-transform: uppercase; min-width: min(100%, 22rem);
+      }
+      .kartica-naslovne {
+        display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: center; padding: .6rem;
+        border: 1px solid var(--linija); background: rgba(15, 21, 41, .35); backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px); max-width: 360px;
+      }
+      .kartica-naslovne img { aspect-ratio: 4 / 3; object-fit: cover; width: 110px; }
+      .kartica-naslovne p { margin: 0 0 .6rem; font-size: .92rem; opacity: .9; }
+
+      /* O nama */
+      .o-nama { background: var(--noc); color: #fff; text-align: center; padding: clamp(4rem, 9vw, 7rem) 0; }
+      .o-nama__crta { width: 1px; height: 56px; background: var(--linija); margin: 0 auto 2.5rem; }
+      .o-nama .naslov { font-size: clamp(1.7rem, 3.6vw, 2.75rem); line-height: 1.22; max-width: 26ch; margin-inline: auto; }
+      .blijedo { color: rgba(255, 255, 255, .45); }
+      .slicice { display: flex; justify-content: center; gap: 1rem; margin-top: 2.75rem; }
+      .slicice img { width: clamp(80px, 11vw, 132px); aspect-ratio: 4 / 3; object-fit: cover; }
+
+      /* Usluge */
+      .sekcija { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+      .sekcija__vrh {
+        display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem;
+        border-top: 1px solid var(--linija-tamna); padding-top: 1.5rem; margin-bottom: 2.5rem;
+      }
+      .sekcija__vrh .naslov { font-size: clamp(1.9rem, 4vw, 3rem); }
+      .sekcija__vrh p { max-width: 36ch; margin: 0; color: var(--siva); }
+      .usluge { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--linija-tamna); }
+      .usluga { padding: 1.75rem 1.5rem 2rem 0; border-bottom: 1px solid var(--linija-tamna); }
+      .usluga:not(:nth-child(3n + 1)) { padding-left: 1.5rem; border-left: 1px solid var(--linija-tamna); }
+      .usluga b { display: block; font-size: .8rem; color: var(--siva); font-weight: 500; letter-spacing: .06em; }
+      .usluga h3 { margin: .6rem 0 .4rem; font-stretch: 80%; font-weight: 500; text-transform: uppercase; font-size: 1.35rem; }
+      .usluga p { margin: 0; color: var(--siva); font-size: .97rem; }
+
+      /* Projekti */
+      .projekti { background: var(--magla); }
+      .klizac { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory;
+        scrollbar-width: none; }
+      .klizac::-webkit-scrollbar { display: none; }
+      .projekt { scroll-snap-align: start; display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem);
+        align-items: start; }
+      .projekt figure { position: relative; margin: 0; }
+      .projekt img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+      .projekt figcaption {
+        position: absolute; left: 1rem; bottom: .9rem; color: #fff; font-stretch: 80%; font-weight: 500;
+        text-transform: uppercase; font-size: 1.3rem; letter-spacing: .01em;
+      }
+      .znacke { display: flex; gap: .4rem; margin-bottom: .9rem; }
+      .znacke span { padding: .2rem .5rem; background: #fff; font-size: .78rem; }
+      .projekt h3 { margin: 0 0 .5rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 500; }
+      .projekt > div > p { margin: 0 0 1.4rem; color: var(--siva); }
+      .detalji { width: 100%; border-collapse: collapse; margin-bottom: 1.6rem; font-size: .92rem; }
+      .detalji th, .detalji td { padding: .65rem 0; border-bottom: 1px solid var(--linija-tamna); }
+      .detalji th { text-align: left; font-weight: 500; font-size: .76rem; letter-spacing: .06em; }
+      .detalji td { text-align: right; color: var(--siva); text-transform: uppercase; font-size: .8rem; letter-spacing: .04em; }
+      .klizac__dno { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+      .brojac { font-size: .95rem; }
+      .brojac span { color: var(--siva); }
+      .strelice { display: flex; gap: .5rem; }
+      .strelice button {
+        width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--linija-tamna);
+        background: #fff; cursor: pointer; color: var(--noc);
+      }
+      .strelice button:last-child { background: var(--plava); color: #fff; border-color: var(--plava); }
+      .strelice svg { width: 16px; height: 16px; }
+
+      /* Zašto mi */
+      .zasto { position: relative; color: #fff; isolation: isolate; min-height: 520px; display: grid; align-items: end;
+        padding-top: 5rem; }
+      .zasto > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+      .zasto::before { content: ""; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(90deg, rgba(15, 21, 41, .88) 0%, rgba(15, 21, 41, .35) 60%, rgba(15, 21, 41, .15) 100%); }
+      .zasto__brojevi { position: absolute; top: 1.5rem; left: max(1.25rem, calc((100% - var(--sirina)) / 2)); display: flex; gap: .35rem; }
+      .zasto__brojevi span { border: 1px solid var(--linija); padding: .15rem .45rem; font-size: .75rem; }
+      .zasto__dno { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem;
+        padding-block: 2.5rem; border-top: 1px solid var(--linija); margin-bottom: 2rem; }
+      .zasto .naslov { font-size: clamp(1.9rem, 4vw, 3rem); max-width: 18ch; }
+      .razlozi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+      .razlozi div { border-top: 1px solid var(--linija); padding-top: 1rem; }
+      .razlozi b { display: block; font-weight: 500; margin-bottom: .3rem; }
+      .razlozi p { margin: 0; opacity: .78; font-size: .95rem; }
+      .citat { padding: clamp(3rem, 7vw, 5rem) 0; border-bottom: 1px solid var(--linija-tamna); }
+      .citat blockquote { margin: 0; font-stretch: 85%; text-transform: uppercase; font-size: clamp(1.15rem, 2.1vw, 1.6rem);
+        line-height: 1.4; max-width: 60ch; }
+      .citat blockquote .blijedo { color: #9aa2b8; }
+      .autor { display: flex; align-items: center; gap: .8rem; margin-top: 1.5rem; font-size: .9rem; }
+      .autor i { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--plava);
+        color: #fff; font-style: normal; font-weight: 500; font-size: .85rem; }
+      .autor small { color: var(--siva); margin-left: .35rem; }
+
+      /* Kartice: Upit / Česta pitanja / Kako radimo */
+      .kartice { background: var(--magla); }
+      .kartice__gumbi { display: grid; grid-template-columns: repeat(3, 1fr); background: #fff; margin-bottom: 1.5rem; }
+      .kartice__gumbi button {
+        min-height: 48px; border: 0; background: transparent; font: 500 .82rem "Archivo", sans-serif; letter-spacing: .06em;
+        text-transform: uppercase; cursor: pointer; color: var(--siva);
+      }
+      .kartice__gumbi button[aria-selected="true"] { background: #dfe5ef; color: var(--noc); }
+      .ploca[hidden] { display: none; }
+      .upit { position: relative; display: grid; grid-template-columns: 1fr minmax(0, 1.05fr); isolation: isolate; color: #fff;
+        background: var(--plava); }
+      .upit > img { position: absolute; inset: 0; width: 55%; height: 100%; object-fit: cover; z-index: -1; opacity: .95; }
+      .upit__lijevo { padding: 3rem 2rem; background: linear-gradient(180deg, var(--plava) 0%, rgba(29, 45, 82, .55) 45%, rgba(29, 45, 82, 0) 70%); }
+      .upit__lijevo .naslov { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+      .obrazac { margin: .6rem; padding: 1.75rem 1.75rem 1.5rem; background: var(--magla); color: var(--noc); display: grid; gap: .2rem; }
+      .obrazac label { font-size: .85rem; font-weight: 500; }
+      .obrazac input:not([type="checkbox"]), .obrazac textarea {
+        width: 100%; border: 0; border-bottom: 1px solid #c9d0dc; background: transparent; padding: .4rem 0 .7rem;
+        font: 16px "Archivo", sans-serif; color: var(--noc); margin-bottom: .6rem; border-radius: 0;
+      }
+      .obrazac input:focus, .obrazac textarea:focus { outline: none; border-bottom-color: var(--plava); }
+      .obrazac fieldset { border: 0; padding: 0; margin: .4rem 0 .8rem; }
+      .obrazac legend { font-size: .85rem; font-weight: 500; margin-bottom: .5rem; }
+      .cipovi { display: flex; flex-wrap: wrap; gap: .4rem; }
+      .cipovi label { position: relative; }
+      .cipovi input { position: absolute; opacity: 0; }
+      .cipovi span { display: inline-flex; min-height: 36px; align-items: center; padding: 0 .75rem; background: #fff;
+        border: 1px solid #d8dde7; font-size: .82rem; font-weight: 400; cursor: pointer; }
+      .cipovi input:checked + span { background: var(--noc); color: #fff; border-color: var(--noc); }
+      .cipovi input:focus-visible + span { outline: 2px solid var(--plava-2); outline-offset: 2px; }
+      .privola { display: flex; gap: .6rem; align-items: start; font-size: .82rem !important; font-weight: 400 !important;
+        color: var(--siva); margin: .2rem 0 1rem; }
+      .privola input { width: 18px; height: 18px; margin: 0; flex: none; }
+      .obrazac .poruka { margin: .8rem 0 0; font-size: .9rem; color: var(--plava-2); }
+      .pitanja details { background: #fff; border-bottom: 1px solid var(--linija-tamna); }
+      .pitanja summary { cursor: pointer; list-style: none; padding: 1.2rem 1.4rem; font-weight: 500; display: flex;
+        justify-content: space-between; gap: 1rem; min-height: 44px; }
+      .pitanja summary::after { content: "+"; font-size: 1.3rem; line-height: 1; }
+      .pitanja details[open] summary::after { content: "−"; }
+      .pitanja p { margin: 0; padding: 0 1.4rem 1.3rem; color: var(--siva); max-width: 70ch; }
+      .koraci { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--linija-tamna); }
+      .koraci div { background: #fff; padding: 1.6rem 1.4rem 2rem; }
+      .koraci b { font-size: .8rem; color: var(--siva); font-weight: 500; }
+      .koraci h3 { font-stretch: 80%; font-weight: 500; text-transform: uppercase; margin: .7rem 0 .4rem; font-size: 1.2rem; }
+      .koraci p { margin: 0; color: var(--siva); font-size: .95rem; }
+
+      /* Podnožje */
+      .podnozje { background: var(--noc); color: rgba(255, 255, 255, .8); padding: 3.5rem 0 2.5rem; }
+      .podnozje__mreza { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+      .podnozje .logo { color: #fff; font-size: 1.4rem; }
+      .podnozje h4 { color: #fff; font-weight: 500; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 .8rem; }
+      .podnozje p { margin: 0 0 .4rem; }
+      .podnozje__dno { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--linija); font-size: .85rem;
+        display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
+
+      @media (max-width: 900px) {
+        .izbornik { display: none; }
+        .naslovna__dno { grid-template-columns: 1fr; }
+        .usluge { grid-template-columns: 1fr 1fr; }
+        .usluga:not(:nth-child(3n + 1)) { padding-left: 0; border-left: 0; }
+        .usluga:nth-child(2n) { padding-left: 1.25rem; border-left: 1px solid var(--linija-tamna); }
+        .projekt { grid-template-columns: 1fr; }
+        .razlozi { grid-template-columns: 1fr; gap: 1rem; }
+        .upit { grid-template-columns: 1fr; }
+        .upit > img { width: 100%; height: 300px; }
+        .upit__lijevo { min-height: 300px; display: grid; align-content: end; padding: 2rem 1.25rem;
+          background: linear-gradient(180deg, rgba(29, 45, 82, 0) 0%, rgba(29, 45, 82, .9) 100%); }
+        .koraci { grid-template-columns: 1fr 1fr; }
+        .podnozje__mreza { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .telefon b { display: none; }
+        .telefon { padding-right: .35rem; }
+        .usluge { grid-template-columns: 1fr; }
+        .usluga:nth-child(2n) { padding-left: 0; border-left: 0; }
+        .kartica-naslovne { grid-template-columns: 90px 1fr; }
+        .kartica-naslovne img { width: 90px; }
+        .koraci { grid-template-columns: 1fr; }
+        .kartice__gumbi button { font-size: .72rem; letter-spacing: .03em; }
+        .obrazac { padding: 1.25rem 1rem; }
+      }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    </style>
+  </head>
+  <body>
+    <div class="demo-traka" role="note">
+      <span>Demo primjer — „Veluna gradnja” je izmišljena firma.</span>
+      <a href="/kontakt">Želim ovakvu stranicu</a>
+    </div>
+
+    <header class="naslovna">
+      <img class="naslovna__slika" src="naslovna.webp" alt="Moderna kuća s velikim staklenim stijenama u sumrak" width="1920" height="1200" fetchpriority="high" />
+      <div class="mreza" aria-hidden="true">
+        <span style="left: max(1.25rem, calc((100% - var(--sirina)) / 2) - 1.5rem)"></span>
+        <span style="left: 50%"></span>
+        <span style="right: max(1.25rem, calc((100% - var(--sirina)) / 2) - 1.5rem)"></span>
+      </div>
+      <div class="omot" style="display: grid; grid-template-rows: auto 1fr">
+        <nav class="zaglavlje" aria-label="Glavni izbornik">
+          <a class="logo" href="#">VELUNA GRADNJA</a>
+          <ul class="izbornik">
+            <li><a href="#usluge">Usluge</a></li>
+            <li><a href="#projekti">Projekti</a></li>
+            <li><a href="#zasto">O nama</a></li>
+            <li><a href="#upit">Kontakt</a></li>
+          </ul>
+          <a class="telefon" href="tel:+385000000000" aria-label="Nazovite nas (izmišljeni broj)">
+            <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+            <b>+385 00 000 0000</b>
+          </a>
+        </nav>
+        <div class="naslovna__dno">
+          <div>
+            <h1 class="naslov">Kuće koje traju,<br />građene kako treba</h1>
+            <p class="naslovna__pod">Novogradnja · adaptacije · fasade</p>
+          </div>
+          <a class="kartica-naslovne" href="#projekti" style="text-decoration: none">
+            <img src="projekt-kuca.webp" alt="" width="1200" height="900" loading="lazy" />
+            <div>
+              <p>Pogledajte što smo gradili</p>
+              <span class="gumb gumb--obrub" style="min-height: 38px; padding: .35rem .7rem">
+                Naši projekti
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 2v8h8M10 7l3 3-3 3"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="o-nama" aria-labelledby="o-nama">
+        <div class="omot">
+          <div class="o-nama__crta" aria-hidden="true"></div>
+          <p class="oznaka">O nama</p>
+          <h2 id="o-nama" class="naslov">
+            Gradimo obiteljske kuće, apartmane i poslovne prostore. Od temelja do ključa,
+            <span class="blijedo">u dogovorenom roku i po dogovorenoj cijeni.</span>
+          </h2>
+          <div class="slicice">
+            <img src="mala-staklena.webp" alt="Staklena poslovna zgrada" width="600" height="450" loading="lazy" />
+            <img src="mala-gradiliste.webp" alt="Gradilište s kranom u sumrak" width="600" height="450" loading="lazy" />
+            <img src="mala-lamele.webp" alt="Pročelje s vertikalnim lamelama" width="600" height="450" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section id="usluge" class="sekcija" aria-labelledby="usluge-naslov">
+        <div class="omot">
+          <div class="sekcija__vrh">
+            <div>
+              <p class="oznaka">Usluge</p>
+              <h2 id="usluge-naslov" class="naslov">Što radimo</h2>
+            </div>
+            <p>Od prvog iskopa do završnih radova. Za veće poslove imamo provjerene suradnike, a za sve odgovara jedna osoba.</p>
+          </div>
+          <div class="usluge">
+            <article class="usluga"><b>01</b><h3>Novogradnja</h3><p>Obiteljske kuće i manje stambene zgrade, od temelja do ključa.</p></article>
+            <article class="usluga"><b>02</b><h3>Adaptacije</h3><p>Stanovi, kuće i poslovni prostori, od rušenja do završnih radova.</p></article>
+            <article class="usluga"><b>03</b><h3>Fasade i izolacija</h3><p>Toplinska izolacija, fasadni sustavi i završni slojevi.</p></article>
+            <article class="usluga"><b>04</b><h3>Krovovi</h3><p>Novi krovovi, sanacije i hidroizolacija ravnih krovova.</p></article>
+            <article class="usluga"><b>05</b><h3>Grubi radovi</h3><p>Zidanje, armiranje, betoniranje ploča i serklaža.</p></article>
+            <article class="usluga"><b>06</b><h3>Zemljani radovi</h3><p>Iskopi, podzidi i priprema terena prije gradnje.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="projekti" class="sekcija projekti" aria-labelledby="projekti-naslov">
+        <div class="omot">
+          <div class="sekcija__vrh">
+            <div>
+              <p class="oznaka">Naši projekti</p>
+              <h2 id="projekti-naslov" class="naslov">Izgrađeno</h2>
+            </div>
+            <p>Nekoliko poslova iz zadnjih godina. Sve smo gradili vlastitom ekipom.</p>
+          </div>
+          <div class="klizac" data-klizac tabindex="0" aria-label="Projekti, pomičite vodoravno">
+            <article class="projekt">
+              <figure><img src="projekt-kuca.webp" alt="Dvoetažna kuća s ravnim krovom i bazenom" width="1200" height="900" loading="lazy" /><figcaption>Stambeno</figcaption></figure>
+              <div>
+                <div class="znacke"><span>2025.</span><span>Novogradnja</span></div>
+                <h3>Obiteljska kuća s bazenom</h3>
+                <p>Dvoetažna kuća s ravnim krovom, velikim staklenim stijenama i bazenom. Gradili smo od temelja do ključa.</p>
+                <table class="detalji">
+                  <tr><th scope="row">Lokacija</th><td>Okolica Splita</td></tr>
+                  <tr><th scope="row">Trajanje</th><td>11 mjeseci</td></tr>
+                  <tr><th scope="row">Površina</th><td>210 m²</td></tr>
+                  <tr><th scope="row">Godina</th><td>2025.</td></tr>
+                </table>
+                <a class="gumb gumb--tamni" href="#upit">Zatražite sličnu ponudu</a>
+              </div>
+            </article>
+            <article class="projekt">
+              <figure><img src="projekt-stambena.webp" alt="Stambena zgrada od tamne opeke s balkonima" width="1200" height="900" loading="lazy" /><figcaption>Stambena zgrada</figcaption></figure>
+              <div>
+                <div class="znacke"><span>2024.</span><span>Grubi i završni radovi</span></div>
+                <h3>Stambena zgrada s osam stanova</h3>
+                <p>Zgrada od fasadne opeke s balkonima. Radili smo grube radove, fasadu i krov.</p>
+                <table class="detalji">
+                  <tr><th scope="row">Lokacija</th><td>Kaštela</td></tr>
+                  <tr><th scope="row">Trajanje</th><td>14 mjeseci</td></tr>
+                  <tr><th scope="row">Stanova</th><td>8</td></tr>
+                  <tr><th scope="row">Godina</th><td>2024.</td></tr>
+                </table>
+                <a class="gumb gumb--tamni" href="#upit">Zatražite sličnu ponudu</a>
+              </div>
+            </article>
+            <article class="projekt">
+              <figure><img src="projekt-poslovni.webp" alt="Staklena poslovna zgrada s lamelama" width="1200" height="900" loading="lazy" /><figcaption>Poslovno</figcaption></figure>
+              <div>
+                <div class="znacke"><span>2023.</span><span>Adaptacija</span></div>
+                <h3>Uredski prostor u poslovnoj zgradi</h3>
+                <p>Preuređenje dvije etaže u otvoreni uredski prostor, s novim instalacijama i akustičnim stropom.</p>
+                <table class="detalji">
+                  <tr><th scope="row">Lokacija</th><td>Dugopolje</td></tr>
+                  <tr><th scope="row">Trajanje</th><td>4 mjeseca</td></tr>
+                  <tr><th scope="row">Površina</th><td>640 m²</td></tr>
+                  <tr><th scope="row">Godina</th><td>2023.</td></tr>
+                </table>
+                <a class="gumb gumb--tamni" href="#upit">Zatražite sličnu ponudu</a>
+              </div>
+            </article>
+          </div>
+          <div class="klizac__dno">
+            <p class="brojac" aria-live="polite"><b data-trenutni>01</b> <span>/ 03</span></p>
+            <div class="strelice">
+              <button type="button" data-natrag aria-label="Prethodni projekt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
+              <button type="button" data-naprijed aria-label="Sljedeći projekt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="zasto" class="zasto" aria-labelledby="zasto-naslov">
+        <img src="zasto-mi.webp" alt="Stambena zgrada s osvijetljenim prozorima u sumrak" width="1920" height="900" loading="lazy" />
+        <div class="zasto__brojevi" aria-hidden="true"><span>01</span><span>02</span><span>03</span></div>
+        <div class="omot">
+          <p class="oznaka">Zašto Veluna</p>
+          <div class="zasto__dno">
+            <h2 id="zasto-naslov" class="naslov">Što nas izdvaja od drugih izvođača</h2>
+            <a class="gumb gumb--obrub" href="#upit" data-kartica="koraci">Kako radimo
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 2v8h8M10 7l3 3-3 3"/></svg>
+            </a>
+          </div>
+          <div class="razlozi" style="margin-bottom: 2.5rem">
+            <div><b>01 · Cijena u ugovoru</b><p>Troškovnik prije početka radova. Ono što potpišemo, to i platite.</p></div>
+            <div><b>02 · Rok koji vrijedi</b><p>Plan po tjednima i redovite fotografije s gradilišta.</p></div>
+            <div><b>03 · Jedna osoba za sve</b><p>Ne tražite majstore po gradu. Imate jedan broj i jednu osobu.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="citat" aria-label="Riječ vlasnika">
+        <div class="omot">
+          <blockquote>
+            U Veluni vjerujemo da kuća traje onoliko koliko su dobro napravljeni detalji koje nitko ne vidi. Zato svaki sloj,
+            od temelja do krova, radimo kao da gradimo za sebe,
+            <span class="blijedo">s jasnim troškovnikom, rokom i jednom osobom koja odgovara za sve.</span>
+          </blockquote>
+          <p class="autor"><i aria-hidden="true">DV</i> <span>DAVOR VELIĆ <small>vlasnik</small></span></p>
+        </div>
+      </section>
+
+      <section id="upit" class="sekcija kartice" aria-label="Upit, česta pitanja i način rada">
+        <div class="omot">
+          <div class="kartice__gumbi" role="tablist" aria-label="Odaberite">
+            <button type="button" role="tab" id="t-upit" aria-controls="p-upit" aria-selected="true">Upit</button>
+            <button type="button" role="tab" id="t-pitanja" aria-controls="p-pitanja" aria-selected="false" tabindex="-1">Česta pitanja</button>
+            <button type="button" role="tab" id="t-koraci" aria-controls="p-koraci" aria-selected="false" tabindex="-1">Kako radimo</button>
+          </div>
+
+          <div class="ploca" id="p-upit" role="tabpanel" aria-labelledby="t-upit">
+            <div class="upit">
+              <img src="obrazac.webp" alt="" width="800" height="900" loading="lazy" />
+              <div class="upit__lijevo">
+                <p class="oznaka">Obrazac za upit</p>
+                <h2 class="naslov">Zatražite besplatnu procjenu</h2>
+              </div>
+              <form class="obrazac" data-obrazac>
+                <label for="u-ime">Ime i prezime</label>
+                <input id="u-ime" name="ime" autocomplete="name" required />
+                <label for="u-tel">Telefon</label>
+                <input id="u-tel" name="telefon" type="tel" autocomplete="tel" required />
+                <label for="u-mail">E-mail</label>
+                <input id="u-mail" name="email" type="email" autocomplete="email" />
+                <label for="u-lok">Lokacija gradnje</label>
+                <input id="u-lok" name="lokacija" />
+                <label for="u-opis">Ukratko o poslu</label>
+                <textarea id="u-opis" name="opis" rows="2"></textarea>
+                <fieldset>
+                  <legend>Vrsta posla</legend>
+                  <div class="cipovi">
+                    <label><input type="radio" name="vrsta" value="novogradnja" checked /><span>Novogradnja</span></label>
+                    <label><input type="radio" name="vrsta" value="adaptacija" /><span>Adaptacija</span></label>
+                    <label><input type="radio" name="vrsta" value="fasada-krov" /><span>Fasada ili krov</span></label>
+                  </div>
+                </fieldset>
+                <label class="privola"><input type="checkbox" required /> Slažem se s obradom osobnih podataka radi odgovora na upit.</label>
+                <button class="gumb gumb--tamni" type="submit" style="justify-self: start">Pošalji upit
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 2v8h8M10 7l3 3-3 3"/></svg>
+                </button>
+                <p class="poruka" data-poruka hidden role="status">Ovo je demo primjer, pa obrazac ne šalje podatke. Na pravoj stranici upit bi stigao izravno vlasniku.</p>
+              </form>
+            </div>
+          </div>
+
+          <div class="ploca pitanja" id="p-pitanja" role="tabpanel" aria-labelledby="t-pitanja" hidden>
+            <details open><summary>Radite li i manje poslove?</summary><p>Da. Osim novogradnji radimo i adaptacije kupaonica, stanova i manje sanacije, ako su u području u kojem radimo.</p></details>
+            <details><summary>Koliko se čeka na ponudu?</summary><p>Nakon obilaska terena troškovnik s cijenom šaljemo u roku od sedam dana.</p></details>
+            <details><summary>Tko nabavlja materijal?</summary><p>Materijal nabavljamo mi, po cijeni iz troškovnika. Ako želite, materijal za završne radove možete odabrati i sami.</p></details>
+            <details><summary>Radite li s projektantima i nadzorom?</summary><p>Da. Surađujemo s Vašim projektantom i nadzornim inženjerom, a možemo preporučiti i provjerene suradnike.</p></details>
+          </div>
+
+          <div class="ploca" id="p-koraci" role="tabpanel" aria-labelledby="t-koraci" hidden>
+            <div class="koraci">
+              <div><b>01</b><h3>Obilazak</h3><p>Dođemo na teren, pogledamo projekt i razgovaramo o željama i budžetu.</p></div>
+              <div><b>02</b><h3>Troškovnik</h3><p>Detaljna ponuda s cijenom po stavkama i planom radova po tjednima.</p></div>
+              <div><b>03</b><h3>Gradnja</h3><p>Radimo po planu. Svaki tjedan dobijete kratko izvješće i fotografije.</p></div>
+              <div><b>04</b><h3>Primopredaja</h3><p>Zajedno pregledamo radove, predamo dokumentaciju i dajemo jamstvo.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="podnozje">
+      <div class="omot">
+        <div class="podnozje__mreza">
+          <div>
+            <a class="logo" href="#">VELUNA GRADNJA</a>
+            <p style="margin-top: .8rem; max-width: 34ch">Novogradnja, adaptacije i fasade. Split i okolica.</p>
+          </div>
+          <div>
+            <h4>Kontakt</h4>
+            <p>+385 00 000 0000</p>
+            <p>info@veluna-gradnja.demo</p>
+          </div>
+          <div>
+            <h4>Radno vrijeme</h4>
+            <p>Pon – pet: 7 – 15 h</p>
+            <p>Subotom po dogovoru</p>
+          </div>
+        </div>
+        <div class="podnozje__dno"><span>© Veluna gradnja (izmišljena tvrtka)</span><span>Demo primjer</span></div>
+      </div>
+    </footer>
+
+    <footer class="demo-odricanje">
+      <p>
+        Ovo je demo primjer stranice za građevinski obrt koji je izradio
+        <a href="/">Levanat web dizajn</a>. „Veluna gradnja” je izmišljena tvrtka; nazivi, kontakti, cijene, projekti i
+        tekstovi su izmišljeni, a svaka podudarnost s postojećim tvrtkama ili osobama je slučajna.
+      </p>
+      <p><a href="/primjeri">Svi primjeri</a> · <a href="/kontakt">Zatražite besplatnu ponudu</a></p>
+    </footer>
+
+    <script>
+      // Klizač projekata
+      (() => {
+        const k = document.querySelector("[data-klizac]");
+        const broj = document.querySelector("[data-trenutni]");
+        const idi = (smjer) => k.scrollBy({ left: smjer * k.clientWidth, behavior: "smooth" });
+        document.querySelector("[data-natrag]").addEventListener("click", () => idi(-1));
+        document.querySelector("[data-naprijed]").addEventListener("click", () => idi(1));
+        k.addEventListener("scroll", () => {
+          broj.textContent = String(Math.round(k.scrollLeft / k.clientWidth) + 1).padStart(2, "0");
+        }, { passive: true });
+      })();
+      // Kartice: Upit / Česta pitanja / Kako radimo
+      (() => {
+        const gumbi = [...document.querySelectorAll('[role="tab"]')];
+        const odaberi = (g) => {
+          gumbi.forEach((x) => {
+            const da = x === g;
+            x.setAttribute("aria-selected", String(da));
+            x.tabIndex = da ? 0 : -1;
+            document.getElementById(x.getAttribute("aria-controls")).hidden = !da;
+          });
+        };
+        gumbi.forEach((g, i) => {
+          g.addEventListener("click", () => odaberi(g));
+          g.addEventListener("keydown", (e) => {
+            if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+            const n = gumbi[(i + (e.key === "ArrowRight" ? 1 : gumbi.length - 1)) % gumbi.length];
+            odaberi(n); n.focus();
+          });
+        });
+        document.querySelectorAll("[data-kartica]").forEach((a) =>
+          a.addEventListener("click", () => odaberi(document.getElementById("t-" + a.dataset.kartica))));
+      })();
+      // Demo: obrazac ne šalje podatke
+      document.querySelector("[data-obrazac]").addEventListener("submit", (e) => {
+        e.preventDefault();
+        document.querySelector("[data-poruka]").hidden = false;
+      });
+    </script>
+  </body>
+</html>
