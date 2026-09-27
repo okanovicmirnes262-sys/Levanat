@@ -36,12 +36,21 @@ export function initScena(scena: HTMLElement) {
       z.style.strokeDashoffset = String(1 - glatko(clamp((d - start) / 0.25)));
     });
   };
+  const kartice = puni.filter((el) => el.hasAttribute('data-kartica'));
+  const ostalo = puni.filter((el) => !el.hasAttribute('data-kartica'));
   const popuni = (f: number) => {
     kostur.style.setProperty('--zica', String(1 - 0.8 * glatko(f)));
-    puni.forEach((el, i) => {
-      const s = (i / puni.length) * 0.6;
-      el.style.opacity = String(glatko(clamp((f - s) / 0.4)));
+    ostalo.forEach((el, i) => {
+      const s = (i / ostalo.length) * 0.5;
+      el.style.opacity = String(glatko(clamp((f - s) / 0.35)));
     });
+    // kartice se slažu jedna za drugom, svaka uleti zdesna (smjer levanta)
+    kartice.forEach((el, i) => {
+      const k = glatko(clamp((f - 0.45 - i * 0.14) / 0.28));
+      el.style.opacity = String(k);
+      el.setAttribute('transform', `translate(${((1 - k) * 36).toFixed(1)} 0)`);
+    });
+    kostur.classList.toggle('is-dodir', f >= 0.999);
   };
 
   const crtaj = (p: number) => {

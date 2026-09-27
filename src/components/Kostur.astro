@@ -60,10 +60,23 @@
   <rect data-zica x="50" y="458" width="210" height="60" rx="2" pathLength="1"></rect>
   <rect data-zica x="290" y="458" width="210" height="60" rx="2" pathLength="1"></rect>
   <rect data-zica x="530" y="458" width="220" height="60" rx="2" pathLength="1"></rect>
-  <text data-puni class="kostur__mala" x="66" y="482">USLUGE</text>
-  <text data-puni class="kostur__info" x="66" y="504">Sve na jednom mjestu</text>
-  <text data-puni class="kostur__mala" x="306" y="482">NA MOBITELU</text>
-  <text data-puni class="kostur__info" x="306" y="504">Pregledno na svakom ekranu</text>
-  <text data-puni class="kostur__mala" x="546" y="482">KONTAKT</text>
-  <text data-puni class="kostur__info" x="546" y="504">Jedan dodir do poziva</text>
+  <!-- Kartice se slažu jedna za drugom zdesna (scena.ts: data-kartica) -->
+  <g data-puni data-kartica>
+    <rect class="kostur__kartica" x="50" y="458" width="210" height="60" rx="2"></rect>
+    <text class="kostur__mala" x="66" y="482">USLUGE</text>
+    <text class="kostur__info" x="66" y="504">Sve na jednom mjestu</text>
+  </g>
+  <g data-puni data-kartica>
+    <rect class="kostur__kartica" x="290" y="458" width="210" height="60" rx="2"></rect>
+    <text class="kostur__mala" x="306" y="482">NA MOBITELU</text>
+    <text class="kostur__info" x="306" y="504">Pregledno na svakom ekranu</text>
+  </g>
+  <g data-puni data-kartica>
+    <rect class="kostur__kartica" x="530" y="458" width="220" height="60" rx="2"></rect>
+    <text class="kostur__mala" x="546" y="482">KONTAKT</text>
+    <text class="kostur__info" x="546" y="504">Jedan dodir do poziva</text>
+    <!-- diskretan „dodir prsta”: dva-tri pulsa kad se kartica složi -->
+    <circle class="kostur__dodir-val" cx="728" cy="488" r="10"></circle>
+    <circle class="kostur__dodir" cx="728" cy="488" r="5"></circle>
+  </g>
 </svg>

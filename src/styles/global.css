@@ -900,25 +900,54 @@ body.menu-open .site-header {
   }
 }
 
-/* Uvodno „klesanje” naslova: riječi se otkrivaju slijeva, kao dlijetom */
+/* Hero: riječi naslova ulaze zdesna jedna za drugom (vjetar), a kurzivni dio
+   „tko ste i što nudite” kreće s blagim zakašnjenjem. Ostali dijelovi slijede. */
 @media (prefers-reduced-motion: no-preference) {
-  .uvod .hero__title .w {
+  html.motion .hero__title .w {
     display: inline-block;
-    animation: klesanje 1s var(--ease-kamen) both;
-    animation-delay: calc(80ms + var(--wi) * 45ms);
+    animation: vjetar-rijec var(--dur-scena) var(--ease-voda) both;
+    animation-delay: calc(120ms + var(--wi) * var(--stagger));
   }
-  .uvod .hero__eyebrow,
-  .uvod .hero__meta {
-    animation: izron 1.1s var(--ease-voda) both;
+  html.motion .hero__title em .w {
+    animation-delay: calc(360ms + var(--wi) * var(--stagger));
+  }
+  html.motion .hero__eyebrow,
+  html.motion .hero__meta {
+    animation: izron var(--dur-sporo) var(--ease-voda) both;
     animation-delay: 0.7s;
   }
-  .uvod .hero__foot {
-    animation: podizanje 1.1s var(--ease-voda) both;
-    animation-delay: 0.5s;
+  html.motion .hero__foot {
+    animation: iz-vjetra var(--dur-sporo) var(--ease-voda) both;
+    animation-delay: 0.55s;
   }
   .uvod .hero__strike::after {
     animation: crta 1s var(--ease-kamen) both;
     animation-delay: 1.05s;
+  }
+}
+@keyframes vjetar-rijec {
+  from {
+    opacity: 0.001;
+    transform: translateX(0.5em);
+    clip-path: inset(-12% 0 -28% 100%);
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(-12% -10% -28% -10%);
+  }
+}
+@keyframes iz-vjetra {
+  from {
+    opacity: 0.001;
+    transform: translateX(var(--pomak-vjetar));
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -1179,6 +1208,21 @@ html.motion .adresa:not(.is-spojeno) .adresa__stranica {
 }
 .adresa.is-spojeno .adresa__stranica {
   border-color: var(--bronca);
+}
+/* Kad sve linije stignu, kartica se lagano istakne (translate zadržava centriranje) */
+@media (prefers-reduced-motion: no-preference) {
+  html.motion .adresa__stranica {
+    transition:
+      border-color var(--dur-srednje) ease,
+      box-shadow var(--dur-sporo) var(--ease-voda),
+      scale var(--dur-sporo) var(--ease-voda);
+  }
+  html.motion .adresa.is-spojeno .adresa__stranica {
+    scale: 1.03;
+    box-shadow:
+      0 30px 60px -30px rgba(11, 42, 60, 0.55),
+      0 0 0 6px rgba(176, 141, 87, 0.12);
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   /* Kad su sve linije spojene, po njima prema stranici putuju male točke */
@@ -3421,6 +3465,54 @@ html.motion .kostur [data-puni] {
   font-weight: 520;
   letter-spacing: 0.2em;
   fill: var(--bronca-svijetla);
+}
+.kostur__kartica {
+  fill: rgba(237, 230, 218, 0.05);
+}
+/* „Dodir prsta” na kartici Kontakt: tri diskretna pulsa kad se kartice slože, pa mirno */
+.kostur__dodir {
+  fill: var(--bronca-svijetla);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.kostur__dodir-val {
+  fill: none;
+  stroke: var(--bronca-svijetla);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .kostur.is-dodir .kostur__dodir-val {
+    animation: dodir-val 1.8s var(--ease-voda) 0.3s 3 both;
+  }
+  .kostur.is-dodir .kostur__dodir {
+    animation: dodir-tocka 1.8s var(--ease-voda) 0.3s 3 both;
+  }
+}
+@keyframes dodir-val {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.4);
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+@keyframes dodir-tocka {
+  0% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(0.72);
+  }
+  30%,
+  100% {
+    transform: scale(1);
+  }
 }
 .kostur__info {
   font-size: 14px;

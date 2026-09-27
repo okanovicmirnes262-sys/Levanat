@@ -7,6 +7,7 @@ import { initAsistent } from './asistent-gumb';
 import { initScena } from './scena';
 import { initUlaz } from './kretanje/ulaz';
 import { initKretanje } from './kretanje/kretanje';
+import { odbrojiPriUlazu } from './kretanje/odbroj';
 
 declare global {
   interface Window {
@@ -103,5 +104,7 @@ if (motion) {
   // Ulasci i scroll animacije: vlastiti mali moduli (bez GSAP-a i Lenisa), odmah pri učitavanju
   initUlaz();
   initKretanje();
+  // koordinate Šibenika u heroju „odbroje” se do točne vrijednosti nakon naslova
+  document.querySelectorAll('[data-odbroj-grupa]').forEach((g) => odbrojiPriUlazu(g, 700));
   window.__levanatMotion = true;
 }
