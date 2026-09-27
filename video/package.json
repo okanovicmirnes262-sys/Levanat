@@ -1,0 +1,26 @@
+{
+  "name": "levanat-reklama",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Levanat — 30-sekundna reklama (Remotion, 1080x1920, 60 fps)",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Reklama out/levanat-reklama-30s.mp4",
+    "render:bez-glazbe": "remotion render ReklamaBezGlazbe out/levanat-reklama-30s-bez-glazbe.mp4",
+    "naslovnica": "remotion still Naslovnica out/naslovnica.png",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.529",
+    "@remotion/cli": "^4.0.529",
+    "@remotion/motion-blur": "^4.0.529",
+    "@remotion/renderer": "^4.0.529",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
