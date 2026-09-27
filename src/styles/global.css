@@ -2683,31 +2683,52 @@ html.motion [data-ulaz].is-in {
 @view-transition {
   navigation: auto;
 }
+/* Levanat: stara stranica odlazi nalijevo, nova ulazi zdesna */
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root) {
-    animation: 0.4s var(--ease-kamen) both odlazak;
+    animation: 0.38s var(--ease-odlazak) both odlazak;
   }
   ::view-transition-new(root) {
-    animation: 0.6s var(--ease-voda) both dolazak;
+    animation: 0.75s var(--ease-vjetar) 0.08s both dolazak;
   }
   .site-header {
     view-transition-name: zaglavlje;
+  }
+  /* naslov podstranice klizi na novo mjesto umjesto da nestane */
+  .page-hero h1 {
+    view-transition-name: naslov;
+  }
+  ::view-transition-group(naslov) {
+    animation-duration: 0.6s;
+    animation-timing-function: var(--ease-vjetar);
+  }
+  ::view-transition-old(naslov) {
+    animation: vt-van 0.2s ease both;
+  }
+  ::view-transition-new(naslov) {
+    animation: vt-unutra 0.45s ease 0.15s both;
   }
 }
 @keyframes odlazak {
   to {
     opacity: 0;
-    transform: translateY(-1rem);
+    transform: translateX(-2.5rem);
   }
 }
 @keyframes dolazak {
   from {
     opacity: 0;
-    clip-path: inset(100% 0 0 0);
+    transform: translateX(3rem);
   }
+}
+@keyframes vt-van {
   to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+}
+@keyframes vt-unutra {
+  from {
+    opacity: 0;
   }
 }
 
