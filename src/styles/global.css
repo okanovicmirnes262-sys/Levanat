@@ -4328,3 +4328,30 @@ main {
     clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%, 0% 75%, 0% 75%, 0% 50%, 0% 50%, 0% 25%, 0% 25%);
   }
 }
+
+/* ---------- Proces: broj koraka se „upali” kad ga linija dosegne ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.motion .process__num {
+    display: inline-block;
+    justify-self: start;
+    opacity: 0.28;
+    transform: translateX(calc(var(--pomak-vjetar) * 0.6)) scale(0.92);
+    transform-origin: left bottom;
+    transition:
+      opacity var(--dur-sporo) var(--ease-voda),
+      transform var(--dur-sporo) var(--ease-vjetar);
+  }
+  html.motion .process__step.is-lit .process__num {
+    opacity: 1;
+    transform: none;
+  }
+  html.motion .process__step::before {
+    transition:
+      background-color var(--dur-srednje) ease,
+      box-shadow var(--dur-srednje) ease,
+      transform var(--dur-srednje) var(--ease-voda);
+  }
+  html.motion .process__step.is-lit::before {
+    transform: scale(1.2);
+  }
+}
