@@ -16,10 +16,10 @@ export const TEKST = {
 
 /** Ilustrativni razgovor u chatbotu (izmišljen, označen kao primjer). */
 export const RAZGOVOR = [
-  { tko: 'kupac', tekst: 'Radite li subotom?' },
-  { tko: 'bot', tekst: 'Da, subotom radimo od 8 do 14 sati.' },
-  { tko: 'kupac', tekst: 'Kako mogu dobiti ponudu?' },
-  { tko: 'bot', tekst: 'Ostavite ime i broj telefona, vlasnik Vam se javlja s ponudom.' },
+  { tko: 'kupac', tekst: 'Radite li i uređenje interijera?' },
+  { tko: 'bot', tekst: 'Da, od idejnog rješenja do izvedbe, uz 3D prikaz prostora.' },
+  { tko: 'kupac', tekst: 'Kako mogu dogovoriti konzultacije?' },
+  { tko: 'bot', tekst: 'Ostavite ime i broj telefona, javimo se s prijedlogom termina.' },
 ] as const;
 
 /** Koraci automatizacije (generički, bez naziva stvarnih servisa). */

@@ -136,12 +136,13 @@ const Objekt: React.FC = () => {
               alignItems: 'center',
               gap: 10,
               padding: '0 22px',
-              borderBottom: `1px solid ${BOJE.rub}`,
+              borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+              background: 'linear-gradient(180deg, #16181f, #0f1015)',
               opacity: platno * (1 - morph),
             }}
           >
-            {[0, 1, 2].map((i) => (
-              <div key={i} style={{ width: 12, height: 12, borderRadius: '50%', background: BOJE.rubJaci }} />
+            {['#ff5f57', '#febc2e', '#28c840'].map((c) => (
+              <div key={c} style={{ width: 12, height: 12, borderRadius: '50%', background: c, opacity: 0.85 }} />
             ))}
             <div
               style={{
@@ -150,15 +151,22 @@ const Objekt: React.FC = () => {
                 maxWidth: 420,
                 height: 28,
                 borderRadius: 14,
-                background: BOJE.staklo,
-                display: 'grid',
-                placeItems: 'center',
+                background: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
                 fontFamily: FONT.sans,
                 fontSize: 15,
-                color: BOJE.kamen2,
+                color: 'rgba(245, 242, 236, 0.7)',
               }}
             >
-              vasobrt.hr
+              <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                <rect x="5" y="11" width="14" height="10" rx="2" />
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+              </svg>
+              aurastudio-demo.hr
             </div>
           </div>
           {/* traka učitavanja (performanse) */}
@@ -189,7 +197,7 @@ const Objekt: React.FC = () => {
                 transform: `scale(${w / preglednik.w})`,
               }}
             >
-              <WebDesktop u={{ nav: 214, naslov: 246, slika: 276, tekst: 306, gumb: 336, kartice: 366 }} />
+              <WebDesktop u={{ nav: 214, naslov: 246, slika: 276, tekst: 306, gumb: 336, povjerenje: 351, kartice: 366 }} />
             </div>
           ) : null}
 
@@ -204,8 +212,8 @@ const Objekt: React.FC = () => {
                 transformOrigin: 'top center',
               }}
             >
-              <div style={{ position: 'absolute', left: 0, top: 0, width: mobitel.w }}>
-                <WebMobitel skrol={skrol} ostrina={ostrina} />
+              <div style={{ position: 'absolute', left: 0, top: 0, width: mobitel.w, height: mobitel.h }}>
+                <WebMobitel skrol={skrol} ostrina={ostrina} visina={mobitel.h} />
               </div>
             </div>
           ) : null}

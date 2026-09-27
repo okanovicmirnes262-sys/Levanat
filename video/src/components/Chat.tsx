@@ -66,10 +66,10 @@ export const Chat: React.FC<{ poruke: number[]; tipka: [number, number][]; cip: 
             color: '#03101a',
           }}
         >
-          V
+          A
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 27, fontWeight: 600, color: BOJE.kamen }}>Asistent · Vaš obrt</div>
+          <div style={{ fontSize: 27, fontWeight: 600, color: BOJE.kamen }}>Asistent · Aura Studio</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4, fontSize: 21, color: BOJE.kamen2 }}>
             <span style={{ width: 10, height: 10, borderRadius: '50%', background: BOJE.tirkiz }} /> Odgovara odmah
           </div>

@@ -7,6 +7,13 @@ Remotion projekt (React, TypeScript, SVG) za vertikalnu reklamu:
 
 **Trenutna verzija (v2)** je apstraktni premium smjer s novim logotipom: svjetlo, 3D geometrija, čestice, neuronska mreža i kinetička tipografija. Nema web stranice ni sučelja. Prva verzija (v1, web stranica, mobitel i chatbot) sačuvana je kao kompozicija `ReklamaV1`.
 
+**Demo stranica u v1** (`src/components/WebStranica.tsx`) prikazuje izmišljeni arhitektonski studio „Aura Studio”:
+- **Izgled:** tamna tema, animirani mesh gradijent i apstraktni arhitektonski volumeni u SVG-u.
+- **Sučelje:** staklena plutajuća navigacija, gumbi s gradijentom i u staklu, kartice usluga s ikonama u Lucide stilu i plutajući gumb asistenta.
+- **Bez izmišljenih brojki:** nema ocjena ni recenzija, a „partneri” su izmišljeni tipografski znakovi.
+
+Desktop i mobitel su u istoj datoteci (`WebDesktop`, `WebMobitel`), a okvir preglednika i mobitela u `src/scenes/Pozornica.tsx`. Render v1: `npm run render:v1` (→ `out/levanat-reklama-v1-30s.mp4`).
+
 ## Pokretanje
 
 ```bash

@@ -8,7 +8,7 @@
     "render": "remotion render Reklama out/sirovo-reklama.mp4 && alati/zavrsi.sh out/sirovo-reklama.mp4 out/levanat-reklama-v2-30s.mp4",
     "render:bez-glazbe": "remotion render ReklamaBezGlazbe out/sirovo-bez-glazbe.mp4 && alati/zavrsi.sh out/sirovo-bez-glazbe.mp4 out/levanat-reklama-v2-30s-bez-glazbe.mp4",
     "naslovnica": "remotion still Naslovnica out/naslovnica-v2.png",
-    "render:v1": "remotion render ReklamaV1 out/levanat-reklama-v1-30s.mp4",
+    "render:v1": "remotion render ReklamaV1 out/sirovo-v1.mp4 && alati/zavrsi.sh out/sirovo-v1.mp4 out/levanat-reklama-v1-30s.mp4",
     "logo": "python alati/logo-vektor.py",
     "zvuk": "python alati/zvuk2.py",
     "typecheck": "tsc --noEmit"
