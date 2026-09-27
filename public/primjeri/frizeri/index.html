@@ -1,0 +1,483 @@
+<!doctype html>
+<!--
+  DEMO PRIMJER — frizeri (brijačnica). „Oštrac” je izmišljena brijačnica (provjereno pretragom da ne postoji u HR).
+  Dizajn: složen u stilu predloška koji je poslao Mirnes (crno-bijela brijačnica, veliki natpis, traka, cjenik sa
+  strelicama), bez kopiranja tuđeg koda, tekstova i slika.
+  Fontovi: Unbounded (NORD ID, SIL Open Font License 1.1) i Manrope (Mikhail Sharanda, SIL OFL 1.1), lokalno.
+  Fotografije (besplatne licence, WebP u ovoj mapi, tonirane crno-bijelo):
+    - FOTOGRAFIJE_IZVORI — upisati autora, poveznicu i licencu za svaku datoteku kad se dodaju.
+-->
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Oštrac brijačnica — demo primjer | Levanat web dizajn</title>
+    <meta name="description" content="Demo primjer web stranice za brijačnicu i frizerski salon. Izmišljena brijačnica, izradio Levanat web dizajn." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/primjeri/frizeri/unbounded.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/primjeri/frizeri/manrope.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face {
+        font-family: "Unbounded";
+        font-weight: 200 900;
+        font-display: swap;
+        src: url("/primjeri/frizeri/unbounded.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Manrope";
+        font-weight: 200 800;
+        font-display: swap;
+        src: url("/primjeri/frizeri/manrope.woff2") format("woff2");
+      }
+
+      /* --- Odricanje (ne mijenjati) --- */
+      body { margin: 0; }
+      .demo-traka {
+        position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; gap: .25rem .75rem;
+        align-items: center; justify-content: center; padding: .55rem 1rem; background: #111; color: #fff;
+        font: 500 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center;
+      }
+      .demo-traka a { color: #f6b3c8; text-decoration: underline; text-underline-offset: 2px; }
+      .demo-odricanje {
+        padding: 1.25rem 1rem 2rem; background: #111; color: #cfcfcf; text-align: center;
+        font: 13px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      .demo-odricanje a { color: #fff; }
+
+      /* --- Oštrac brijačnica --- */
+      :root {
+        --crna: #141414;
+        --crna-2: #1f1f1f;
+        --siva: #6b6b6b;
+        --siva-svijetla: #a3a3a3;
+        --svijetla: #f4f4f2;
+        --linija: rgba(20, 20, 20, 0.12);
+        --linija-svijetla: rgba(255, 255, 255, 0.16);
+        --sirina: 1240px;
+        --naslovni: "Unbounded", "Arial Black", sans-serif;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+      body {
+        font-family: "Manrope", system-ui, sans-serif; color: var(--crna); background: #fff;
+        line-height: 1.6; overflow-x: clip;
+      }
+      img { display: block; max-width: 100%; height: auto; }
+      a { color: inherit; }
+      [id] { scroll-margin-top: 56px; }
+      .omot { width: min(100% - 2.5rem, var(--sirina)); margin-inline: auto; }
+      .naslov {
+        font-family: var(--naslovni); font-weight: 600; text-transform: uppercase; line-height: 1.08;
+        letter-spacing: 0.01em; margin: 0;
+      }
+      .mala {
+        font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--siva);
+      }
+      /* Mjesto za fotografiju: tamna podloga drži oblik dok se slika ne učita */
+      .foto { background: #2a2a2a; overflow: hidden; }
+      .foto img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+      .gumb {
+        display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 46px;
+        padding: .6rem 1.2rem; border-radius: 999px; border: 1px solid var(--crna); background: var(--crna);
+        color: #fff; font: 700 .78rem/1 "Manrope", sans-serif; letter-spacing: .12em; text-transform: uppercase;
+        text-decoration: none; cursor: pointer; transition: background .2s, color .2s;
+      }
+      .gumb:hover { background: #fff; color: var(--crna); }
+      .gumb--svijetli { background: #fff; color: var(--crna); border-color: #fff; }
+      .gumb--svijetli:hover { background: transparent; color: #fff; }
+      .gumb svg, .strelica svg { width: 14px; height: 14px; }
+      :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+      /* Zaglavlje */
+      .zaglavlje { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1.4rem; }
+      .logo { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; }
+      .logo svg { width: 38px; height: 38px; }
+      .logo b { display: block; font: 700 1.05rem/1 var(--naslovni); letter-spacing: .02em; }
+      .logo small { display: block; margin-top: .25rem; font-size: .7rem; color: var(--siva); letter-spacing: .08em; }
+      .izbornik { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; list-style: none; margin: 0; padding: 0; }
+      .izbornik a { font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-decoration: none; }
+      .izbornik a::before { content: "[ "; color: var(--siva-svijetla); }
+      .izbornik a::after { content: " ]"; color: var(--siva-svijetla); }
+      .izbornik a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      /* Naslovna */
+      .naslovna { position: relative; display: grid; grid-template-columns: 1fr; padding-top: .5rem; }
+      .naslovna__ime {
+        font-family: var(--naslovni); font-weight: 800; text-transform: uppercase; line-height: .86;
+        font-size: clamp(3.6rem, 15vw, 13.5rem); letter-spacing: -.02em; margin: 0; text-align: right;
+      }
+      .naslovna__tijelo { display: grid; gap: 2rem; margin-top: 1.5rem; }
+      .naslovna__foto { aspect-ratio: 4 / 5; border-radius: 4px; }
+      .naslovna__tekst { display: grid; gap: 1rem; align-content: start; max-width: 30rem; }
+      .oznaka-okvir {
+        display: inline-flex; align-items: center; gap: .6rem; justify-self: start; padding: .55rem .9rem;
+        border: 1px solid var(--crna); font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      }
+      .oznaka-okvir::before { content: ""; width: 6px; height: 6px; background: var(--crna); border-radius: 50%; }
+      .naslovna__tekst p { margin: 0; color: #3b3b3b; }
+      .krug {
+        display: grid; place-items: center; width: 118px; height: 118px; border-radius: 50%; margin-top: .75rem;
+        background: var(--crna); color: #fff; text-decoration: none; text-align: center;
+        font: 700 .74rem/1.3 "Manrope", sans-serif; letter-spacing: .12em; text-transform: uppercase;
+        transition: transform .3s;
+      }
+      .krug:hover { transform: rotate(-8deg) scale(1.04); }
+      @media (min-width: 880px) {
+        .naslovna__tijelo { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: end; margin-top: 1.75rem; }
+        .naslovna__foto { aspect-ratio: 4 / 4.6; }
+        .naslovna__tekst { padding-bottom: 2.5rem; }
+      }
+
+      /* Traka */
+      .traka { overflow: hidden; background: var(--crna); color: #fff; margin-top: 2.5rem; }
+      .traka__niz {
+        display: flex; gap: 2.2rem; width: max-content; padding: .95rem 0;
+        font: 600 .8rem/1 var(--naslovni); letter-spacing: .16em; text-transform: uppercase; white-space: nowrap;
+      }
+      .traka__niz span::before { content: "•"; margin-right: 2.2rem; color: var(--siva-svijetla); }
+      @media (prefers-reduced-motion: no-preference) {
+        .traka__niz { animation: traka 38s linear infinite; }
+      }
+      @keyframes traka { to { transform: translateX(-50%); } }
+
+      /* Sekcije */
+      .sekcija { padding-block: clamp(4rem, 9vw, 7.5rem); }
+      .o-nama { display: grid; gap: 2.5rem; }
+      .o-nama__tekst { display: grid; gap: 1rem; align-content: start; }
+      .o-nama__tekst p { margin: 0; color: #3b3b3b; max-width: 36rem; }
+      .o-nama .naslov { font-size: clamp(1.5rem, 1rem + 2vw, 2.4rem); max-width: 18ch; margin-bottom: .5rem; }
+      .brojke { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+      .brojke b { display: block; font: 700 clamp(1.6rem, 1.2rem + 1.6vw, 2.6rem)/1 var(--naslovni); }
+      .brojke span { display: block; margin-top: .5rem; font-size: .8rem; color: var(--siva); line-height: 1.4; }
+      .o-nama__foto { aspect-ratio: 4 / 3.4; border-radius: 14px; }
+      @media (min-width: 880px) {
+        .o-nama { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 4rem; }
+      }
+
+      .tamna { background: var(--crna); color: #fff; }
+      .tamna .mala { color: var(--siva-svijetla); }
+      .centar { text-align: center; }
+      .uvod { display: grid; gap: .9rem; justify-items: center; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+      .uvod .naslov { font-size: clamp(1.5rem, 1rem + 2vw, 2.4rem); }
+      .uvod p { margin: 0; max-width: 34rem; color: inherit; opacity: .78; }
+
+      .pristup { display: grid; gap: 2rem; }
+      .pristup__foto { aspect-ratio: 1; border-radius: 14px; }
+      .nacela { list-style: none; margin: 0; padding: 0; }
+      .nacela li {
+        display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: .3rem 1rem; padding: 1.3rem 0;
+        border-bottom: 1px solid var(--linija-svijetla);
+      }
+      .nacela li:first-child { border-top: 1px solid var(--linija-svijetla); }
+      .nacela em { font-style: normal; font-size: .75rem; color: var(--siva-svijetla); padding-top: .2rem; }
+      .nacela b { font: 600 .85rem/1.4 var(--naslovni); letter-spacing: .06em; text-transform: uppercase; }
+      .nacela p { grid-column: 2; margin: 0; color: #cfcfcf; font-size: .95rem; }
+      @media (min-width: 880px) {
+        .pristup { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: center; gap: 4rem; }
+        .nacela li { grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1.2fr); align-items: baseline; }
+        .nacela p { grid-column: 3; }
+      }
+
+      .cjenik { display: grid; gap: 2.5rem; }
+      .usluge { list-style: none; margin: 0; padding: 0; }
+      .usluge li {
+        display: grid; grid-template-columns: 2.8rem minmax(0, 1fr) auto 44px; align-items: center; gap: .8rem;
+        padding: 1.05rem 0; border-bottom: 1px solid var(--linija);
+      }
+      .usluge li:first-child { border-top: 1px solid var(--linija); }
+      .usluge em { font-style: normal; font-size: .72rem; color: var(--siva-svijetla); }
+      .usluge b { font-size: .82rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+      .usluge b small { display: block; margin-top: .2rem; font-size: .8rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--siva); }
+      .usluge .cijena { font-weight: 800; font-size: .92rem; white-space: nowrap; }
+      .strelica {
+        display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--crna);
+        color: #fff; text-decoration: none; transition: transform .25s;
+      }
+      .strelica:hover { transform: rotate(45deg); }
+      .cjenik__foto { aspect-ratio: 3 / 3.6; border-radius: 14px; }
+      .napomena { margin: 1.2rem 0 0; font-size: .85rem; color: var(--siva); }
+      @media (min-width: 880px) {
+        .cjenik { grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr); align-items: center; gap: 3.5rem; }
+      }
+
+      .radovi__vrh { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+      .radovi__vrh .naslov { font-size: clamp(1.5rem, 1rem + 2vw, 2.4rem); }
+      .radovi__niz { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+      .rad { margin: 0; }
+      .rad .foto { aspect-ratio: 4 / 5; border-radius: 14px; }
+      .rad figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: .8rem; font-size: .82rem; }
+      .rad figcaption span:last-child { color: var(--siva-svijetla); }
+
+      /* Rezervacija */
+      .rezervacija { display: grid; gap: 2.5rem; }
+      .rezervacija .naslov { font-size: clamp(1.5rem, 1rem + 2vw, 2.4rem); }
+      .rezervacija__info { display: grid; gap: 1.2rem; align-content: start; }
+      .rezervacija__info p { margin: 0; color: #3b3b3b; max-width: 30rem; }
+      .podaci { display: grid; gap: .9rem; margin: .5rem 0 0; }
+      .podaci div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--linija); }
+      .podaci dt { font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--siva); padding-top: .15rem; }
+      .podaci dd { margin: 0; font-weight: 600; }
+      .obrazac { display: grid; gap: .9rem; padding: clamp(1.25rem, 3vw, 2rem); border-radius: 14px; background: var(--svijetla); }
+      .obrazac label { font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      .obrazac input, .obrazac select {
+        width: 100%; min-height: 48px; padding: .7rem .9rem; border: 1px solid var(--linija); border-radius: 8px;
+        background: #fff; font: 500 1rem "Manrope", sans-serif; color: var(--crna);
+      }
+      .obrazac input:focus, .obrazac select:focus { outline: 2px solid var(--crna); outline-offset: 1px; }
+      .obrazac__red { display: grid; gap: .9rem; }
+      @media (min-width: 560px) { .obrazac__red { grid-template-columns: 1fr 1fr; } }
+      .obrazac__red > div { display: grid; gap: .45rem; }
+      .privola { display: flex; gap: .6rem; align-items: flex-start; font-size: .82rem !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important; color: #3b3b3b; }
+      .privola input { width: 18px; min-height: 18px; height: 18px; margin-top: .15rem; flex: none; }
+      .poruka { margin: 0; padding: .8rem 1rem; border-radius: 8px; background: var(--crna); color: #fff; font-size: .9rem; }
+      @media (min-width: 880px) {
+        .rezervacija { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 4rem; }
+      }
+
+      /* Podnožje */
+      .podnozje { background: var(--svijetla); padding-top: 3.5rem; }
+      .podnozje__mreza { display: grid; gap: 2rem; padding-bottom: 2.5rem; }
+      .podnozje p { margin: 0; font-size: .88rem; color: #3b3b3b; }
+      .podnozje .izbornik { display: grid; grid-template-columns: repeat(2, max-content); gap: .7rem 2rem; align-content: start; }
+      .kartica-termin { display: grid; gap: .6rem; align-content: start; padding: 1.4rem; border-radius: 14px; background: var(--crna); color: #fff; }
+      .kartica-termin b { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+      .kartica-termin p { color: #cfcfcf; }
+      .kartica-termin .gumb { justify-self: stretch; margin-top: .4rem; }
+      .podnozje__dno {
+        display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem 1.5rem; padding-block: 1.1rem;
+        background: var(--crna); color: #cfcfcf; font-size: .78rem;
+      }
+      .podnozje__dno .omot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem 1.5rem; }
+      @media (min-width: 880px) {
+        .podnozje__mreza { grid-template-columns: 1.3fr 1fr 1fr; gap: 3rem; }
+      }
+      @media (max-width: 879px) {
+        .zaglavlje { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-traka" role="note">
+      <span>Demo primjer — „Oštrac” je izmišljena brijačnica.</span>
+      <a href="/kontakt">Želim ovakvu stranicu</a>
+    </div>
+
+    <!-- SADRŽAJ: stranica izmišljene brijačnice -->
+    <header class="omot">
+      <nav class="zaglavlje" aria-label="Glavni izbornik">
+        <a class="logo" href="#" aria-label="Oštrac brijačnica, početak stranice">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="29" r="5" /><circle cx="29" cy="29" r="5" /><path d="M14.5 25.5 29 5M25.5 25.5 11 5" />
+          </svg>
+          <span><b>OŠTRAC</b><small>brijačnica · Split</small></span>
+        </a>
+        <ul class="izbornik">
+          <li><a href="#o-nama">O NAMA</a></li>
+          <li><a href="#cjenik">CJENIK</a></li>
+          <li><a href="#radovi">RADOVI</a></li>
+          <li><a href="#rezervacija">REZERVACIJA</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="omot naslovna" aria-labelledby="ime">
+        <h1 id="ime" class="naslovna__ime">Oštrac<span aria-hidden="true">.</span></h1>
+        <div class="naslovna__tijelo">
+          <div class="foto naslovna__foto">
+            <img src="/primjeri/frizeri/naslovna.webp" alt="Muškarac s tek podšišanom kosom i urednim prijelazom na zatiljku" width="900" height="1035" fetchpriority="high" />
+          </div>
+          <div class="naslovna__tekst">
+            <p class="oznaka-okvir">Brijačnica u centru Splita</p>
+            <p>Šišanje, brada i brijanje britvom, u točno dogovoreno vrijeme. Bez čekanja u redu i bez iznenađenja na blagajni.</p>
+            <p>Termin rezervirate u minuti, a cijenu znate prije nego što sjednete u stolicu.</p>
+            <a class="krug" href="#rezervacija">Rezerviraj<br />termin</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="traka" aria-hidden="true">
+        <div class="traka__niz">
+          <span>Šišanje</span><span>Brada</span><span>Fade</span><span>Brijanje britvom</span><span>Preciznost</span><span>Dogovoreni termin</span><span>Jasne cijene</span>
+          <span>Šišanje</span><span>Brada</span><span>Fade</span><span>Brijanje britvom</span><span>Preciznost</span><span>Dogovoreni termin</span><span>Jasne cijene</span>
+        </div>
+      </div>
+
+      <section id="o-nama" class="omot sekcija o-nama" aria-labelledby="o-nama-naslov">
+        <div class="o-nama__tekst">
+          <p class="mala">O nama</p>
+          <h2 id="o-nama-naslov" class="naslov">Brijačnica za ljude koji znaju što žele</h2>
+          <p>Oštrac je mala brijačnica s tri stolice i tri brijača koji rade samo muško šišanje i bradu. Svaki termin traje koliko treba, a ne koliko stane između dvije mušterije.</p>
+          <p>Prije šišanja kratko porazgovaramo o tome kako nosite kosu i koliko vremena ujutro imate za nju. Tako frizura izgleda dobro i tjedan dana kasnije, a ne samo kad izađete iz salona.</p>
+          <div class="brojke">
+            <div><b>3</b><span>brijača, svaki sa svojom stolicom</span></div>
+            <div><b>45′</b><span>traje prosječni termin šišanja</span></div>
+            <div><b>6</b><span>dana u tjednu, od 8 do 20 h</span></div>
+          </div>
+        </div>
+        <div class="foto o-nama__foto">
+          <img src="/primjeri/frizeri/salon.webp" alt="Unutrašnjost brijačnice sa stolicama i ogledalima" width="900" height="765" loading="lazy" />
+        </div>
+      </section>
+
+      <section class="tamna sekcija" aria-labelledby="pristup-naslov">
+        <div class="omot">
+          <div class="uvod centar">
+            <p class="mala">Naš pristup</p>
+            <h2 id="pristup-naslov" class="naslov">Isti standard, svaki put</h2>
+            <p>Nije važno kod kojeg brijača sjednete: postupak, alat i vrijeme su isti.</p>
+          </div>
+          <div class="pristup">
+            <div class="foto pristup__foto">
+              <img src="/primjeri/frizeri/pristup.webp" alt="Brijač strojićem precizno izrađuje prijelaz na zatiljku" width="800" height="800" loading="lazy" />
+            </div>
+            <ul class="nacela">
+              <li><em>[ 01 ]</em><b>Termin bez čekanja</b><p>Rezervirate online ili telefonom i dolazite u točno dogovoreno vrijeme.</p></li>
+              <li><em>[ 02 ]</em><b>Kratak razgovor prije</b><p>Pitamo kako nosite kosu, pa predložimo frizuru koja Vam odgovara.</p></li>
+              <li><em>[ 03 ]</em><b>Čist alat i pribor</b><p>Alat se nakon svake mušterije čisti i dezinficira, a ručnik je uvijek nov.</p></li>
+              <li><em>[ 04 ]</em><b>Cijena unaprijed</b><p>Sve cijene su na cjeniku ispod. Ono što piše, to i platite.</p></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="cjenik" class="omot sekcija" aria-labelledby="cjenik-naslov">
+        <div class="uvod centar">
+          <p class="mala">Cjenik</p>
+          <h2 id="cjenik-naslov" class="naslov">Najčešće usluge</h2>
+          <p>Ne vidite što tražite? Nazovite, dogovorit ćemo se.</p>
+        </div>
+        <div class="cjenik">
+          <div>
+            <ul class="usluge">
+              <li><em>[ 01 ]</em><b>Muško šišanje<small>strojić i škare, pranje i styling</small></b><span class="cijena">od 18 €</span><a class="strelica" href="#rezervacija" aria-label="Rezerviraj muško šišanje"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg></a></li>
+              <li><em>[ 02 ]</em><b>Skin fade<small>prijelaz do kože, oblikovanje vrha</small></b><span class="cijena">od 22 €</span><a class="strelica" href="#rezervacija" aria-label="Rezerviraj skin fade"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg></a></li>
+              <li><em>[ 03 ]</em><b>Uređivanje brade<small>kontura, skraćivanje, ulje</small></b><span class="cijena">od 14 €</span><a class="strelica" href="#rezervacija" aria-label="Rezerviraj uređivanje brade"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg></a></li>
+              <li><em>[ 04 ]</em><b>Šišanje i brada<small>kompletno, uz topli ručnik</small></b><span class="cijena">od 30 €</span><a class="strelica" href="#rezervacija" aria-label="Rezerviraj šišanje i bradu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg></a></li>
+              <li><em>[ 05 ]</em><b>Brijanje britvom<small>tradicionalno, s pjenom i toplim ručnikom</small></b><span class="cijena">od 20 €</span><a class="strelica" href="#rezervacija" aria-label="Rezerviraj brijanje britvom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg></a></li>
+              <li><em>[ 06 ]</em><b>Otac i sin<small>dva šišanja u jednom terminu</small></b><span class="cijena">od 30 €</span><a class="strelica" href="#rezervacija" aria-label="Rezerviraj šišanje za oca i sina"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg></a></li>
+            </ul>
+            <p class="napomena">Cijene su u eurima, s PDV-om. Plaćanje gotovinom ili karticom.</p>
+          </div>
+          <div class="foto cjenik__foto">
+            <img src="/primjeri/frizeri/stolica.webp" alt="Brijačka stolica ispred ogledala" width="800" height="960" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section id="radovi" class="tamna sekcija" aria-labelledby="radovi-naslov">
+        <div class="omot">
+          <div class="radovi__vrh">
+            <div>
+              <p class="mala">Radovi</p>
+              <h2 id="radovi-naslov" class="naslov">Iz naše stolice</h2>
+            </div>
+            <a class="gumb gumb--svijetli" href="#">Više na Instagramu
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg>
+            </a>
+          </div>
+          <div class="radovi__niz">
+            <figure class="rad"><div class="foto"><img src="/primjeri/frizeri/rad-1.webp" alt="Kratka frizura sa skin fadeom" width="640" height="800" loading="lazy" /></div><figcaption><span>Skin fade</span><span>45 min</span></figcaption></figure>
+            <figure class="rad"><div class="foto"><img src="/primjeri/frizeri/rad-2.webp" alt="Teksturirani vrh s kratkim stranama" width="640" height="800" loading="lazy" /></div><figcaption><span>Teksturirani crop</span><span>40 min</span></figcaption></figure>
+            <figure class="rad"><div class="foto"><img src="/primjeri/frizeri/rad-3.webp" alt="Uređena brada s oštrom konturom" width="640" height="800" loading="lazy" /></div><figcaption><span>Šišanje i brada</span><span>60 min</span></figcaption></figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="rezervacija" class="omot sekcija rezervacija" aria-labelledby="rez-naslov">
+        <div class="rezervacija__info">
+          <p class="mala">Rezervacija</p>
+          <h2 id="rez-naslov" class="naslov">Rezervirajte termin</h2>
+          <p>Odaberite uslugu i vrijeme koje Vam odgovara. Potvrdu dobivate SMS-om, a dan prije podsjetnik.</p>
+          <dl class="podaci">
+            <div><dt>Adresa</dt><dd>Primjer ulica 00, Split</dd></div>
+            <div><dt>Radno vrijeme</dt><dd>Pon – sub, 8:00 – 20:00</dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:+385000000000">+385 00 000 0000</a></dd></div>
+            <div><dt>E-mail</dt><dd>info@ostrac-primjer.demo</dd></div>
+          </dl>
+        </div>
+        <form class="obrazac" data-obrazac>
+          <div class="obrazac__red">
+            <div><label for="r-ime">Ime</label><input id="r-ime" name="ime" autocomplete="given-name" required /></div>
+            <div><label for="r-tel">Telefon</label><input id="r-tel" name="telefon" type="tel" autocomplete="tel" required /></div>
+          </div>
+          <div class="obrazac__red">
+            <div>
+              <label for="r-usluga">Usluga</label>
+              <select id="r-usluga" name="usluga">
+                <option>Muško šišanje</option><option>Skin fade</option><option>Uređivanje brade</option>
+                <option>Šišanje i brada</option><option>Brijanje britvom</option><option>Otac i sin</option>
+              </select>
+            </div>
+            <div><label for="r-dan">Datum</label><input id="r-dan" name="datum" type="date" required /></div>
+          </div>
+          <div class="obrazac__red">
+            <div>
+              <label for="r-vrijeme">Vrijeme</label>
+              <select id="r-vrijeme" name="vrijeme">
+                <option>8:00</option><option>9:00</option><option>10:00</option><option>11:00</option><option>12:00</option>
+                <option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option><option>19:00</option>
+              </select>
+            </div>
+            <div>
+              <label for="r-brijac">Brijač</label>
+              <select id="r-brijac" name="brijac"><option>Bilo koji slobodan</option><option>Luka</option><option>Ante</option><option>Mateo</option></select>
+            </div>
+          </div>
+          <label class="privola"><input type="checkbox" required /> Slažem se s obradom osobnih podataka radi rezervacije termina.</label>
+          <button class="gumb" type="submit" style="justify-self: start">Rezerviraj
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" /></svg>
+          </button>
+          <p class="poruka" data-poruka hidden role="status">Ovo je demo primjer, pa obrazac ne šalje podatke. Na pravoj stranici rezervacija bi stigla izravno u brijačnicu.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="podnozje">
+      <div class="omot podnozje__mreza">
+        <div style="display: grid; gap: 1rem; align-content: start">
+          <a class="logo" href="#">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="29" r="5" /><circle cx="29" cy="29" r="5" /><path d="M14.5 25.5 29 5M25.5 25.5 11 5" />
+            </svg>
+            <span><b>OŠTRAC</b><small>brijačnica · Split</small></span>
+          </a>
+          <p>Muško šišanje, brada i brijanje britvom u centru Splita. Samo na termin.</p>
+          <p><a href="tel:+385000000000">+385 00 000 0000</a> · info@ostrac-primjer.demo</p>
+        </div>
+        <ul class="izbornik">
+          <li><a href="#o-nama">O NAMA</a></li>
+          <li><a href="#cjenik">CJENIK</a></li>
+          <li><a href="#radovi">RADOVI</a></li>
+          <li><a href="#rezervacija">REZERVACIJA</a></li>
+        </ul>
+        <div class="kartica-termin">
+          <b>Rezervirajte termin</b>
+          <p>Bez čekanja i bez iznenađenja. Potvrda stiže SMS-om.</p>
+          <a class="gumb gumb--svijetli" href="#rezervacija">Rezerviraj</a>
+        </div>
+      </div>
+      <div class="podnozje__dno">
+        <div class="omot"><span>© Oštrac brijačnica (izmišljena)</span><span>Pravila privatnosti · Uvjeti rezervacije</span></div>
+      </div>
+    </footer>
+
+    <footer class="demo-odricanje">
+      <p>
+        Ovo je demo primjer stranice za brijačnicu i frizerski salon koji je izradio
+        <a href="/">Levanat web dizajn</a>. „Oštrac” je izmišljena tvrtka; nazivi, kontakti, cijene i tekstovi su
+        izmišljeni, a svaka podudarnost s postojećim tvrtkama ili osobama je slučajna.
+      </p>
+      <p><a href="/primjeri">Svi primjeri</a> · <a href="/kontakt">Zatražite besplatnu ponudu</a></p>
+    </footer>
+
+    <script>
+      // Demo: obrazac ne šalje podatke
+      document.querySelector("[data-obrazac]").addEventListener("submit", (e) => {
+        e.preventDefault();
+        document.querySelector("[data-poruka]").hidden = false;
+      });
+    </script>
+  </body>
+</html>
