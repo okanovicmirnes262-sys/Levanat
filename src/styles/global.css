@@ -359,7 +359,9 @@ p + p {
     0 1px 2px rgba(7, 28, 40, 0.18);
   transition:
     box-shadow 0.5s var(--ease-voda),
-    background-color 0.5s ease;
+    background-color 0.5s ease,
+    transform var(--dur-srednje) var(--ease-voda),
+    translate 0.6s var(--ease-voda);
   will-change: transform;
 }
 
@@ -371,8 +373,8 @@ p + p {
   width: 35%;
   z-index: -1;
   background: linear-gradient(100deg, transparent, rgba(255, 246, 225, 0.55), transparent);
-  transform: translateX(-120%) skewX(-18deg);
-  transition: transform 0.9s var(--ease-voda);
+  transform: translateX(520%) skewX(-18deg);
+  transition: transform 0.9s var(--ease-vjetar);
 }
 
 .btn__arrow {
@@ -382,6 +384,7 @@ p + p {
 
 @media (hover: hover) {
   .btn:hover {
+    transform: translateY(-2px);
     background-color: var(--bronca-svijetla);
     box-shadow:
       inset 0 1px 0 rgba(255, 244, 222, 0.55),
@@ -389,14 +392,19 @@ p + p {
       0 14px 30px -12px rgba(7, 28, 40, 0.55);
   }
   .btn:hover::before {
-    transform: translateX(520%) skewX(-18deg);
+    transform: translateX(-120%) skewX(-18deg);
   }
   .btn:hover .btn__arrow {
-    transform: translateX(0.3rem);
+    animation: strelica-vjetar var(--dur-sporo) var(--ease-vjetar);
   }
+}
+.btn:focus-visible .btn__arrow {
+  animation: strelica-vjetar var(--dur-sporo) var(--ease-vjetar);
 }
 
 .btn:active {
+  transform: scale(0.98);
+  transition-duration: 0.5s, 0.5s, var(--dur-brzo), 0.6s;
   box-shadow:
     inset 0 1px 3px rgba(60, 40, 10, 0.4),
     0 1px 1px rgba(7, 28, 40, 0.2);
@@ -697,7 +705,7 @@ p + p {
   padding: calc(var(--header-h) + 2.5rem) var(--gutter) 2rem;
   background: var(--more-duboko);
   color: var(--na-moru);
-  clip-path: inset(0 0 100% 0);
+  clip-path: inset(0 0 0 100%);
   visibility: hidden;
   transition:
     clip-path 0.8s var(--ease-kamen),
@@ -717,6 +725,47 @@ p + p {
 }
 .mobile-menu li + li {
   border-top: 1px solid var(--linija-more);
+}
+.mobile-menu li,
+.mobile-menu__foot > * {
+  opacity: 0;
+  transform: translateX(var(--pomak-vjetar));
+  transition:
+    opacity var(--dur-brzo) ease,
+    transform var(--dur-srednje) var(--ease-odlazak);
+}
+.mobile-menu.is-open li,
+.mobile-menu.is-open .mobile-menu__foot > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-sporo) var(--ease-voda),
+    transform var(--dur-scena) var(--ease-vjetar);
+  transition-delay: calc(240ms + var(--i, 0) * var(--stagger));
+}
+.mobile-menu li:nth-child(2) {
+  --i: 1;
+}
+.mobile-menu li:nth-child(3) {
+  --i: 2;
+}
+.mobile-menu li:nth-child(4) {
+  --i: 3;
+}
+.mobile-menu li:nth-child(5) {
+  --i: 4;
+}
+.mobile-menu li:nth-child(6) {
+  --i: 5;
+}
+.mobile-menu li:nth-child(7) {
+  --i: 6;
+}
+.mobile-menu__foot > :first-child {
+  --i: 6;
+}
+.mobile-menu__foot > :last-child {
+  --i: 7;
 }
 .mobile-menu a:not(.btn) {
   display: flex;

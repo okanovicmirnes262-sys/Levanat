@@ -33,12 +33,11 @@ export function initCursor() {
       const r = el.getBoundingClientRect();
       const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
       const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-      el.style.transform = `translate(${dx * 10}px, ${dy * 8}px)`;
+      // zasebno svojstvo translate, pa se slaže s CSS podizanjem i pritiskom (transform)
+      el.style.translate = `${(dx * 10).toFixed(1)}px ${(dy * 8).toFixed(1)}px`;
     });
     el.addEventListener('pointerleave', () => {
-      el.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
-      el.style.transform = '';
-      setTimeout(() => (el.style.transition = ''), 600);
+      el.style.translate = '';
     });
   });
 }
