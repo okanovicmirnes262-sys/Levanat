@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import WorkItem from '../components/WorkItem.astro';
+import Cta from '../components/Cta.astro';
+import { primjeri, poveznicaPrimjera } from '../data/primjeri';
+import { breadcrumbSchema, type Crumb } from '../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Primjeri', href: '/primjeri' },
+];
+
+// Primjeri se prikazuju istim komponentama kao radovi, ali uvijek s oznakom da je firma izmišljena.
+const stavke = primjeri.map((p) => ({
+  naziv: `${p.djelatnost}: ${p.firma}`,
+  opis: `${p.opis} Demo primjer — „${p.firma}” je izmišljena firma.`,
+  vrsta: `Demo primjer · ${p.djelatnost}`,
+  slika: p.slika,
+  link: poveznicaPrimjera(p),
+  uIzradi: false,
+}));
+---
+
+<Base
+  title="Primjeri web stranica po djelatnostima | Levanat Šibenik"
+  description="Demo primjeri web stranica za frizere, apartmane, obrtnike i druge djelatnosti. Pogledajte kako bi mogla izgledati i Vaša stranica."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="Primjeri">
+    <h1>Kako bi mogla izgledati <em>Vaša stranica</em></h1>
+    <p class="lead">
+      Za svaku djelatnost napravio sam primjer stranice kako biste lakše zamislili svoju. Firme na primjerima su
+      izmišljene; nazivi, kontakti, cijene i tekstovi služe samo za prikaz, a svaka podudarnost s postojećim tvrtkama
+      ili osobama je slučajna.
+    </p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap works">
+      {
+        stavke.length > 0 ? (
+          stavke.map((rad, i) => <WorkItem rad={rad} index={i} headingLevel="h2" />)
+        ) : (
+          <p class="lead">Primjeri su u pripremi. U međuvremenu pogledajte radove ili mi se javite.</p>
+        )
+      }
+    </div>
+  </section>
+
+  <Cta title="Svidio Vam se primjer? Napravimo Vašu stranicu." />
+</Base>

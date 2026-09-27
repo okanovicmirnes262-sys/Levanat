@@ -10,7 +10,8 @@ interface Props {
 }
 const { rad, index, headingLevel = 'h3' } = Astro.props;
 const H = headingLevel;
-const hasLink = /^https?:\/\//.test(rad.link);
+// Vanjski projekt (https://…) ili stranica na ovoj domeni (/primjeri/…)
+const hasLink = /^(https?:\/\/|\/(?!\/))/.test(rad.link);
 const n = String(index + 1).padStart(2, '0');
 ---
 

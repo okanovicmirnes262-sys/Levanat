@@ -1,4 +1,5 @@
 // Središnje mjesto za podatke o brendu. Placeholderi su u uglatim zagradama.
+import { primjeri } from './data/primjeri';
 
 export const brand = {
   name: 'Levanat',
@@ -16,9 +17,11 @@ export const brand = {
   primaryCta: 'Zatražite besplatnu ponudu',
 } as const;
 
+// „Primjeri” se u izborniku pojavljuju tek kad postoji barem jedan demo primjer (src/data/primjeri.ts).
 export const nav = [
   { href: '/usluge', label: 'Usluge' },
   { href: '/radovi', label: 'Radovi' },
+  ...(primjeri.length > 0 ? [{ href: '/primjeri', label: 'Primjeri' }] : []),
   { href: '/o-meni', label: 'O meni' },
   { href: '/kontakt', label: 'Kontakt' },
 ] as const;

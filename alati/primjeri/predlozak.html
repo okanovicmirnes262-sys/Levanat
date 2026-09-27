@@ -1,0 +1,51 @@
+<!doctype html>
+<!--
+  PREDLOŽAK DEMO PRIMJERA — kopirati u public/primjeri/<kod-djelatnosti>/index.html.
+  Obavezno: lang="hr", noindex, traka „Demo primjer” (vrh) i odricanje u podnožju, izmišljeni naziv i kontakti.
+  Zamijeniti {{FIRMA}} i {{DJELATNOST}} (npr. „frizerski salon”). Dizajn između oznaka SADRŽAJ je slobodan.
+
+  Slike (samo besplatne licence, npr. Unsplash/Pexels), spremljene kao WebP u istu mapu:
+    - <datoteka>.webp — <autor>, <izvor/URL>, licenca <Unsplash License / Pexels License>
+-->
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{{FIRMA}} — demo primjer | Levanat web dizajn</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      /* --- Odricanje (ne mijenjati) --- */
+      body { margin: 0; }
+      .demo-traka {
+        position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; gap: .25rem .75rem;
+        align-items: center; justify-content: center; padding: .55rem 1rem; background: #111; color: #fff;
+        font: 500 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center;
+      }
+      .demo-traka a { color: #f6b3c8; text-decoration: underline; text-underline-offset: 2px; }
+      .demo-odricanje {
+        padding: 1.25rem 1rem 2rem; background: #111; color: #cfcfcf; text-align: center;
+        font: 13px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      .demo-odricanje a { color: #fff; }
+      /* --- SADRŽAJ: stil primjera --- */
+    </style>
+  </head>
+  <body>
+    <div class="demo-traka" role="note">
+      <span>Demo primjer — „{{FIRMA}}” je izmišljena firma.</span>
+      <a href="/kontakt">Želim ovakvu stranicu</a>
+    </div>
+
+    <!-- SADRŽAJ: stranica izmišljene firme ({{DJELATNOST}}) -->
+
+    <footer class="demo-odricanje">
+      <p>
+        Ovo je demo primjer stranice za {{DJELATNOST}} koji je izradio
+        <a href="/">Levanat web dizajn</a>. „{{FIRMA}}” je izmišljena tvrtka; nazivi, kontakti, cijene i tekstovi su
+        izmišljeni, a svaka podudarnost s postojećim tvrtkama ili osobama je slučajna.
+      </p>
+      <p><a href="/primjeri">Svi primjeri</a> · <a href="/kontakt">Zatražite besplatnu ponudu</a></p>
+    </footer>
+  </body>
+</html>
