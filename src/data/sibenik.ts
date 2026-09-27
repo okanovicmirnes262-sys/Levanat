@@ -14,6 +14,8 @@ export type Sibencanin = {
   tekst: string;
   /** misao koja povezuje priču s mojim radom */
   misao: [string, string];
+  /** mali animirani motiv uz misao (motion) */
+  motiv: 'juraj' | 'faust' | 'supuk' | 'petrovic';
 };
 
 export const sibencani: Sibencanin[] = [
@@ -21,6 +23,7 @@ export const sibencani: Sibencanin[] = [
     src: juraj,
     alt: 'Kip Jurja Dalmatinca, djelo Ivana Meštrovića, ispred katedrale sv. Jakova u Šibeniku',
     ime: 'Juraj Dalmatinac',
+    motiv: 'juraj',
     godine: 'oko 1410.–1473.',
     uloga: 'Graditelj katedrale sv. Jakova',
     tekst:
@@ -34,6 +37,7 @@ export const sibencani: Sibencanin[] = [
     src: vrancic,
     alt: 'Homo volans, crtež padobrana Fausta Vrančića iz knjige Machinae novae',
     ime: 'Faust Vrančić',
+    motiv: 'faust',
     godine: '1551.–1617.',
     uloga: 'Izumitelj i jezikoslovac',
     tekst:
@@ -47,6 +51,7 @@ export const sibencani: Sibencanin[] = [
     src: supuk,
     alt: 'Portret Ante Šupuka, gradonačelnika Šibenika',
     ime: 'Ante Šupuk',
+    motiv: 'supuk',
     godine: '1838.–1904.',
     uloga: 'Gradonačelnik Šibenika',
     tekst:
@@ -60,6 +65,7 @@ export const sibencani: Sibencanin[] = [
     src: petrovic,
     alt: 'Dražen Petrović u dresu Šibenke s brojem 4, s loptom na terenu',
     ime: 'Dražen Petrović',
+    motiv: 'petrovic',
     godine: '1964.–1993.',
     uloga: 'Košarkaš',
     tekst:

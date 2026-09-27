@@ -1365,7 +1365,7 @@ html.motion .friz__glava img:not(.is-loaded) {
   gap: 1rem;
   align-content: center;
 }
-.friz__misao p:first-child {
+.friz__misao p:first-of-type {
   font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
   font-style: italic;
   font-weight: 320;
@@ -4109,5 +4109,177 @@ main {
   html.motion .friz .friz__pin {
     position: sticky;
     top: 0;
+  }
+}
+
+/* ---------- Šibenčani: mali motiv uz misao svakog lika ---------- */
+[data-odbroj] {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.motiv {
+  width: 44px;
+  height: 44px;
+  overflow: visible;
+  fill: none;
+  stroke: var(--bronca-svijetla);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.motiv .motiv__tanko {
+  stroke-width: 0.8;
+  opacity: 0.7;
+}
+.motiv--supuk .motiv__sjaj {
+  stroke: none;
+  fill: var(--bronca-svijetla);
+  opacity: 0.22;
+}
+.motiv--petrovic text {
+  font-family: var(--f);
+  font-size: 15px;
+  font-weight: 420;
+  fill: var(--bronca-svijetla);
+  stroke: none;
+}
+.motiv__padobran,
+.motiv__dres {
+  transform-box: view-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.motion .motiv {
+    opacity: 0;
+    transition: opacity var(--dur-srednje) var(--ease-voda);
+  }
+  html.motion .is-motiv .motiv {
+    opacity: 1;
+  }
+
+  /* Faust: Homo volans se lebdeći spusti */
+  html.motion .motiv--faust .motiv__padobran {
+    transform-origin: 24px 8px;
+    transform: translateY(-22px) rotate(-6deg);
+  }
+  html.motion .is-motiv .motiv--faust .motiv__padobran {
+    animation: motiv-padobran 2.2s var(--ease-voda) both;
+  }
+
+  /* Šupuk: žarulja se upali (dva titraja pa stalni sjaj) */
+  html.motion .motiv--supuk .motiv__sjaj {
+    opacity: 0;
+  }
+  html.motion .motiv--supuk .motiv__nit {
+    stroke: var(--na-moru-2);
+  }
+  html.motion .is-motiv .motiv--supuk .motiv__sjaj {
+    animation: motiv-sjaj 1.6s linear 0.25s both;
+  }
+  html.motion .is-motiv .motiv--supuk .motiv__nit {
+    animation: motiv-nit 1.6s linear 0.25s both;
+  }
+
+  /* Petrović: dres s brojem 4 uleti zdesna s malim odskokom */
+  html.motion .motiv--petrovic .motiv__dres {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+  html.motion .is-motiv .motiv--petrovic .motiv__dres {
+    animation: motiv-dres 0.9s var(--ease-vjetar) 0.1s both;
+  }
+
+  /* Juraj: portret se otkrije „kamenim” redovima zdesna, od temelja prema vrhu */
+  html.motion .friz__glava[data-motiv='juraj'] picture {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%, 100% 75%, 100% 75%, 100% 50%, 100% 50%, 100% 25%, 100% 25%);
+  }
+  html.motion .friz__glava[data-motiv='juraj'].is-kamen picture {
+    animation: motiv-kamen 1.3s var(--ease-kamen) both;
+  }
+}
+
+@keyframes motiv-padobran {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) rotate(-6deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(-9px) rotate(4deg);
+  }
+  72% {
+    transform: translateY(-2px) rotate(-2deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes motiv-sjaj {
+  0%,
+  8% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.55;
+  }
+  20% {
+    opacity: 0.08;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  38% {
+    opacity: 0.15;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+@keyframes motiv-nit {
+  0%,
+  8% {
+    stroke: var(--na-moru-2);
+  }
+  12%,
+  100% {
+    stroke: var(--bronca-svijetla);
+  }
+  20% {
+    stroke: var(--na-moru-2);
+  }
+  30% {
+    stroke: var(--bronca-svijetla);
+  }
+}
+@keyframes motiv-dres {
+  0% {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(-4px);
+  }
+  78% {
+    transform: translateX(1.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes motiv-kamen {
+  0% {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%, 100% 75%, 100% 75%, 100% 50%, 100% 50%, 100% 25%, 100% 25%);
+  }
+  40% {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 35% 100%, 35% 75%, 62% 75%, 62% 50%, 84% 50%, 84% 25%, 100% 25%);
+  }
+  72% {
+    clip-path: polygon(52% 0, 100% 0, 100% 100%, 0% 100%, 0% 75%, 8% 75%, 8% 50%, 26% 50%, 26% 25%, 52% 25%);
+  }
+  100% {
+    clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%, 0% 75%, 0% 75%, 0% 50%, 0% 50%, 0% 25%, 0% 25%);
   }
 }

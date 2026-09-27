@@ -10,6 +10,7 @@ import { homeFaq } from '../data/faq';
 import { radovi } from '../data/radovi';
 import { kipovi } from '../data/kamen';
 import Kostur from '../components/Kostur.astro';
+import FrizMotiv from '../components/FrizMotiv.astro';
 import JednaAdresa from '../components/JednaAdresa.astro';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
@@ -149,7 +150,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
         {
           sibencani.map((o) => (
             <Fragment>
-              <figure class="friz__glava">
+              <figure class="friz__glava" data-motiv={o.motiv}>
                 <Picture src={o.src} alt={o.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={[320, 520, 760]} sizes="(min-width: 900px) 330px, 56vw" loading="lazy" decoding="async" />
                 <figcaption>
                   <span class="mono friz__godine"><span>{o.uloga}</span><span>{o.godine}</span></span>
@@ -157,8 +158,9 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
                   <p class="friz__opis">{o.tekst}</p>
                 </figcaption>
               </figure>
-              <div class="friz__misao">
-                <p>{o.misao[0]}</p>
+              <div class="friz__misao" data-motiv={o.motiv}>
+                <FrizMotiv motiv={o.motiv} />
+                <p set:html={o.misao[0].replace(/^(\d+)/, '<span data-odbroj="$1">$1</span>')} />
                 <p>{o.misao[1]}</p>
               </div>
             </Fragment>

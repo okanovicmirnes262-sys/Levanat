@@ -2,6 +2,7 @@
 // Koristi zajednički modul scroll.ts; sve piše u CSS varijable ili transform/opacity.
 
 import { prati } from './scroll';
+import { odbroji } from './odbroj';
 import { clamp, krivulje } from './tokeni';
 
 export function initKretanje() {
@@ -80,12 +81,30 @@ function svjetlo(glave: HTMLElement[]) {
     const d = Math.abs(r.left + r.width / 2 - c) / (innerWidth * 0.55);
     const lit = Math.max(0, 1 - d * d);
     g.style.setProperty('--lit', lit.toFixed(3));
-    // motiv lika se pokrene jednom, kad portret dođe u središte
-    if (lit > 0.7 && !g.classList.contains('is-motiv')) {
-      g.classList.add('is-motiv');
-      g.dispatchEvent(new CustomEvent('friz:motiv', { bubbles: true }));
-    }
   });
+}
+
+/**
+ * Motivi Šibenčana: svaki se pokrene jednom, kad misao (ili Jurjev portret) uđe na ekran.
+ * IO radi i s translateX trakom (desktop) i s vodoravnim scrollom trake (mobitel).
+ */
+function motivi(friz: HTMLElement) {
+  const io = new IntersectionObserver(
+    (unosi) =>
+      unosi.forEach((u) => {
+        if (!u.isIntersecting) return;
+        const el = u.target as HTMLElement;
+        io.unobserve(el);
+        if (el.classList.contains('friz__glava')) {
+          el.classList.add('is-kamen');
+          return;
+        }
+        el.classList.add('is-motiv');
+        if (el.dataset.motiv === 'juraj') odbroji(el, 150);
+      }),
+    { threshold: 0.55 },
+  );
+  friz.querySelectorAll('.friz__misao, .friz__glava[data-motiv="juraj"]').forEach((el) => io.observe(el));
 }
 
 /**
@@ -148,4 +167,5 @@ function initFriz() {
     { passive: true },
   );
   svjetlo(glave);
+  motivi(friz);
 }
