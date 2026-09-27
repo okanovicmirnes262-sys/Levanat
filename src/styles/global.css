@@ -3876,12 +3876,19 @@ body.menu-open .avion-leti,
 .avion-prozor .avion__papir {
   gap: 1.1rem;
 }
+/* Prostor iznad gumba za avion: avion stoji na vrhu, dno mu dodiruje gumb */
 .hero__actions.ima-avion {
-  padding-top: 1.6rem;
+  padding-top: 38px;
+}
+.hero__actions.ima-avion .avion-leti {
+  height: 42px;
 }
 @media (max-height: 820px) {
   .hero__actions.ima-avion {
-    padding-top: 0.9rem;
+    padding-top: 30px;
+  }
+  .hero__actions.ima-avion .avion-leti {
+    height: 33px;
   }
   .hero__actions .avion-leti svg {
     width: 32px;
@@ -3899,5 +3906,47 @@ main {
   }
   .adresa__oznaka {
     font-size: 0.62rem;
+  }
+}
+
+/* ---------- Hero na većim ekranima: kostur desno pokraj naslova ---------- */
+@media (min-width: 900px) {
+  .scena {
+    height: 240vh;
+    height: 240svh;
+  }
+  .scena__kostur {
+    left: auto;
+    /* desni rub poravnat s rubom sadržaja (.wrap), i na vrlo širokim ekranima */
+    right: calc(max(0px, (100vw - var(--maxw)) / 2) + var(--gutter));
+    /* desna polovica sadržaja (stupci 7–12), ograničena i visinom ekrana */
+    width: min(
+      calc((min(100vw, var(--maxw)) - 2 * var(--gutter)) * 0.47),
+      calc((100svh - var(--header-h) - var(--tide-h) - 4rem) * 1.43)
+    );
+    transform: translateY(-50%);
+    opacity: 1;
+  }
+  .scena .hero__eyebrow,
+  .scena .hero__title,
+  .scena .hero__foot,
+  .scena .hero__meta {
+    grid-column: 1 / span 6;
+  }
+  .scena .hero__title {
+    font-size: clamp(2.2rem, min(0.9rem + 3.3vw, 9.5svh), 5.4rem);
+  }
+  /* Veo samo iza teksta lijevo, da kostur desno ostane jasan */
+  .scena__veo {
+    background: linear-gradient(to right, rgba(11, 42, 60, 0.7) 0%, rgba(11, 42, 60, 0.3) 45%, transparent 60%);
+  }
+}
+@media (min-width: 900px) and (prefers-reduced-motion: reduce) {
+  .scena {
+    height: 100vh;
+    height: 100svh;
+  }
+  .scena__kostur {
+    display: block;
   }
 }

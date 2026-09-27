@@ -58,8 +58,9 @@ export function initAvionLet() {
   // --- Sjedenje na gumbu (samo početna) ---
   const sjedni = () => {
     if (stanje !== 'sjedi' || !seat) return;
+    // Visinu i prostor iznad gumba daje CSS (.ima-avion); ovdje samo vodoravni položaj
     plane.style.left = `${seat.offsetLeft + seat.offsetWidth - 30}px`;
-    plane.style.top = `${seat.offsetTop - plane.offsetHeight + 4}px`;
+    plane.style.top = '0px';
   };
 
   // --- Pad: ljuljanje lijevo-desno uz polagano spuštanje prema donjem lijevom kutu ---
@@ -131,6 +132,9 @@ export function initAvionLet() {
     seat.parentElement?.append(plane);
     sjedni();
     addEventListener('resize', sjedni, { passive: true });
+    // Ponovno izmjeri kad se raspored oko gumba promijeni (fontovi, padding, visina ekrana)
+    if ('ResizeObserver' in window) new ResizeObserver(sjedni).observe(seat);
+    document.fonts?.ready.then(sjedni);
     if (!reduce) {
       const uvod = document.documentElement.classList.contains('uvod');
       setTimeout(() => stanje === 'sjedi' && spustiS(seat, 4600), uvod ? 4200 : 2600);
