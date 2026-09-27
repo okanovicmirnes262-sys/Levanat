@@ -21,19 +21,35 @@ const OBLICI = [
   [52, 170, 100, 0, 148, 170, 142, 260, 100, 260, 58, 260],
   [8, 232, 100, 0, 192, 232, 112, 206, 100, 256, 88, 206],
 ];
+// Preklopljeni dijelovi papira (tamniji ton), za svaki korak: lijevi i desni preklop (po 3 točke).
+// Prvi preklop je pravi odraz vrha preko pregiba, pa se vidi kako se kut papira prebacuje.
+const PREKLOPI = [
+  [[100, 0, 0, 0, 0, 92], [100, 0, 200, 0, 200, 92]],
+  [[100, 0, 100, 92, 0, 92], [100, 0, 100, 92, 200, 92]],
+  [[100, 0, 100, 170, 52, 170], [100, 0, 100, 170, 148, 170]],
+  [[100, 0, 100, 256, 88, 206], [100, 0, 112, 206, 192, 232]],
+];
 
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const tocke = (from: number[], to: number[], k: number) => {
+  const pts: string[] = [];
+  for (let i = 0; i < from.length; i += 2) pts.push(`${from[i] + (to[i] - from[i]) * k},${from[i + 1] + (to[i + 1] - from[i + 1]) * k}`);
+  return pts.join(' ');
+};
 
-function preklopi(poly: SVGPolygonElement, from: number[], to: number[], ms: number) {
+/** Jedan preklop: obris i oba preklopa se pomiču zajedno (SVG atributi, bez layouta). */
+function preklopi(poly: SVGPolygonElement, flaps: SVGPolygonElement[], korak: number, ms: number) {
   return new Promise<void>((done) => {
     const t0 = performance.now();
     const step = (now: number) => {
       const k = ease(Math.min((now - t0) / ms, 1));
-      const pts: string[] = [];
-      for (let i = 0; i < from.length; i += 2)
-        pts.push(`${from[i] + (to[i] - from[i]) * k},${from[i + 1] + (to[i + 1] - from[i + 1]) * k}`);
-      poly.setAttribute('points', pts.join(' '));
+      poly.setAttribute('points', tocke(OBLICI[korak - 1], OBLICI[korak], k));
+      flaps.forEach((f, j) => {
+        f.setAttribute('points', tocke(PREKLOPI[korak - 1][j], PREKLOPI[korak][j], k));
+        // prvi preklop: tamni ton se pojavi dok se kut podiže s papira
+        if (korak === 1) f.style.opacity = String(Math.min(1, k * 1.6));
+      });
       if (k < 1) requestAnimationFrame(step);
       else done();
     };
@@ -41,66 +57,113 @@ function preklopi(poly: SVGPolygonElement, from: number[], to: number[], ms: num
   });
 }
 
-/** Papir se skupi, presavije u avion i odleti. Vraća se kad je avion izvan ekrana. */
+/**
+ * Papir se skupi, presavije u avion (tri pregiba, dva tona papira), okrene nosom ulijevo,
+ * nagne se i odleti na levantu uz nekoliko linija vjetra. Animira se samo transform/opacity
+ * i SVG (obris, stroke). Vraća se kad je avion izvan ekrana.
+ */
 async function letaj(papir: HTMLElement) {
   const r = papir.getBoundingClientRect();
   const w = 170;
   const h = (w * 260) / 200;
   const cx = r.left + r.width / 2;
   const cy = Math.min(Math.max(r.top + r.height / 2, h), innerHeight - h / 2);
+  const x0 = cx - w / 2;
+  const y0 = cy - h / 2;
 
   const layer = document.createElement('div');
   layer.className = 'avion__let';
   layer.setAttribute('aria-hidden', 'true');
-  layer.innerHTML = `<svg viewBox="-10 -10 220 280" preserveAspectRatio="none">
+  layer.innerHTML = `<div class="avion__tijelo"><svg viewBox="-10 -10 220 280" preserveAspectRatio="none">
       <polygon class="avion__list" points="${OBLICI[0].join(' ')}" vector-effect="non-scaling-stroke"/>
+      <polygon class="avion__preklop" points="${PREKLOPI[0][0].join(' ')}" vector-effect="non-scaling-stroke"/>
+      <polygon class="avion__preklop avion__preklop--sjena" points="${PREKLOPI[0][1].join(' ')}" vector-effect="non-scaling-stroke"/>
       <path class="avion__pregib" d="M100 0V260" vector-effect="non-scaling-stroke"/>
-    </svg>`;
-  Object.assign(layer.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
+    </svg></div>`;
+  // Sloj stoji na konačnom mjestu papira za avion; skupljanje je samo transform (bez layouta)
+  Object.assign(layer.style, { left: `${x0}px`, top: `${y0}px`, width: `${w}px`, height: `${h}px` });
   // U otvorenom <dialog> avion mora letjeti unutar njega (gornji sloj preglednika)
   const host = papir.closest('dialog') ?? document.body;
   host.append(layer);
-  const poly = layer.querySelector('polygon')!;
+  const tijelo = layer.querySelector<HTMLElement>('.avion__tijelo')!;
+  const poly = layer.querySelector<SVGPolygonElement>('.avion__list')!;
+  const flaps = [...layer.querySelectorAll<SVGPolygonElement>('.avion__preklop')];
   const pregib = layer.querySelector<SVGPathElement>('.avion__pregib')!;
+  flaps.forEach((f) => (f.style.opacity = '0'));
 
   // 1. Sadržaj izblijedi, list se skupi na veličinu avionskog papira
   papir.classList.add('is-leti');
   await layer.animate(
     [
-      { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` },
-      { left: `${cx - w / 2}px`, top: `${cy - h / 2}px`, width: `${w}px`, height: `${h}px` },
+      { transform: `translate(${r.left - x0}px, ${r.top - y0}px) scale(${r.width / w}, ${r.height / h})` },
+      { transform: 'none' },
     ],
-    { duration: 520, easing: 'cubic-bezier(.6,0,.2,1)', fill: 'forwards' },
+    { duration: 560, easing: 'cubic-bezier(.6,0,.2,1)', fill: 'forwards' },
   ).finished;
 
-  // 2. Tri preklopa
+  // 2. Tri preklopa; papir se pri svakom lagano „podigne” (3D) i spusti
   pregib.style.opacity = '1';
   for (let i = 1; i < OBLICI.length; i++) {
-    await preklopi(poly, OBLICI[i - 1], OBLICI[i], 380);
-    await sleep(60);
+    tijelo.animate(
+      [{ transform: 'none' }, { transform: `perspective(700px) rotateX(${i === 3 ? 26 : 14}deg) scale(.97)` }, { transform: 'none' }],
+      { duration: 420, easing: 'cubic-bezier(.45,0,.2,1)' },
+    );
+    await preklopi(poly, flaps, i, 400);
+    await sleep(i === OBLICI.length - 1 ? 140 : 70);
   }
+  pregib.style.opacity = '0';
 
-  // 3. Avion se okrene nosom ulijevo i odleti na levantu, uz tanki trag vjetra
+  // 3. Linije vjetra zdesna i trag leta
   const dx = -(cx + w * 1.5);
   const dy = -Math.min(cy, 220);
   const svgNS = 'http://www.w3.org/2000/svg';
   const trag = document.createElementNS(svgNS, 'svg');
   trag.setAttribute('class', 'avion__trag');
   trag.setAttribute('aria-hidden', 'true');
-  const put = document.createElementNS(svgNS, 'path');
-  put.setAttribute('d', `M${cx} ${cy - 12} Q${cx + dx * 0.45} ${cy - 40} ${cx + dx} ${cy + dy}`);
-  put.setAttribute('pathLength', '1');
-  put.setAttribute('stroke-dasharray', '1');
-  trag.append(put);
+  const crta = (d: string, cls = '') => {
+    const p = document.createElementNS(svgNS, 'path');
+    p.setAttribute('d', d);
+    p.setAttribute('pathLength', '1');
+    p.setAttribute('stroke-dasharray', '1');
+    p.setAttribute('stroke-dashoffset', '1');
+    if (cls) p.setAttribute('class', cls);
+    trag.append(p);
+    return p;
+  };
+  const put = crta(`M${cx} ${cy - 12} Q${cx + dx * 0.45} ${cy - 40} ${cx + dx} ${cy + dy}`);
+  const vjetar = [-46, 8, 58].map((o, i) =>
+    crta(`M${Math.min(innerWidth, cx + 260 + i * 30)} ${cy + o} q-${120 + i * 20} ${-8 - i * 3} -${260 + i * 40} ${-2 + i * 4}`, 'avion__vjetar'),
+  );
   host.append(trag);
+  vjetar.forEach((v, i) =>
+    v.animate(
+      [
+        { strokeDashoffset: -1, opacity: 0 },
+        { strokeDashoffset: 0, opacity: 0.8, offset: 0.45 },
+        { strokeDashoffset: 1, opacity: 0 },
+      ],
+      { duration: 900, delay: i * 110, easing: 'cubic-bezier(.3,0,.1,1)', fill: 'forwards' },
+    ),
+  );
+
+  // 4. Nos ulijevo, nagib (valjanje oko tijela) i let po krivulji
   const let_ = layer.animate(
     [
       { transform: 'translate(0,0) rotate(0deg) scale(1)' },
-      { transform: 'translate(0,-12px) rotate(-90deg) scale(.8)', offset: 0.22 },
-      { transform: `translate(${dx * 0.45}px,-70px) rotate(-100deg) scale(.6)`, offset: 0.6 },
-      { transform: `translate(${dx}px,${dy}px) rotate(-108deg) scale(.4)` },
+      { transform: 'translate(10px,-10px) rotate(-90deg) scale(.82)', offset: 0.2, easing: 'cubic-bezier(.4,0,.6,1)' },
+      { transform: `translate(${dx * 0.45}px,-70px) rotate(-98deg) scale(.6)`, offset: 0.6 },
+      { transform: `translate(${dx}px,${dy}px) rotate(-110deg) scale(.36)` },
     ],
-    { duration: 1300, easing: 'cubic-bezier(.5,0,.75,.4)', fill: 'forwards' },
+    { duration: 1400, delay: 120, easing: 'cubic-bezier(.5,0,.75,.4)', fill: 'forwards' },
+  );
+  tijelo.animate(
+    [
+      { transform: 'perspective(600px) rotateY(0deg)' },
+      { transform: 'perspective(600px) rotateY(0deg)', offset: 0.18 },
+      { transform: 'perspective(600px) rotateY(28deg)', offset: 0.5 },
+      { transform: 'perspective(600px) rotateY(12deg)' },
+    ],
+    { duration: 1400, delay: 120, easing: 'ease-in-out', fill: 'forwards' },
   );
   put.animate(
     [
@@ -108,11 +171,11 @@ async function letaj(papir: HTMLElement) {
       { strokeDashoffset: 0, opacity: 0.5, offset: 0.75 },
       { strokeDashoffset: 0, opacity: 0 },
     ],
-    { duration: 1700, easing: 'cubic-bezier(.5,0,.75,.4)', fill: 'forwards' },
+    { duration: 1800, delay: 160, easing: 'cubic-bezier(.5,0,.75,.4)', fill: 'forwards' },
   );
   await let_.finished;
   layer.remove();
-  trag.remove();
+  setTimeout(() => trag.remove(), 400);
 }
 
 export function initAvion(scope: ParentNode = document) {

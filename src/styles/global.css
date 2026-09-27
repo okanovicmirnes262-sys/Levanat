@@ -3805,6 +3805,26 @@ html.motion .kostur [data-puni] {
   stroke-width: 1;
   stroke-linejoin: round;
 }
+.avion__tijelo {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 40%;
+}
+.avion__preklop {
+  fill: var(--kamen-2);
+  stroke: var(--kamen-sjena);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+.avion__preklop--sjena {
+  fill: var(--kamen-sjena);
+  fill-opacity: 0.55;
+}
+.avion__trag .avion__vjetar {
+  stroke: var(--kamen-sjena);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
 .avion__pregib {
   stroke: var(--kamen-sjena);
   stroke-width: 1;
@@ -3849,15 +3869,35 @@ html.motion .kostur [data-puni] {
   font: inherit;
   color: var(--tekst);
 }
+/* Potvrda: poruka stiže s vjetrom, redak po redak zdesna */
 @media (prefers-reduced-motion: no-preference) {
+  .avion__stigao:not([hidden]) > * {
+    animation: avion-stigao var(--dur-scena) var(--ease-vjetar) both;
+  }
+  .avion__stigao:not([hidden]) > :nth-child(2) {
+    animation-delay: calc(var(--stagger) * 2);
+  }
+  .avion__stigao:not([hidden]) > :nth-child(3) {
+    animation-delay: calc(var(--stagger) * 4);
+  }
+  .avion__stigao:not([hidden]) > :nth-child(4) {
+    animation-delay: calc(var(--stagger) * 6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
   .avion__stigao:not([hidden]) {
-    animation: avion-stigao 0.8s var(--ease-voda) both;
+    animation: avion-fade 0.3s ease both;
   }
 }
 @keyframes avion-stigao {
   from {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateX(var(--pomak-vjetar));
+  }
+}
+@keyframes avion-fade {
+  from {
+    opacity: 0;
   }
 }
 
