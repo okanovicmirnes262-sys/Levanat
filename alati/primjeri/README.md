@@ -11,6 +11,8 @@ djelatnosti (umjesto reference) i koristi ga za `{web}` u WhatsApp porukama.
 3. Tekstovi na hrvatskom, prirodni, obraćanje s „Vi”. Naziv firme izmišljen i provjeren pretragom da ne postoji;
    kontakti očito izmišljeni (npr. `+385 00 000 0000`, `info@primjer-firme.demo`). Traka i odricanje ostaju.
 4. Slike: samo besplatne licence (Unsplash, Pexels), WebP u istoj mapi, autor i izvor upisani u komentar na vrhu.
+   Putanje do slika i fontova uvijek **apsolutne** (`/primjeri/<kod>/slika.webp`), ne `slika.webp`: stranica se
+   otvara bez kose crte na kraju adrese (`trailingSlash: 'never'`), pa bi relativne putanje vodile u krivu mapu.
 5. Snimka zaslona `public/primjeri/<kod>/snimka.webp` (1600 × 1000) i stavka u `src/data/primjeri.ts` —
    tada se primjer pojavi na `/primjeri` i u izborniku.
 6. `npm run check && npm run build`, objava, pa u CRM-u: Postavke → Djelatnosti → „Demo primjer” =
