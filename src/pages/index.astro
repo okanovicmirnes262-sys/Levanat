@@ -188,7 +188,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       <ol class="services">
         {
           services.map((s) => (
-            <li class="service">
+            <li class="service" data-ulaz="desno">
               <a href={s.href}>
                 <span class="service__n broj">{s.n}</span>
                 <h3 class="service__title">{s.title}</h3>

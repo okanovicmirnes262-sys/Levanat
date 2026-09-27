@@ -1450,7 +1450,52 @@ html.motion .friz__glava img:not(.is-loaded) {
       0 26px 40px -28px rgba(11, 42, 60, 0.5);
   }
   .service a:hover .service__arrow {
-    transform: translateX(0.4rem);
+    animation: strelica-vjetar var(--dur-sporo) var(--ease-vjetar);
+  }
+}
+/* Linija ispod reda: na hover/fokus se ispuni zdesna nalijevo */
+.service a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--bronca);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-sporo) var(--ease-vjetar);
+}
+.service a:hover::after,
+.service a:focus-visible::after {
+  transform: scaleX(1);
+}
+.service a:focus-visible .service__arrow {
+  animation: strelica-vjetar var(--dur-sporo) var(--ease-vjetar);
+}
+/* Strelica: vjetar je odnese ulijevo i vrati zdesna */
+@keyframes strelica-vjetar {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  38% {
+    transform: translateX(-0.9rem);
+    opacity: 0;
+  }
+  39% {
+    transform: translateX(0.9rem);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service a:hover .service__arrow,
+  .service a:focus-visible .service__arrow {
+    animation: none;
   }
 }
 @media (min-width: 900px) {
