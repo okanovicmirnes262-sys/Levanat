@@ -2,12 +2,15 @@
   "name": "levanat-reklama",
   "private": true,
   "version": "1.0.0",
-  "description": "Levanat — 30-sekundna reklama (Remotion, 1080x1920, 60 fps)",
+  "description": "Levanat — 30-sekundna reklama v2 (Remotion, 1080x1920, 60 fps)",
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render Reklama out/levanat-reklama-30s.mp4",
-    "render:bez-glazbe": "remotion render ReklamaBezGlazbe out/levanat-reklama-30s-bez-glazbe.mp4",
-    "naslovnica": "remotion still Naslovnica out/naslovnica.png",
+    "render": "remotion render Reklama out/sirovo-reklama.mp4 && alati/zavrsi.sh out/sirovo-reklama.mp4 out/levanat-reklama-v2-30s.mp4",
+    "render:bez-glazbe": "remotion render ReklamaBezGlazbe out/sirovo-bez-glazbe.mp4 && alati/zavrsi.sh out/sirovo-bez-glazbe.mp4 out/levanat-reklama-v2-30s-bez-glazbe.mp4",
+    "naslovnica": "remotion still Naslovnica out/naslovnica-v2.png",
+    "render:v1": "remotion render ReklamaV1 out/levanat-reklama-v1-30s.mp4",
+    "logo": "python alati/logo-vektor.py",
+    "zvuk": "python alati/zvuk2.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
