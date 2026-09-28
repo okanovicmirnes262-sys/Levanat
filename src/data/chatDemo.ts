@@ -56,7 +56,7 @@ export const baza: Znanje[] = [
     kljucne: ['seo', 'lokaln', 'trazilic', 'pronadu', 'vidljiv', 'optimizac'],
     odgovor:
       'Lokalni SEO je skup postupaka kojima Googleu pokazujemo da ste upravo Vi dobar odgovor kad netko u Šibeniku ili okolici traži ono čime se bavite. Uključuje brzinu i strukturu stranice, sadržaj za usluge i mjesta, Google Business profil i strukturirane podatke.',
-    veza: { href: '/usluge/seo-optimizacija', tekst: 'Više o SEO optimizaciji →' },
+    veza: { href: '/usluge/lokalni-seo', tekst: 'Više o lokalnom SEO-u →' },
   },
   {
     pitanje: 'Možete li garantirati prvo mjesto na Googleu?',

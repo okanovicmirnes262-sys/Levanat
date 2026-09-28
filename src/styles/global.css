@@ -2278,6 +2278,19 @@ html.motion .friz__glava img:not(.is-loaded) {
 .footer__bottom p + p {
   margin: 0;
 }
+.footer__pravno {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 900px) {
+  .footer__pravno {
+    justify-content: flex-end;
+  }
+}
 @media (min-width: 900px) {
   .footer__bottom {
     grid-template-columns: auto 1fr;

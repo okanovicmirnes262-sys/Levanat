@@ -1,6 +1,6 @@
 export const serviceOptions = [
   'Izrada web stranice',
-  'SEO optimizacija',
+  'Lokalni SEO',
   'AI chatbot',
   'Održavanje',
   'Još nisam siguran/sigurna',

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Nap from '../components/Nap.astro';
+import { brand } from '../config';
+import { breadcrumbSchema, type Crumb } from '../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Impresum', href: '/impresum' },
+];
+---
+
+<Base
+  title="Impresum: podaci o pružatelju usluge web dizajna | Levanat"
+  description="Impresum web stranice Levanat: naziv obrta, sjedište u Šibeniku, OIB i kontakt podaci pružatelja usluga izrade web stranica."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="Pravne informacije">
+    <h1>Impresum</h1>
+    <p class="lead">Podaci o pružatelju usluga, u skladu sa Zakonom o elektroničkoj trgovini.</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <article class="prose">
+        <h2>Pružatelj usluga</h2>
+        <p>
+          {brand.owner}, {brand.businessDetails}
+          <br />
+          OIB: {brand.oib}
+        </p>
+
+        <h2>Sjedište i kontakt</h2>
+        <div class="contact__aside"><Nap oblik="opis" /></div>
+
+        <h2>Djelatnost</h2>
+        <p>
+          Izrada web stranica, web dizajn, lokalni SEO i AI chatbotovi za web stranice. Više o uslugama pročitajte na
+          stranici <a class="link" href="/usluge">Usluge</a>.
+        </p>
+
+        <h2>Odgovornost za sadržaj</h2>
+        <p>
+          Sadržaj ove stranice izrađen je pažljivo, ali ne jamčim da je u svakom trenutku potpun i ažuran. Za sadržaj
+          vanjskih stranica na koje stranica vodi odgovorni su njihovi vlasnici. Uvjeti korištenja stranice opisani su u
+          <a class="link" href="/uvjeti-koristenja">Uvjetima korištenja</a>, a obrada osobnih podataka u
+          <a class="link" href="/pravila-privatnosti">Pravilima privatnosti</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>

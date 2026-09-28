@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { brand } from '../config';
+import { breadcrumbSchema, type Crumb } from '../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Uvjeti korištenja', href: '/uvjeti-koristenja' },
+];
+// [DATUM_UVJETA] — ažurirajte kad promijenite sadržaj uvjeta.
+const updated = '[DATUM_UVJETA]';
+---
+
+<Base
+  title="Uvjeti korištenja web stranice Levanat, web dizajn Šibenik"
+  description="Uvjeti korištenja web stranice Levanat: autorska prava, informativni karakter cijena, ponude i poveznice na vanjske stranice. Kratko i jasno."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="Pravne informacije">
+    <h1>Uvjeti <em>korištenja</em></h1>
+    <p class="lead">Nekoliko jasnih pravila za korištenje ove stranice.</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <article class="prose">
+        <p class="mono muted">Posljednja izmjena: {updated}</p>
+
+        <h2>1. O stranici</h2>
+        <p>
+          Stranicu vodi {brand.owner}, {brand.businessDetails} (u daljnjem tekstu: Levanat). Podaci o pružatelju usluga
+          nalaze se u <a class="link" href="/impresum">Impresumu</a>. Korištenjem stranice prihvaćate ove uvjete.
+        </p>
+
+        <h2>2. Cijene i ponude</h2>
+        <p>
+          Cijene na stranici, uključujući rezultat kalkulatora, okvirne su i informativne. Obvezujuća je samo pisana
+          ponuda koju dobijete nakon razgovora, s opisom onoga što je uključeno. Slanje upita ne obvezuje Vas ni na što.
+        </p>
+
+        <h2>3. Autorska prava</h2>
+        <p>
+          Tekstovi, dizajn, ilustracije i fotografije na stranici zaštićeni su autorskim pravom. Ne smiju se kopirati ni
+          koristiti u druge svrhe bez pisanog dopuštenja. Snimke zaslona projekata prikazane su uz dopuštenje klijenata,
+          a prava na njihov sadržaj pripadaju klijentima. Fotografije poznatih Šibenčana koriste se u skladu s njihovim
+          licencama.
+        </p>
+
+        <h2>4. Demo primjeri i chatbot</h2>
+        <p>
+          Demo primjeri stranica prikazuju izmišljene tvrtke i služe samo kao ogled mogućeg dizajna. Asistent na stranici
+          odgovara na osnovna pitanja o uslugama; za točne uvjete i cijene mjerodavna je pisana ponuda.
+        </p>
+
+        <h2>5. Vanjske poveznice</h2>
+        <p>
+          Stranica vodi i na vanjske stranice (npr. Wikipedija ili radovi klijenata). Za njihov sadržaj i pravila
+          privatnosti odgovorni su njihovi vlasnici.
+        </p>
+
+        <h2>6. Privatnost</h2>
+        <p>
+          Kako se obrađuju podaci koje pošaljete kroz kontakt formu opisano je u
+          <a class="link" href="/pravila-privatnosti">Pravilima privatnosti</a>. Stranica ne koristi kolačiće.
+        </p>
+
+        <h2>7. Izmjene uvjeta</h2>
+        <p>
+          Uvjeti se mogu povremeno mijenjati. Vrijedi verzija objavljena na ovoj stranici, s datumom posljednje izmjene.
+          Za pitanja se javite putem stranice <a class="link" href="/kontakt">Kontakt</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>

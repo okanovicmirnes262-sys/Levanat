@@ -1,10 +1,10 @@
 ---
-import { brand, nav, services } from '../config';
-import { isPlaceholder, windLetters } from '../lib';
+import { brand, lokacije, nav, services } from '../config';
+import { stvarno, windLetters } from '../lib';
+import Nap from './Nap.astro';
 
 const year = new Date().getFullYear();
-const email = brand.email;
-const emailIsReal = !isPlaceholder(email);
+const oib = stvarno(brand.oib);
 ---
 
 <footer class="site-footer">
@@ -46,16 +46,22 @@ const emailIsReal = !isPlaceholder(email);
               </li>
             ))
           }
+          {
+            lokacije.map((l) => (
+              <li>
+                <a class="link" href={l.href}>
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
       <div class="footer__col">
         <h2>Kontakt</h2>
         <ul>
-          <li>
-            {emailIsReal ? <a class="link" href={`mailto:${email}`}>{email}</a> : <span>{email}</span>}
-          </li>
-          <li>Šibenik, Hrvatska</li>
+          <Nap />
           <li><a class="link" href="/kontakt">{brand.primaryCta}</a></li>
         </ul>
       </div>
@@ -64,8 +70,12 @@ const emailIsReal = !isPlaceholder(email);
     <p class="footer__word" aria-hidden="true" set:html={windLetters('Levanat')} />
 
     <div class="footer__bottom">
-      <p>© {year} Levanat · {brand.businessDetails}</p>
-      <p><a class="link" href="/pravila-privatnosti">Pravila privatnosti</a></p>
+      <p>© {year} Levanat · {brand.businessDetails}{oib ? ` · OIB ${oib}` : ''}</p>
+      <ul class="footer__pravno">
+        <li><a class="link" href="/pravila-privatnosti">Pravila privatnosti</a></li>
+        <li><a class="link" href="/uvjeti-koristenja">Uvjeti korištenja</a></li>
+        <li><a class="link" href="/impresum">Impresum</a></li>
+      </ul>
     </div>
 
     <details class="colophon">

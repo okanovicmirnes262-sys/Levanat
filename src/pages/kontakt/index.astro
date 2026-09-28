@@ -2,19 +2,18 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import AvionForma from '../../components/AvionForma.astro';
-import { brand } from '../../config';
-import { breadcrumbSchema, isPlaceholder, type Crumb } from '../../lib';
+import Nap from '../../components/Nap.astro';
+import { breadcrumbSchema, type Crumb } from '../../lib';
 
 const crumbs: Crumb[] = [
   { name: 'Početna', href: '/' },
   { name: 'Kontakt', href: '/kontakt' },
 ];
-const emailIsReal = !isPlaceholder(brand.email);
 ---
 
 <Base
-  title="Kontakt — zatražite besplatnu ponudu | Levanat, web dizajn Šibenik"
-  description="Zatražite besplatnu ponudu za izradu web stranice, SEO optimizaciju ili AI chatbot. Web dizajner iz Šibenika, za klijente iz cijele Hrvatske."
+  title="Kontakt: web dizajner Šibenik, besplatna ponuda | Levanat"
+  description="Kontakt za izradu web stranice, lokalni SEO ili AI chatbot. Web dizajner iz Šibenika za obrte i male firme. Zatražite besplatnu ponudu!"
   schema={[breadcrumbSchema(crumbs)]}
 >
   <PageHero crumbs={crumbs} label="Kontakt">
@@ -28,18 +27,15 @@ const emailIsReal = !isPlaceholder(brand.email);
   <section class="section">
     <div class="wrap grid contact">
       <aside class="contact__aside">
+        <Nap oblik="opis" />
         <dl>
           <div>
-            <dt class="mono">E-mail</dt>
-            <dd>{emailIsReal ? <a class="link" href={`mailto:${brand.email}`}>{brand.email}</a> : brand.email}</dd>
-          </div>
-          <div>
-            <dt class="mono">Lokacija</dt>
-            <dd>Šibenik, Hrvatska</dd>
-          </div>
-          <div>
             <dt class="mono">Područje rada</dt>
-            <dd>Cijela Hrvatska, uživo u Šibensko-kninskoj županiji</dd>
+            <dd>
+              <a class="link" href="/izrada-web-stranica-sibenik">Šibenik</a>,
+              <a class="link" href="/izrada-web-stranica-vodice">Vodice</a> i cijela Šibensko-kninska županija uživo,
+              ostatak Hrvatske na daljinu
+            </dd>
           </div>
         </dl>
         <p class="muted">

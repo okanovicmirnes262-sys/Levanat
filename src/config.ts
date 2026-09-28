@@ -12,6 +12,20 @@ export const brand = {
   // [PODACI_O_OBRTU] — naziv obrta, adresa sjedišta, OIB, MBO/registarski broj.
   // Dok registracija nije gotova, footer i pravila privatnosti prikazuju ovaj tekst.
   businessDetails: '[PODACI_O_OBRTU]',
+  // Kontakt podaci (NAP): dok su u uglatim zagradama, ne prikazuju se na stranici ni u schemi.
+  // [TELEFON_PLACEHOLDER] — u međunarodnom obliku, npr. +385 91 234 5678
+  phone: '[TELEFON_PLACEHOLDER]',
+  // [ADRESA_PLACEHOLDER] — ulica i kućni broj sjedišta (grad je ispod, u `city`)
+  address: '[ADRESA_PLACEHOLDER]',
+  postalCode: '22000',
+  // [RADNO_VRIJEME_PLACEHOLDER] — za prikaz, npr. „Pon–pet 8–16 h”
+  hours: '[RADNO_VRIJEME_PLACEHOLDER]',
+  // Radno vrijeme za schemu (format schema.org), npr. ['Mo-Fr 08:00-16:00']; prazno = ne ulazi u schemu
+  hoursSchema: [] as string[],
+  // [OIB_PLACEHOLDER]
+  oib: '[OIB_PLACEHOLDER]',
+  // Profili na društvenim mrežama, npr. { label: 'Instagram', href: 'https://instagram.com/…' }
+  social: [] as { label: string; href: string }[],
   // Koordinate Šibenika (katedrala sv. Jakova), koriste se za izračun izlaska sunca i u schemi.
   geo: { lat: 43.7350, lon: 15.8897 },
   primaryCta: 'Zatražite besplatnu ponudu',
@@ -22,8 +36,15 @@ export const nav = [
   { href: '/usluge', label: 'Usluge' },
   { href: '/radovi', label: 'Radovi' },
   ...(primjeri.length > 0 ? [{ href: '/primjeri', label: 'Primjeri' }] : []),
+  { href: '/blog', label: 'Blog' },
   { href: '/o-meni', label: 'O meni' },
   { href: '/kontakt', label: 'Kontakt' },
+] as const;
+
+// Lokacijske stranice (lokalni SEO)
+export const lokacije = [
+  { href: '/izrada-web-stranica-sibenik', label: 'Izrada web stranica Šibenik' },
+  { href: '/izrada-web-stranica-vodice', label: 'Izrada web stranica Vodice' },
 ] as const;
 
 export const services = [
@@ -37,10 +58,10 @@ export const services = [
   },
   {
     n: '02',
-    href: '/usluge/seo-optimizacija',
-    title: 'SEO optimizacija',
+    href: '/usluge/lokalni-seo',
+    title: 'Lokalni SEO',
     short:
-      'Tehnička osnova, sadržaj i Google Business profil složeni onako kako Google preporučuje.',
+      'Tehnička osnova, sadržaj za usluge i mjesta te strukturirani podaci, da Vas pronađu ljudi iz Vašeg kraja.',
     meta: 'Lokalna vidljivost',
   },
   {

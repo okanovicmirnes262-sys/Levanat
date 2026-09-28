@@ -1,0 +1,48 @@
+---
+// Naziv, adresa, telefon (NAP) i ostali kontakt podaci iz jednog izvora (config.ts), da budu
+// isti na svakoj stranici. Placeholderi se ne prikazuju kao poveznice; telefon, radno vrijeme i
+// mreže se pojavljuju tek kad su upisani.
+import { brand } from '../config';
+import { stvarno, telHref } from '../lib';
+
+interface Props {
+  /** „popis” za footer (<li>), „opis” za kontakt stranicu (<dl>) */
+  oblik?: 'popis' | 'opis';
+}
+const { oblik = 'popis' } = Astro.props;
+
+const email = stvarno(brand.email);
+const phone = stvarno(brand.phone);
+const hours = stvarno(brand.hours);
+const ulica = stvarno(brand.address);
+const adresa = [ulica, `${ulica ? brand.postalCode + ' ' : ''}${brand.city}`, 'Hrvatska'].filter(Boolean).join(', ');
+
+type Stavka = { oznaka: string; tekst: string; href?: string };
+const stavke: Stavka[] = [
+  { oznaka: 'Naziv', tekst: `${brand.name}, web dizajn` },
+  { oznaka: 'Adresa', tekst: adresa },
+  ...(phone ? [{ oznaka: 'Telefon', tekst: phone, href: telHref(phone) }] : []),
+  email ? { oznaka: 'E-mail', tekst: email, href: `mailto:${email}` } : { oznaka: 'E-mail', tekst: brand.email },
+  ...(hours ? [{ oznaka: 'Radno vrijeme', tekst: hours }] : []),
+  ...brand.social.map((m) => ({ oznaka: m.label, tekst: m.label, href: m.href })),
+];
+---
+
+{
+  oblik === 'opis' ? (
+    <dl class="nap">
+      {stavke.map((s) => (
+        <div>
+          <dt class="mono">{s.oznaka}</dt>
+          <dd>{s.href ? <a class="link" href={s.href} rel={s.href.startsWith('http') ? 'me noopener' : undefined}>{s.tekst}</a> : s.tekst}</dd>
+        </div>
+      ))}
+    </dl>
+  ) : (
+    stavke
+      .filter((s) => s.oznaka !== 'Naziv')
+      .map((s) => (
+        <li>{s.href ? <a class="link" href={s.href} rel={s.href.startsWith('http') ? 'me noopener' : undefined}>{s.tekst}</a> : s.tekst}</li>
+      ))
+  )
+}
