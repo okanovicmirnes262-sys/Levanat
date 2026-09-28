@@ -665,6 +665,7 @@ p + p {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
+  min-height: 44px;
   padding: 0.6rem 0;
   border: 0;
   background: none;
@@ -1401,7 +1402,7 @@ html.motion .friz__glava img:not(.is-loaded) {
   font-weight: 380;
 }
 .friz__opis {
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.55;
   color: var(--na-moru-2);
 }
@@ -2273,7 +2274,7 @@ html.motion .friz__glava img:not(.is-loaded) {
   padding-top: 1.5rem;
   border-top: 1px solid var(--linija-more);
   color: var(--na-moru-2);
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 .footer__bottom p + p {
   margin: 0;
@@ -2300,7 +2301,7 @@ html.motion .friz__glava img:not(.is-loaded) {
 .colophon {
   margin-top: 1rem;
   color: var(--na-moru-2);
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 .colophon summary {
   cursor: pointer;
@@ -2498,6 +2499,55 @@ html.motion .friz__glava img:not(.is-loaded) {
 .prose a {
   color: var(--tirkiz-tekst);
 }
+.prose ol {
+  padding-left: 1.4rem;
+  margin: 1rem 0;
+}
+.prose p,
+.prose li {
+  line-height: 1.65;
+}
+.prose strong {
+  font-weight: 560;
+}
+.clanak__jos {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--linija);
+}
+.clanak__jos h2 {
+  margin-top: 0;
+}
+
+/* ---------- Blog: popis članaka ---------- */
+.blog-popis {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--linija);
+  max-width: 52rem;
+}
+.blog-popis__clanak {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1.75rem, 3vw, 2.5rem) 0;
+  border-bottom: 1px solid var(--linija);
+}
+.blog-popis__clanak h2 {
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  line-height: 1.12;
+}
+.blog-popis__clanak h2 a {
+  text-decoration: none;
+}
+.blog-popis__clanak p {
+  margin: 0;
+  color: var(--tekst-2);
+  max-width: 40em;
+}
+.blog-popis__clanak .link {
+  justify-self: start;
+}
 
 .upkeep {
   row-gap: 2rem;
@@ -2637,7 +2687,7 @@ html.motion .friz__glava img:not(.is-loaded) {
   overflow: hidden;
 }
 .form__note {
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--tekst-2);
   max-width: 36em;
 }
@@ -3203,7 +3253,7 @@ html.motion [data-ulaz].is-in {
 }
 .kalk__napomena {
   color: var(--tekst-2);
-  font-size: 0.95rem;
+  font-size: 1rem;
   max-width: 34em;
   margin-bottom: 0.6rem !important;
 }
@@ -3866,7 +3916,7 @@ html.motion .kostur [data-puni] {
   }
 }
 .avion__pomoc {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--tekst-2);
 }
 
@@ -4505,4 +4555,39 @@ main {
   html.motion .mihovil.is-kip .mihovil__citat footer {
     opacity: 1;
   }
+}
+
+/* ---------- Recenzije (prikazuju se tek kad postoje prave) ---------- */
+.recenzije {
+  display: grid;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 900px) {
+  .recenzije {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Dodirne mete najmanje 44 × 44 px: samostalne poveznice dobivaju nevidljivo prošireno područje
+   (bez promjene izgleda i rasporeda) */
+.logo,
+.hero__actions .link,
+.work__link,
+.footer__pravno .link,
+.colophon summary,
+.blog-popis__clanak .link {
+  position: relative;
+}
+.logo::after,
+.hero__actions .link::after,
+.work__link::after,
+.footer__pravno .link::after,
+.colophon summary::after,
+.blog-popis__clanak .link::after {
+  content: '';
+  position: absolute;
+  inset: -0.75rem -0.25rem;
 }

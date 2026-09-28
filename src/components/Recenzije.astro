@@ -1,0 +1,32 @@
+---
+// Recenzije klijenata (src/data/recenzije.ts). Prikazuju se samo kad postoji barem jedna prava recenzija.
+import { recenzije } from '../data/recenzije';
+---
+
+{
+  recenzije.length > 0 && (
+    <section class="section" aria-labelledby="recenzije-naslov">
+      <div class="wrap">
+        <div class="grid section-head">
+          <p class="label">Klijenti</p>
+          <h2 id="recenzije-naslov" data-reveal="line">
+            Što kažu klijenti
+          </h2>
+        </div>
+        <ul class="recenzije">
+          {recenzije.map((r) => (
+            <li data-ulaz="desno">
+              <blockquote class="quote">
+                <p>„{r.tekst}”</p>
+                <footer class="mono muted">
+                  {r.ime}, {r.posao}
+                  {r.mjesto && `, ${r.mjesto}`}
+                </footer>
+              </blockquote>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

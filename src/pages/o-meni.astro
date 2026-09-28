@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Cta from '../components/Cta.astro';
+import { radovi } from '../data/radovi';
 import { breadcrumbSchema, type Crumb } from '../lib';
 
 const crumbs: Crumb[] = [
@@ -14,11 +15,24 @@ const principles = [
   ['Jasan jezik', 'Bez stručnog žargona. Uvijek znate što radim, zašto i koliko to košta.'],
   ['Stranica ostaje Vaša', 'Domena i hosting glase na Vas. Nitko Vas ne drži taocem vlastite stranice.'],
 ];
+
+const n = radovi.length;
+const brojProjekata = n % 10 === 1 && n % 100 !== 11 ? `${n} projekt` : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? `${n} projekta` : `${n} projekata`;
+
+// Alati i tehnologije koje stvarno koristim na stranicama (bez izmišljenih certifikata)
+const tehnologije = [
+  ['Astro i TypeScript', 'Brze, statične stranice bez nepotrebnog tereta, koje se učitavaju u trenu i na mobitelu.'],
+  ['HTML, CSS i pristupačnost', 'Semantička struktura, dovoljni kontrasti i navigacija tipkovnicom, da stranicu mogu koristiti svi.'],
+  ['Core Web Vitals', 'Brzina učitavanja (LCP), odziv (INP) i stabilnost (CLS) mjere se prije svake predaje.'],
+  ['Tehnički i lokalni SEO', 'Naslovi, opisi, strukturirani podaci (schema.org), sitemap i stranice za mjesta u kojima radite.'],
+  ['Vercel hosting i HTTPS', 'Brz hosting s certifikatom, automatskim objavama i sigurnosnim zaglavljima.'],
+  ['AI chatbot', 'Asistent koji odgovara iz Vaših materijala, složen tako da se drži činjenica.'],
+];
 ---
 
 <Base
-  title="O meni — Mirnes Okanović, web dizajner iz Šibenika | Levanat"
-  description="Mirnes Okanović, web dizajner iz Šibenika. Izrađujem web stranice za male poduzetnike i obrte, s posvećenošću detaljima koji čine razliku."
+  title="Web dizajner Šibenik — Mirnes Okanović, o meni | Levanat"
+  description="Mirnes Okanović, web dizajner iz Šibenika: web stranice za obrte i male poduzetnike, alati koje koristim i kako radim. Zatražite besplatnu ponudu!"
   schema={[breadcrumbSchema(crumbs)]}
 >
   <PageHero crumbs={crumbs} label="O meni">
@@ -72,7 +86,38 @@ const principles = [
         </ol>
         <p data-reveal="fade">
           Radim iz Šibenika, s klijentima iz cijele Hrvatske. S onima iz Šibenika i Šibensko-kninske županije rado se
-          nađem i uživo.
+          nađem i uživo. Više o tome na stranicama <a class="link" href="/izrada-web-stranica-sibenik"
+            >web dizajn u Šibeniku</a
+          > i <a class="link" href="/izrada-web-stranica-vodice">izrada web stranica u Vodicama</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap grid block" style="border-top: 1px solid var(--linija);">
+      <div class="block__head">
+        <p class="label">Alati</p>
+        <h2 data-reveal="line">Tehnologije koje koristim</h2>
+      </div>
+      <div class="block__body">
+        <ul class="list">
+          {
+            tehnologije.map(([t, d], i) => (
+              <li data-reveal="fade">
+                <span class="broj">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{t}</strong>
+                  <span>{d}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <p data-reveal="fade">
+          Dosadašnje projekte ({brojProjekata}) možete pogledati na stranici{' '}
+          <a class="link" href="/radovi">Radovi</a>, a kako razmišljam o cijenama i suradnji pročitajte na{' '}
+          <a class="link" href="/blog">blogu</a>.
         </p>
       </div>
     </div>

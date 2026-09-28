@@ -99,7 +99,7 @@ export const lokacije: Lokacija[] = [
     uMjestu: 'u Vodicama',
     title: 'Izrada web stranica Vodice — za turizam i obrte | Levanat',
     description:
-      'Izrada web stranica u Vodicama za apartmane, restorane, charter i obrte: višejezično, brzo na mobitelu, s upitima i rezervacijama. Zatražite besplatnu ponudu!',
+      'Izrada web stranica u Vodicama za apartmane, restorane, charter i obrte: višejezično, brzo na mobitelu, s rezervacijama. Zatražite besplatnu ponudu!',
     h1: 'Izrada web stranica',
     h1Em: 'u Vodicama',
     uvod:

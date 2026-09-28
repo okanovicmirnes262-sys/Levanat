@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Cta from '../../components/Cta.astro';
+import { breadcrumbSchema, type Crumb } from '../../lib';
+
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Blog', href: '/blog' },
+];
+const clanci = (await getCollection('blog')).sort((a, b) => b.data.objavljeno.getTime() - a.data.objavljeno.getTime());
+const datum = (x: Date) => x.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title="Blog o web stranicama za obrte i male firme | Levanat"
+  description="Blog o izradi web stranica, cijenama i lokalnom SEO-u za obrtnike i male poduzetnike iz Šibenika i okolice. Iskreni odgovori na česta pitanja."
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <PageHero crumbs={crumbs} label="Blog">
+    <h1>Blog: <em>iskreni odgovori</em> o web stranicama</h1>
+    <p class="lead">
+      Pitanja koja mi obrtnici i mali poduzetnici najčešće postavljaju, odgovorena bez žargona. Za sve ostalo, tu su{' '}
+      <a class="link" href="/usluge">usluge</a> i <a class="link" href="/kontakt">kontakt</a>.
+    </p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="blog-popis">
+        {
+          clanci.map((c) => (
+            <li class="blog-popis__clanak" data-ulaz="desno">
+              <p class="mono muted">
+                <time datetime={c.data.objavljeno.toISOString().slice(0, 10)}>{datum(c.data.objavljeno)}</time>
+              </p>
+              <h2>
+                <a class="link-plain" href={`/blog/${c.id}`}>
+                  {c.data.naslov}
+                </a>
+              </h2>
+              <p>{c.data.sazetak}</p>
+              <a class="link" href={`/blog/${c.id}`} aria-hidden="true" tabindex="-1">
+                Pročitajte članak →
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <Cta />
+</Base>

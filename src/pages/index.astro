@@ -12,6 +12,7 @@ import { kipovi } from '../data/kamen';
 import Kostur from '../components/Kostur.astro';
 import FrizMotiv from '../components/FrizMotiv.astro';
 import JednaAdresa from '../components/JednaAdresa.astro';
+import Recenzije from '../components/Recenzije.astro';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
@@ -293,6 +294,8 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       </p>
     </div>
   </section>
+
+  <Recenzije />
 
   <Faq
     items={homeFaq}

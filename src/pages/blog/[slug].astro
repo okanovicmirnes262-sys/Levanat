@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import { articleSchema, breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
+
+export async function getStaticPaths() {
+  const clanci = await getCollection('blog');
+  return clanci.map((c) => ({ params: { slug: c.id }, props: { c } }));
+}
+
+const { c } = Astro.props;
+const { Content } = await render(c);
+const d = c.data;
+const url = `/blog/${c.id}`;
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: 'Blog', href: '/blog' },
+  { name: d.naslov, href: url },
+];
+const datum = (x: Date) => x.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+const ostali = (await getCollection('blog')).filter((x) => x.id !== c.id);
+---
+
+<Base
+  title={d.title}
+  description={d.description}
+  schema={[
+    breadcrumbSchema(crumbs),
+    articleSchema({ title: d.naslov, description: d.description, url, objavljeno: d.objavljeno, azurirano: d.azurirano }),
+    ...(d.faq.length ? [faqSchema(d.faq)] : []),
+  ]}
+>
+  <PageHero crumbs={crumbs} label="Blog">
+    <h1>{d.naslov}</h1>
+    <p class="lead">{d.sazetak}</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <article class="prose clanak">
+        <p class="mono muted">
+          <time datetime={d.objavljeno.toISOString().slice(0, 10)}>{datum(d.objavljeno)}</time>
+          {d.azurirano && <> · ažurirano <time datetime={d.azurirano.toISOString().slice(0, 10)}>{datum(d.azurirano)}</time></>}
+          {' · '}Mirnes Okanović
+        </p>
+        <Content />
+      </article>
+
+      {
+        ostali.length > 0 && (
+          <aside class="prose clanak__jos" aria-labelledby="jos-naslov">
+            <h2 id="jos-naslov">Pročitajte i</h2>
+            <ul>
+              {ostali.map((x) => (
+                <li>
+                  <a class="link" href={`/blog/${x.id}`}>
+                    {x.data.naslov}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+    </div>
+  </section>
+
+  {d.faq.length > 0 && <Faq items={d.faq} label="Pitanja" title="Česta pitanja" />}
+  <Cta />
+</Base>
