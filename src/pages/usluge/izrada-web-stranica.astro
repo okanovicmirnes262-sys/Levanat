@@ -6,7 +6,7 @@ import Cta from '../../components/Cta.astro';
 import Kalkulator from '../../components/Kalkulator.astro';
 import { brand } from '../../config';
 import { webFaq } from '../../data/faq';
-import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
+import { breadcrumbSchema, faqSchema, serviceSchema, type Crumb } from '../../lib';
 
 const crumbs: Crumb[] = [
   { name: 'Početna', href: '/' },
@@ -28,9 +28,19 @@ const included = [
 ---
 
 <Base
-  title="Izrada web stranica Šibenik — cijena od 200 € | Levanat"
-  description="Izrada web stranica u Šibeniku za obrte i male firme: dizajn po mjeri, prilagodba mobitelu i osnovni SEO. Cijena okvirno od 200 €. Besplatna ponuda."
-  schema={[breadcrumbSchema(crumbs), faqSchema(webFaq)]}
+  title="Izrada web stranica za obrtnike i male poduzetnike | Levanat"
+  description="Web stranice za obrtnike i male poduzetnike iz Šibenika: dizajn po mjeri, mobitel, osnovni SEO. Okvirno od 200 €. Zatražite besplatnu ponudu!"
+  schema={[
+    breadcrumbSchema(crumbs),
+    faqSchema(webFaq),
+    serviceSchema({
+      name: 'Izrada web stranica',
+      url: '/usluge/izrada-web-stranica',
+      description: 'Izrada web stranica za obrtnike, male poduzetnike i firme: dizajn po mjeri, prilagodba mobitelu, brzina i osnovni SEO.',
+      mjesta: ['Šibenik', 'Vodice', 'Drniš', 'Primošten'],
+      odCijene: 200,
+    }),
+  ]}
 >
   <PageHero crumbs={crumbs} label="Usluga 01">
     <h1>Izrada web stranica u Šibeniku, <em>za obrte i male firme</em></h1>
@@ -78,6 +88,11 @@ const included = [
           jedan je od najisplativijih koraka koje možete napraviti za svoj posao. Posebno kad radite lokalno, u Šibeniku
           i okolici, gdje se preporuke danas provjeravaju upravo pretraživanjem.
         </p>
+        <p data-reveal="fade">
+          Više o radu s lokalnim klijentima: <a class="link" href="/izrada-web-stranica-sibenik">web dizajn u Šibeniku</a>{' '}
+          i <a class="link" href="/izrada-web-stranica-vodice">izrada web stranica u Vodicama</a>. Niste sigurni treba li
+          Vam stranica? Pročitajte <a class="link" href="/blog/trebam-li-web-stranicu-za-obrt">trebam li web stranicu za obrt</a>.
+        </p>
       </div>
     </section>
 
@@ -93,7 +108,9 @@ const included = [
         </div>
         <p data-reveal="fade">
           Konačna cijena ovisi o broju podstranica, količini sadržaja i dodatnim mogućnostima, poput obrasca za upite ili
-          AI chatbota. Nakon kratkog razgovora dobivate besplatnu ponudu u kojoj je svaka stavka jasno navedena.
+          AI chatbota. Nakon kratkog razgovora dobivate besplatnu ponudu u kojoj je svaka stavka jasno navedena. Sve što
+          utječe na cijenu objašnjeno je u članku{' '}
+          <a class="link" href="/blog/koliko-kosta-izrada-web-stranice">koliko košta izrada web stranice</a>.
         </p>
         <p class="label" style="margin-top: 1rem">Izračunajte okvirnu cijenu</p>
         <Kalkulator />

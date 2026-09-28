@@ -4240,7 +4240,8 @@ main {
     grid-column: 1 / span 6;
   }
   .scena .hero__title {
-    font-size: clamp(2.2rem, min(0.9rem + 3.3vw, 9.5svh), 5.4rem);
+    font-size: clamp(2.2rem, min(0.9rem + 3vw, 7.6svh), 5rem);
+    max-width: 18ch;
   }
   /* Veo samo iza teksta lijevo, da kostur desno ostane jasan */
   .scena__veo {

@@ -4,40 +4,50 @@ import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
 import Cta from '../../components/Cta.astro';
 import { seoFaq } from '../../data/faq';
-import { breadcrumbSchema, faqSchema, type Crumb } from '../../lib';
+import { breadcrumbSchema, faqSchema, serviceSchema, type Crumb } from '../../lib';
 
 const crumbs: Crumb[] = [
   { name: 'Početna', href: '/' },
   { name: 'Usluge', href: '/usluge' },
-  { name: 'SEO optimizacija', href: '/usluge/seo-optimizacija' },
+  { name: 'Lokalni SEO', href: '/usluge/lokalni-seo' },
 ];
 
 const work = [
   ['Tehnička osnova', 'Brzina, prikaz na mobitelu, sitemap i sve što Googleu treba kako bi stranicu pročitao bez zapreka.'],
   [
-    'Sadržaj i ključne riječi',
-    'Stranice za usluge i mjesta u kojima radite, napisane prirodnim jezikom, onako kako Vas ljudi zaista traže.',
+    'Ključne riječi',
+    'Provjerimo kako Vas ljudi zaista traže, npr. „frizer Šibenik” ili „apartmani Vodice”, i na te pojmove složimo stranice.',
   ],
   [
-    'Google Business profil',
-    'Izrada ili uređivanje profila: kategorije, radno vrijeme, fotografije i opis, kako biste bili vidljivi i na Google kartama.',
+    'Stranice za usluge i mjesta',
+    'Svaka važna usluga i svako mjesto u kojem radite dobiju svoju stranicu, s jedinstvenim tekstom, a ne kopijom.',
   ],
-  ['Strukturirani podaci', 'Oznake koje Googleu jasno kažu tko ste, gdje ste i čime se bavite.'],
-  ['Dosljedni podaci', 'Isti naziv, adresa i telefon na stranici, na Google profilu i u imenicima u kojima se pojavljujete.'],
-  ['Praćenje', 'Postavljanje Google Search Consolea, kako bi se vidjelo za koje se pojmove pojavljujete i koliko Vas ljudi pronalazi.'],
+  ['Naslovi i opisi', 'Title, meta opis i naslovi na stranici složeni tako da se iz rezultata pretrage odmah vidi tko ste i gdje radite.'],
+  ['Strukturirani podaci', 'Schema.org oznake (LocalBusiness, usluge, česta pitanja) koje Googleu jasno kažu tko ste, gdje ste i čime se bavite.'],
+  ['Dosljedni podaci', 'Isti naziv, adresa i telefon na svakoj stranici i u imenicima u kojima se pojavljujete.'],
+  ['Interne poveznice', 'Stranice se međusobno povezuju opisnim poveznicama, pa Google i posjetitelji lakše nađu ono što traže.'],
 ];
 ---
 
 <Base
-  title="SEO optimizacija Šibenik — lokalni SEO | Levanat"
-  description="SEO optimizacija u Šibeniku za obrte i male firme: lokalni SEO, Google Business profil i tehnička osnova, kako bi Vas pronašli na Googleu i Google kartama."
-  schema={[breadcrumbSchema(crumbs), faqSchema(seoFaq)]}
+  title="Lokalni SEO Šibenik — vidljivost na Googleu | Levanat"
+  description="Lokalni SEO u Šibeniku za obrte i male firme: brza stranica, sadržaj za usluge i mjesta, strukturirani podaci. Zatražite besplatnu ponudu!"
+  schema={[
+    breadcrumbSchema(crumbs),
+    faqSchema(seoFaq),
+    serviceSchema({
+      name: 'Lokalni SEO',
+      url: '/usluge/lokalni-seo',
+      description: 'Lokalna optimizacija web stranice za tražilice: tehnička osnova, sadržaj za usluge i mjesta, strukturirani podaci.',
+      mjesta: ['Šibenik', 'Vodice'],
+    }),
+  ]}
 >
   <PageHero crumbs={crumbs} label="Usluga 02">
-    <h1>SEO optimizacija u Šibeniku: <em>lokalna vidljivost</em> na Googleu</h1>
+    <h1>Lokalni SEO u Šibeniku: <em>da Vas pronađu</em> ljudi iz Vašeg kraja</h1>
     <p class="lead">
-      Lokalni SEO za obrte i male firme: stranica i Google Business profil složeni tako da Google jasno razumije čime
-      se bavite i gdje radite.
+      Web stranica složena tako da Google jasno razumije čime se bavite i gdje radite, pa Vas prikaže onima koji traže
+      baš to, baš ovdje.
     </p>
   </PageHero>
 
@@ -63,7 +73,7 @@ const work = [
     <section class="grid block" aria-labelledby="sto-radim">
       <div class="block__head">
         <p class="label">Što radim</p>
-        <h2 id="sto-radim" data-reveal="line">SEO optimizacija, korak po korak</h2>
+        <h2 id="sto-radim" data-reveal="line">Lokalni SEO, korak po korak</h2>
       </div>
       <div class="block__body">
         <ul class="list">
@@ -90,11 +100,13 @@ const work = [
       <div class="block__body">
         <p data-reveal="fade">
           Rezultati dolaze postupno, a prvo mjesto na Googleu ne može Vam pošteno obećati nitko. Mogu Vam obećati da će
-          stranica i Google Business profil biti složeni onako kako Google preporučuje, i da ćete razumjeti što je
-          napravljeno i zašto.
+          stranica biti složena onako kako Google preporučuje, i da ćete razumjeti što je napravljeno i zašto.
+          Primjer kako to izgleda u praksi su stranice za{' '}
+          <a class="link" href="/izrada-web-stranica-sibenik">Šibenik</a> i{' '}
+          <a class="link" href="/izrada-web-stranica-vodice">Vodice</a>.
         </p>
         <p data-reveal="fade">
-          SEO optimizacija uključena je u osnovnom obliku u svaku <a class="link" href="/usluge/izrada-web-stranica"
+          Lokalni SEO uključen je u osnovnom obliku u svaku <a class="link" href="/usluge/izrada-web-stranica"
             >izradu web stranice</a
           >. Za postojeće stranice ili opsežniji lokalni SEO javite se, pa ćemo vidjeti što ima smisla.
         </p>
@@ -102,6 +114,6 @@ const work = [
     </section>
   </div>
 
-  <Faq items={seoFaq} label="Pitanja" title="Pitanja o SEO optimizaciji" />
+  <Faq items={seoFaq} label="Pitanja" title="Pitanja o lokalnom SEO-u" />
   <Cta title="Pogledajmo kako Vaša stranica stoji." />
 </Base>

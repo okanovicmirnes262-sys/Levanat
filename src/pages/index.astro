@@ -15,8 +15,8 @@ import JednaAdresa from '../components/JednaAdresa.astro';
 import { sibencani } from '../data/sibenik';
 import { abs, faqSchema, splitWords } from '../lib';
 
-const t1 = splitWords('Web stranica koja jasno pokazuje');
-const t2 = splitWords('tko ste i što nudite.', t1.next);
+const t1 = splitWords('Izrada web stranica Šibenik:');
+const t2 = splitWords('brze i pregledne stranice za male poduzetnike', t1.next);
 
 const steps = [
   {
@@ -49,7 +49,7 @@ const pageSchema = {
   '@type': 'WebPage',
   '@id': abs('/') + '#stranica',
   url: abs('/'),
-  name: 'Izrada web stranica Šibenik | Levanat',
+  name: 'Izrada web stranica Šibenik — brze i pregledne | Levanat',
   inLanguage: 'hr-HR',
   about: { '@type': 'City', name: 'Šibenik' },
   mentions: sibencani.map((o) => ({ '@type': 'Person', name: o.ime, description: o.uloga, sameAs: wiki[o.ime] })),
@@ -61,8 +61,8 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
 ---
 
 <Base
-  title="Izrada web stranica Šibenik | Levanat — web dizajn"
-  description="Izrada web stranica u Šibeniku za male poduzetnike i obrte. Brza, pregledna stranica, lokalni SEO i Google Business profil. Zatražite besplatnu ponudu."
+  title="Izrada web stranica Šibenik — brze i pregledne | Levanat"
+  description="Izrada web stranica u Šibeniku za obrtnike i male poduzetnike: web dizajn po mjeri, prilagodba mobitelu i lokalni SEO. Zatražite besplatnu ponudu!"
   schema={[faqSchema(homeFaq), pageSchema]}
 >
   <!-- Hero: kostur web stranice koji se crta dok skrolate, a na kraju se popuni -->
@@ -84,7 +84,7 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
 
       <div class="hero__foot">
         <p class="lead">
-          Izrađujem web stranice za obrtnike, male firme i poduzetnike iz Šibenika i cijele Hrvatske.
+          Web dizajn i izrada stranica za obrtnike, male firme i poduzetnike iz Šibenika, Vodica i cijele Hrvatske.
         </p>
         <p class="hero__opis">
           Pregledan dizajn, brzo učitavanje, prilagodba mobitelu i tekst koji na jednom mjestu kaže čime se bavite, gdje
@@ -130,6 +130,11 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
           kontaktirati. Na nju možete uputiti ljude s društvenih mreža, iz Google profila ili iz poruke.
         </p>
         <p data-reveal="fade">Stranica ne zamjenjuje društvene mreže. Nadopunjuje ih.</p>
+        <p data-reveal="fade">
+          Ako se pitate isplati li se, pročitajte <a class="link" href="/blog/trebam-li-web-stranicu-za-obrt"
+            >trebam li web stranicu za obrt</a
+          > i <a class="link" href="/blog/koliko-kosta-izrada-web-stranice">koliko košta izrada web stranice</a>.
+        </p>
       </div>
 
       <JednaAdresa />
@@ -144,7 +149,11 @@ const valV = Array.from({ length: 41 }, (_, i) => `${(6 + Math.sin(i * 0.9) * 4)
       <div class="wrap grid friz__head">
         <p class="label">02 · Šibenik</p>
         <h2 id="friz-naslov" data-reveal="line">Radim iz Šibenika.</h2>
-        <p class="friz__uvod" data-reveal="fade">Četiri Šibenčanina i ono što od njih uzimam u svoj posao.</p>
+        <p class="friz__uvod" data-reveal="fade">
+          Četiri Šibenčanina i ono što od njih uzimam u svoj posao. Više o tome kako radim s lokalnim klijentima:{' '}
+          <a class="link" href="/izrada-web-stranica-sibenik">izrada web stranica u Šibeniku</a> i{' '}
+          <a class="link" href="/izrada-web-stranica-vodice">u Vodicama</a>.
+        </p>
       </div>
       <div class="friz__traka" tabindex="0" aria-label="Poznati Šibenčani; pomičite vodoravno">
         {

@@ -6,6 +6,10 @@ import { SITE_URL } from './site.config.mjs';
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'never',
+  // Stara adresa SEO usluge (301 na Vercelu)
+  redirects: {
+    '/usluge/seo-optimizacija': { status: 301, destination: '/usluge/lokalni-seo' },
+  },
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),

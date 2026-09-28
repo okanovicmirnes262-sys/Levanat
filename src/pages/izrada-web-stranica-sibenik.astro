@@ -1,0 +1,8 @@
+---
+import LokacijaStranica from '../components/LokacijaStranica.astro';
+import { lokacije } from '../data/lokacije';
+
+const l = lokacije.find((x) => x.slug === 'izrada-web-stranica-sibenik')!;
+---
+
+<LokacijaStranica l={l} />

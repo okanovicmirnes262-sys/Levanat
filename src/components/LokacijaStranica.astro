@@ -1,0 +1,136 @@
+---
+// Zajednički raspored lokacijskih stranica (Šibenik, Vodice). Sadržaj je u src/data/lokacije.ts.
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import Faq from './Faq.astro';
+import Cta from './Cta.astro';
+import WorkItem from './WorkItem.astro';
+import { brand } from '../config';
+import { radovi } from '../data/radovi';
+import type { Lokacija } from '../data/lokacije';
+import { breadcrumbSchema, faqSchema, serviceSchema, type Crumb } from '../lib';
+
+interface Props {
+  l: Lokacija;
+}
+const { l } = Astro.props;
+const href = `/${l.slug}`;
+const crumbs: Crumb[] = [
+  { name: 'Početna', href: '/' },
+  { name: `Izrada web stranica ${l.mjesto}`, href },
+];
+const primjer = radovi.findIndex((r) => r.naziv === l.primjer);
+---
+
+<Base
+  title={l.title}
+  description={l.description}
+  schema={[
+    breadcrumbSchema(crumbs),
+    faqSchema(l.faq),
+    serviceSchema({
+      name: `Izrada web stranica ${l.uMjestu}`,
+      url: href,
+      description: l.description,
+      mjesta: [l.mjesto],
+      odCijene: 200,
+    }),
+  ]}
+>
+  <PageHero crumbs={crumbs} label={`Web dizajn · ${l.mjesto}`}>
+    <h1>{l.h1} <em>{l.h1Em}</em></h1>
+    <p class="lead">{l.uvod}</p>
+  </PageHero>
+
+  <div class="wrap">
+    {
+      l.odlomci.map((o, i) => (
+        <section class="grid block" aria-labelledby={`o-${i}`}>
+          <div class="block__head">
+            <p class="label">{o.oznaka}</p>
+            <h2 id={`o-${i}`} data-reveal="line">
+              {o.naslov}
+            </h2>
+          </div>
+          <div class="block__body">
+            {o.tekst.map((t, j) => (
+              <p class={i === 0 && j === 0 ? 'lead' : undefined} data-reveal="fade" set:html={t} />
+            ))}
+            {o.stavke && (
+              <ul class="list">
+                {o.stavke.map(([t, d], k) => (
+                  <li data-reveal="fade">
+                    <span class="broj">{String(k + 1).padStart(2, '0')}</span>
+                    <div>
+                      <strong>{t}</strong>
+                      <span set:html={d} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="grid block" aria-labelledby="dalje">
+      <div class="block__head">
+        <p class="label">Dalje</p>
+        <h2 id="dalje" data-reveal="line">Usluge i korisni tekstovi</h2>
+      </div>
+      <div class="block__body">
+        <ul class="list">
+          <li data-reveal="fade">
+            <span class="broj">→</span>
+            <div>
+              <strong><a class="link" href="/usluge/izrada-web-stranica">Izrada web stranica za obrte i male firme</a></strong>
+              <span>Što je uključeno, kako teče izrada i kalkulator okvirne cijene.</span>
+            </div>
+          </li>
+          <li data-reveal="fade">
+            <span class="broj">→</span>
+            <div>
+              <strong><a class="link" href="/blog/trebam-li-web-stranicu-za-obrt">Trebam li web stranicu za obrt?</a></strong>
+              <span>Iskren odgovor, s primjerima kad se stranica isplati, a kad ne.</span>
+            </div>
+          </li>
+          <li data-reveal="fade">
+            <span class="broj">→</span>
+            <div>
+              <strong><a class="link" href="/blog/kako-odabrati-web-dizajnera">Kako odabrati web dizajnera</a></strong>
+              <span>Pitanja koja vrijedi postaviti prije nego što se za nekoga odlučite.</span>
+            </div>
+          </li>
+        </ul>
+        <p data-reveal="fade">
+          <a class="btn" href="/kontakt">{brand.primaryCta} <span class="btn__arrow" aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  {
+    primjer >= 0 && (
+      <section class="section" aria-labelledby="primjer">
+        <div class="wrap">
+          <div class="grid section-head">
+            <p class="label">Primjer iz okolice</p>
+            <h2 id="primjer" data-reveal="line">
+              Stranica iz našeg kraja
+            </h2>
+          </div>
+          <div class="works">
+            <WorkItem rad={radovi[primjer]} index={primjer} />
+          </div>
+          <p data-reveal="fade" style="margin-top: 2rem">
+            Svi projekti su na stranici <a class="link" href="/radovi">Radovi</a>.
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <Faq items={l.faq} label="Pitanja" title={`Česta pitanja: web stranica ${l.uMjestu}`} />
+  <Cta title={l.ctaNaslov} />
+</Base>

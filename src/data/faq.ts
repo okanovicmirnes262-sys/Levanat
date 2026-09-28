@@ -46,18 +46,21 @@ export const webFaq: Faq[] = [
 
 export const seoFaq: Faq[] = [
   {
-    q: 'Koliko brzo se vide rezultati SEO optimizacije?',
+    q: 'Koliko brzo se vide rezultati lokalnog SEO-a?',
     a: 'Ovisi o konkurenciji u Vašoj djelatnosti i o tome koliko je stranica nova. Prve promjene obično se vide nakon nekoliko tjedana, a ozbiljniji pomaci traju duže. Zato SEO shvaćam kao temelj koji se gradi, a ne kao trik.',
   },
   {
     q: 'Možete li mi osigurati prvo mjesto na Googleu?',
-    a: 'Ne mogu, i ne može nitko tko je iskren. Poredak određuje Google. Ono što mogu jest složiti stranicu i Google Business profil onako kako Google preporučuje i objasniti Vam što je napravljeno i zašto.',
+    a: 'Ne mogu, i ne može nitko tko je iskren. Poredak određuje Google. Ono što mogu jest složiti stranicu onako kako Google preporučuje i objasniti Vam što je napravljeno i zašto.',
   },
   {
     q: 'Može li SEO bez izrade nove stranice?',
     a: 'Može, ako je postojeća stranica dobra osnova. Ako nije, iskreno ću Vam reći da je isplativije složiti novu nego krpati staru.',
   },
-  homeFaq[3],
+  {
+    q: 'Trebam li posebnu stranicu za svako mjesto u kojem radim?',
+    a: 'Ako radite u više mjesta, npr. u Šibeniku i Vodicama, pomaže da svako ima svoju stranicu s tekstom koji stvarno govori o tom mjestu. Kopirani tekst s promijenjenim imenom grada ne pomaže, pa takve stranice pišemo zasebno.',
+  },
 ];
 
 export const chatbotFaq: Faq[] = [
